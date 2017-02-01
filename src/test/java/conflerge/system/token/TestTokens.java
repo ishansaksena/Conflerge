@@ -58,7 +58,7 @@ public class TestTokens {
     private void checkFileContents(String filename, String expected) {
         try {
             List<JavaToken> mergedTokens = TokenParser.tokenizeFile("MERGED");
-            List<JavaToken> expectedTokens = TokenParser.tokenizeString(expected);           
+            List<JavaToken> expectedTokens = TokenParser.tokenizeString(expected);     
             if (mergedTokens.size() != expectedTokens.size()) {
                 fail();
             }
@@ -85,7 +85,15 @@ public class TestTokens {
         String b = "class Foo { }";
         String l = "class Foo { }";
         String r = "class Foo { }";
-        checkMergeSucceeds(b, l, r, "class Foo { }");
+        checkMergeSucceeds(b, l, r, "class Foo {  }");
+    }
+    
+    @Test
+    public void testTrivialCommentMerge() {
+        String b = "class Foo { }";
+        String l = "class Foo {/* comment */  }";
+        String r = "class Foo { }";
+        checkMergeSucceeds(b, l, r, "class Foo { /* comment */  }");
     }
     
     @Test
@@ -102,6 +110,14 @@ public class TestTokens {
         String l = "class Foo { void greet() { System.out.println(\"hi\"); } }";
         String r = "class Foo { void greet() { printer.println(\"hello\"); } }";
         checkMergeSucceeds(b, l, r, "class Foo { void greet() { printer.println(\"hi\"); } }");
+    }
+    
+    @Test
+    public void testMergeFirstToken() {
+        String b = "class Foo { }";
+        String l = "public class Foo { }";
+        String r = "class Bar { }";
+        checkMergeSucceeds(b, l, r, "public class Bar { }");
     }
     
     @Test

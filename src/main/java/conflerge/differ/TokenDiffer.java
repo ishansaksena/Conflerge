@@ -59,14 +59,14 @@ public class TokenDiffer {
         
         List<Edit> edits = new ArrayList<Edit>();
         
-        while (i > 0 && j > 0) {
+        while (i >= 0 && j >= 0) {
             // Case: delete at 'i'
-            if (op[i][j] == op[i - 1][j] + 1) {
+            if (i >= 1 && op[i][j] == op[i - 1][j] + 1) {
                 edits.add(new Edit(Edit.Type.DELETE, i, j));
                 i--;
 
             // Case: insert at 'j'
-            } else if (op[i][j] == op[i][j - 1] + 1) {
+            } else if (j >= 1 && op[i][j] == op[i][j - 1] + 1) {
                 edits.add(new Edit(Edit.Type.INSERT, i, j));
                 j--;
 
