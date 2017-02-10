@@ -49,10 +49,5 @@ First, clone the repo you want to test on and move all the files in this directo
 	(Note: every file pair differs by at least one line: '// Merged by Conflerge', which I added 
 	temporarily to distinguish the merged files)
 
-5) JavaParser.txt contains a lil writeup I did from running this process on the JavaParser repo. I noted 
-the total conflicts, total merges, and the number of good and bad merges. I also gave a brief description 
-of why each bad merge was bad. This is more or less a good template for us, although maybe we should switch
-to a spreadsheet...
-
-Have fun : )
+5) Run ./make_csv.sh to generate a csv file with the testing data.
 
