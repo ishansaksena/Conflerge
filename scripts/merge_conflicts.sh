@@ -1,46 +1,59 @@
 #!/bin/bash
 
 function mergeCommits {
-	# Get conflicting commits
+
+	# Get and merge the conflicting commits
   git checkout --force -b commit1 $1 
   git checkout --force -b commit2 $2
   git checkout commit1
-
-	# Merge conflicting commits
   git merge commit2 > merge.txt
 	
   # Clear the file we'll save successful files in
+  touch files.txt
   rm files.txt
+  touch files.txt
 	
-  # Read conflicts line-by-line
+  # Read each conflict line
 	while read CONFLICT
 	do
+
 		# Try to extract a .java file from the conflict line
 		if [[ $CONFLICT =~ .*[[:space:]]([^\.]*\.java) ]]
 		then
+
       # Make sure it's a content merge, not a file insertion or deletion
       if [[ $CONFLICT == *"content"* ]]
 			then
-				# Found one! Apply our mergetool
+
+				# Found one! Get its name and apply our mergetool
 	      FILE=${BASH_REMATCH[1]}
   			RES="$(yes | git mergetool --tool=conflerge $FILE)"
+
         # Check if Conflerge succeeded
         if [[ $RES == *"SUCCESS"* ]] 
         then
+
           # It did! Output this so we can grep for it later
           echo "SUCCESS"
-          # Write the result file to conflerge_results/...
+
+          # Get the file's name without the full path
           if [[ $FILE =~ .*/([^/]*.java) ]]
           then
+
             # Save the name of this file so we can use it later
             echo $FILE >> files.txt        
+
             # Write the merged file to the results folder
             FILENAME="conflerge_results/actual_"
             FILENAME+="${BASH_REMATCH[1]}"
+
+            # Make sure this file has unique name
             while [ -f $FILENAME ]
             do
               FILENAME+=1
             done
+            
+            # Write the file contents to the file in conflerge_results/
             cat $FILE > $FILENAME         
           fi   
         else
@@ -63,9 +76,11 @@ function mergeCommits {
   git checkout --force -b merged $3
   while read FILE
   do
+
     # Write the result file to conflerge_results/...
     if [[ $FILE =~ .*/([^/]*.java) ]]
     then
+
       # Write the merged file to the results folder
       FILENAME="conflerge_results/expected_"
       FILENAME+="${BASH_REMATCH[1]}"      
@@ -86,7 +101,10 @@ function mergeCommits {
 }
 
 # Set up the destination 
-mkdir conflerge_results
+if [ ! -d conflerge_results ]
+then
+  mkdir conflerge_results
+fi
 
 # Outer loop: read the contents of merge_conflicts.txt line by line
 while read line
@@ -96,4 +114,5 @@ do
 
 done < merge_conflicts.txt
 
+rm files.txt
 rm merge.txt

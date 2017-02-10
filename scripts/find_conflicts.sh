@@ -1,7 +1,5 @@
 #!/bin/bash
 
-TOTAL_CONFLICTS=0
-
 touch merge_conflicts.txt
 rm merge_conflicts.txt
 touch merge_conflicts.txt
@@ -24,7 +22,6 @@ do
 	if [ $CONFLICTS -gt 0 ]; then
 			echo "$COMMIT_1 $COMMIT_2 $MERGE" >> merge_conflicts.txt
 			git reset --merge
-			TOTAL_CONFLICTS=$(($CONFLICTS + $TOTAL_CONFLICTS))
 			echo "--------------------------------"
 			echo "   Found $CONFLICTS conflicts" 
 			echo "--------------------------------"
@@ -40,5 +37,5 @@ done <<< "$(git rev-list --min-parents=2 HEAD)"
 rm merge.txt
 
 echo "--------------------------------"
-echo "Total conficts: $TOTAL_CONFLICTS"
+echo "    Finished Finding Conflicts"
 echo "--------------------------------"
