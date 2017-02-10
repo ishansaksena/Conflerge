@@ -21,8 +21,14 @@ popd
 REPO=$(basename "$PWD")
 
 CONFLICTS=$(grep FAILURE res.txt | wc -l)
+
 SUCCESSES=$(grep SUCCESS res.txt | wc -l)
+
 CONFLICTS=$(($CONFLICTS + $SUCCESSES))
 
-echo ",Conflicts,Merges,Perfect" > $REPO.csv
-printf "%s,%d,%d,%d" "$REPO" "$CONFLICTS" "$SUCCESSES" "$PERFECT_MERGES" >> $REPO.csv
+PERCENT_RESOLVED=$[SUCCESSES*100/CONFLICTS]
+
+PERCENT_PERFECT=$[PERFECT_MERGES*100/SUCCESSES]
+
+echo ",Conflicts Found,Conflicts Resolved,Perfect Resolutions,% Conflicts Resolved,% Perfect Resolutions" > $REPO.csv
+printf "%s,%d,%d,%d,%d,%d" "$REPO" "$CONFLICTS" "$SUCCESSES" "$PERFECT_MERGES" "$PERCENT_RESOLVED" "$PERCENT_PERFECT" >> $REPO.csv
