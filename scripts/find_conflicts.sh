@@ -32,7 +32,7 @@ do
 	git branch -D commit1
 	git branch -D commit2
 	git reset --hard master	
-done <<< "$(git rev-list --min-parents=2 HEAD)"
+done <<< "$(git rev-list --merges --max-parents=2 HEAD)"
 
 rm merge.txt
 
