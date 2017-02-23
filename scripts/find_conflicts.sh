@@ -1,8 +1,10 @@
 #!/bin/bash
 
-touch merge_conflicts.txt
-rm merge_conflicts.txt
-touch merge_conflicts.txt
+touch $2
+rm $2
+touch $2
+
+DEFAULT_BRANCH=$(git -C $1 rev-parse --abbrev-ref HEAD)
 
 while read MERGE
 do
@@ -20,7 +22,7 @@ do
 	# Handle conflicts
 	CONFLICTS=$(grep CONFLICT merge.txt | grep content | wc -l)
 	if [ $CONFLICTS -gt 0 ]; then
-			echo "$COMMIT_1 $COMMIT_2 $MERGE" >> merge_conflicts.txt
+			echo "$COMMIT_1 $COMMIT_2 $MERGE" >> $2
 			git -C $1 reset --merge
 			echo "--------------------------------"
 			echo "   Found $CONFLICTS conflicts" 
@@ -28,10 +30,10 @@ do
 	fi
 
 	# Clean up
-	git -C $1 checkout master
+	git -C $1 checkout $DEFAULT_BRANCH
 	git -C $1 branch -D commit1
 	git -C $1 branch -D commit2
-	git -C $1 reset --hard master
+	git -C $1 reset --hard $DEFAULT_BRANCH
 done <<< "$(git -C $1 rev-list --merges --max-parents=2 HEAD)"
 
 rm merge.txt
