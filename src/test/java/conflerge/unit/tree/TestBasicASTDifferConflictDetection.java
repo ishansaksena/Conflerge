@@ -72,25 +72,44 @@ public class TestBasicASTDifferConflictDetection {
                 false
         );
     }
+      
+    @Test
+    public void testOverlappingDeleteReplace1() {
+        merge(
+                "class Foo { void foo() { int i;  } } ",
+                "class Foo { void foo() { int j; } }",
+                "class Foo { }",
+                false
+        );
+    }
+       
+    @Test
+    public void testOverlappingDeleteReplace2() {
+        merge(
+                "class Foo { void foo() { int i;  } } ",
+                "class Foo { }",
+                "class Foo { void foo() { int j; } }",
+                false
+        );
+    }
     
-//  TODO: implement this    
-//    @Test
-//    public void testOverlappingDeleteReplace1() {
-//        merge(
-//                "class Foo { void foo() { int i;  } } ",
-//                "class Foo { void foo() { int j; } }",
-//                "class Foo { }",
-//                false
-//        );
-//    }
-//       
-//    @Test
-//    public void testOverlappingDeleteReplace2() {
-//        merge(
-//                "class Foo { void foo() { int i;  } } ",
-//                "class Foo { }",
-//                "class Foo { void foo() { int j; } }",
-//                false
-//        );
-//    }
+    @Test
+    public void testOverlappingDeleteInsertUnder1() {
+        merge(
+                "class Foo { void foo() { }}",
+                "class Foo { void foo(int a) { }}",
+                "class Foo { }",
+                false
+        );
+    }
+    
+    @Test
+    public void testOverlappingDeleteInsertUnder2() {
+        merge(
+                "class Foo { void foo() { }}",
+                "class Foo { }",
+                "class Foo { void foo(int a) { }}",
+                false
+        );
+    }
 }

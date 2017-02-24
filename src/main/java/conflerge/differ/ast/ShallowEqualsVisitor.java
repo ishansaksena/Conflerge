@@ -110,10 +110,15 @@ public class ShallowEqualsVisitor implements GenericVisitor<Boolean, Visitable> 
         if (n1 == n2) return true;      
         if (n1 == null || n2 == null) return false;
         if (n1.getClass() != n2.getClass()) return false;
-        if (!nodeEquals(n1.getComment(), n2.getComment())) return false;
         return n1.accept(this, n2);
     }
     
+    /**
+     * Not being called?
+     * @param n1
+     * @param arg
+     * @return
+     */
     public Boolean visit(final NodeListWrapperNode n1, final Visitable arg) {
         return true;
     }

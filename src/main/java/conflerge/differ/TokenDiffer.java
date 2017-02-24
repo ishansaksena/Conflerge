@@ -23,6 +23,8 @@ public class TokenDiffer {
         int m = modified.size();
         int[][] op = new int[n][m];
 
+        System.out.println();
+        
         // Base cases: align base[0..n] with [], corresponds to i deletions
         for (int i = 0; i < n; i++) {
             op[i][0] = i;
