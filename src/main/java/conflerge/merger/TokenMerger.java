@@ -59,7 +59,7 @@ public class TokenMerger {
         while (!localEdits.isEmpty() && !remoteEdits.isEmpty()) {
             Edit e1 = localEdits.pop();
             Edit e2 = remoteEdits.pop();
-                        
+            
             // Case: Conflict
             if (e1.type != Edit.Type.MATCH && e2.type != Edit.Type.MATCH) {
                 return null;
@@ -84,8 +84,10 @@ public class TokenMerger {
             } else if (e2.type == Edit.Type.INSERT) {
                 res.add(remote.get(e2.icur));
                 localEdits.push(e1);
-            } 
+            }
+            System.out.println();
         }
+        res.remove(0);
         return res;
     }
 }

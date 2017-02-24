@@ -1,22 +1,6 @@
 #!/bin/bash
 
-PERFECT_MERGES=0
-
-pushd conflerge_results
-  FILES=actual_*
-  for FILE in $FILES
-  do  
-    if [[ $FILE =~ actual_(.*.java.*) ]]
-    then 
-      FILE="${BASH_REMATCH[1]}" 
-      DIFF=$(diff -U 0 -B -w actual_$FILE expected_$FILE | grep @ | wc -l)
-      if [[ $DIFF == 0 ]]
-      then
-        PERFECT_MERGES=$(($PERFECT_MERGES + 1))
-      fi  
-    fi
-  done
-popd
+./rundiff.sh
 
 REPO=$(basename "$PWD")
 
@@ -24,11 +8,21 @@ CONFLICTS=$(grep FAILURE res.txt | wc -l)
 
 SUCCESSES=$(grep SUCCESS res.txt | wc -l)
 
+PERFECT_MERGES=$(grep SUCCESS conflerge_results/*.out | wc -l)
+
+PERFECT_NO_COMMENTS=$(grep SUCCESS conflerge_results/*.outc | wc -l)
+
+PERFECT_NO_COMMENTS_IMPORTS=$(grep SUCCESS conflerge_results/*.outci | wc -l)
+
 CONFLICTS=$(($CONFLICTS + $SUCCESSES))
 
 PERCENT_RESOLVED=$[SUCCESSES*100/CONFLICTS]
 
 PERCENT_PERFECT=$[PERFECT_MERGES*100/SUCCESSES]
 
-echo ",Conflicts Found,Conflicts Resolved,Perfect Resolutions,% Conflicts Resolved,% Perfect Resolutions" > $REPO.csv
-printf "%s,%d,%d,%d,%d,%d" "$REPO" "$CONFLICTS" "$SUCCESSES" "$PERFECT_MERGES" "$PERCENT_RESOLVED" "$PERCENT_PERFECT" >> $REPO.csv
+PERCENT_PERFECT_NO_COMMENTS=$[PERFECT_NO_COMMENTS*100/SUCCESSES]
+
+PERCENT_PERFECT_NO_COMMENTS_IMPORTS=$[PERFECT_NO_COMMENTS_IMPORTS*100/SUCCESSES]
+
+echo ",Conflicts Found,Conflicts Resolved,Perfect Resolutions, Perfect w/o comments, Perfect w/o comments or imports, % Conflicts Resolved,% Perfect Resolutions, %Perfect No Comments, %Perfect w/o comments or imports" > $REPO.csv
+printf "%s,%d,%d,%d,%d,%d,%d,%d,%d,%d" "$REPO" "$CONFLICTS" "$SUCCESSES" "$PERFECT_MERGES" "$PERFECT_NO_COMMENTS" "$PERFECT_NO_COMMENTS_IMPORTS" "$PERCENT_RESOLVED" "$PERCENT_PERFECT" "$PERCENT_PERFECT_NO_COMMENTS" "$PERCENT_PERFECT_NO_COMMENTS_IMPORTS" >> $REPO.csv
