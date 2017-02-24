@@ -10,6 +10,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.visitor.Visitable;
+import com.github.javaparser.utils.Pair;
 
 /**
  * Uses the mmdiff algorithm to diff ASTs!
@@ -23,10 +24,11 @@ public class ASTDiffer {
         base.accept(new NodeListWrapperVisitor(), "A"); 
         local.accept(new NodeListWrapperVisitor(), "B");
         
-        DiffResult res = new ASTDiffer(base, local).diff();
+        DiffResult res1 = new ASTDiffer(base, local).diff();
+        DiffResult res2 = new ASTDiffer(base, base).diff();
         
-        base.accept(new MergeVisitor(), res);   
-        base.accept(new NodeListUnwrapperVisitor(), null); 
+        base.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(res1, res2));   
+        base.accept(new NodeListUnwrapperVisitor(), null);  
         
         System.out.println("\n" + base.toString());
     }
@@ -44,6 +46,8 @@ public class ASTDiffer {
     
     public final Map<Node, Node> parentsA;
     public final Map<Node, Node> parentsB;
+    
+    public static boolean conflict = false;
        
     private int[][] opt;
     private final int m;
@@ -318,6 +322,11 @@ public class ASTDiffer {
     
     private boolean unmodified(Visitable n) {
         return alignsA.containsKey(n) || alignsB.containsKey(n);
+    }
+
+    public static void handleConflict() {
+        System.err.println("CONFLICT!");
+        conflict = true;
     }
     
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.utils.Pair;
 
 import conflerge.differ.ast.ASTDiffer;
 import conflerge.differ.ast.DiffResult;
@@ -22,9 +23,10 @@ public class TestTrickyCases {
         n1.accept(new NodeListWrapperVisitor(), "A"); 
         n2.accept(new NodeListWrapperVisitor(), "B");
         
-        DiffResult res = new ASTDiffer(n1, n2).diff();
+        DiffResult res1 = new ASTDiffer(n1, n2).diff();
+        DiffResult res2 = new ASTDiffer(n1, n1).diff();
         
-        n1.accept(new MergeVisitor(), res);   
+        n1.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(res1, res2));   
         n1.accept(new NodeListUnwrapperVisitor(), null); 
         
         assertEquals(JavaParser.parse(str2), n1);

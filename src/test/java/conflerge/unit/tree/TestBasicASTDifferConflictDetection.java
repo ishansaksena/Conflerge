@@ -6,33 +6,38 @@ import org.junit.Test;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.utils.Pair;
 
 import conflerge.differ.ast.ASTDiffer;
 import conflerge.differ.ast.DiffResult;
-import conflerge.differ.ast.NodeListWrapper;
+import conflerge.differ.ast.MergeVisitor;
+import conflerge.differ.ast.NodeListUnwrapperVisitor;
+import conflerge.differ.ast.NodeListWrapperVisitor;
 
 /**
- * TODO: update this file so it functions with the most recent modifications.
  *
  */
 public class TestBasicASTDifferConflictDetection {
     
-    private static void merge(String baseStr, String localStr, String remoteStr, boolean canMerge) { 
-//        Node base   = JavaParser.parse(baseStr);
-//        Node local  = JavaParser.parse(localStr);    
-//        Node remote = JavaParser.parse(remoteStr);   
-//        
-//        NodeListWrapper.wrapAST(base);
-//        NodeListWrapper.wrapAST(local); 
-//        NodeListWrapper.wrapAST(remote);
-//        
-//        ASTDiffer localDiffer = new ASTDiffer(base, local);
-//        ASTDiffer remoteDiffer = new ASTDiffer(base, remote);
-//        
-//        DiffResult localDiff  = localDiffer.diff();
-//        DiffResult remoteDiff = remoteDiffer.diff();
-//        
-//        assertEquals(canMerge, DiffResult.merge(localDiff, remoteDiff, localDiffer, remoteDiffer));
+    private static void merge(String baseStr, String localStr, String remoteStr, boolean conflict) { 
+        Node base   = JavaParser.parse(baseStr);
+        Node local  = JavaParser.parse(localStr);    
+        Node remote = JavaParser.parse(remoteStr);    
+
+        base.accept(new NodeListWrapperVisitor(), "A"); 
+        local.accept(new NodeListWrapperVisitor(), "B");
+        remote.accept(new NodeListWrapperVisitor(), "C");
+        
+        DiffResult localDiff = new ASTDiffer(base, local).diff();
+        DiffResult remoteDiff = new ASTDiffer(base, remote).diff();
+        
+        ASTDiffer.conflict = false;
+        
+        base.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(localDiff, remoteDiff));   
+        base.accept(new NodeListUnwrapperVisitor(), null); 
+        
+        assertEquals(ASTDiffer.conflict, conflict);
+        
     }
     
     //-Overlapping-Deletions------------------------------------
@@ -43,7 +48,7 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { int i;  } } ",
                 "class Foo { void foo() {  } }",
                 "class Foo { }",
-                false
+                true
         );
     }
     
@@ -53,7 +58,7 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { int i;  } } ",
                 "class Foo { }",
                 "class Foo { void foo() {  } }",
-                false
+                true
         );
     }
     
@@ -63,7 +68,7 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { int i;  } } ",
                 "class Foo { void foo() { int j; } }",
                 "class Foo { void foo() { int k; } }",
-                false
+                true
         );
     }
        
@@ -73,7 +78,7 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { int i;  } } ",
                 "class Foo { void foo() { int j;  } }",
                 "class Foo { void foo() { print(hello); } }",
-                false
+                true
         );
     }
       
@@ -83,7 +88,7 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { int i;  } } ",
                 "class Foo { void foo() { int j; } }",
                 "class Foo { }",
-                false
+                true
         );
     }
        
@@ -93,7 +98,7 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { int i;  } } ",
                 "class Foo { }",
                 "class Foo { void foo() { int j; } }",
-                false
+                true
         );
     }
     
@@ -103,7 +108,7 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { }}",
                 "class Foo { void foo(int a) { }}",
                 "class Foo { }",
-                false
+                true
         );
     }
     
@@ -113,7 +118,7 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { }}",
                 "class Foo { }",
                 "class Foo { void foo(int a) { }}",
-                false
+                true
         );
     }
 }
