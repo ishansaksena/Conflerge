@@ -1,6 +1,7 @@
 package conflerge.differ.ast;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,6 @@ import java.util.Map;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.expr.ObjectCreationExpr;
 import com.github.javaparser.ast.visitor.Visitable;
 
 /**
@@ -17,13 +17,17 @@ import com.github.javaparser.ast.visitor.Visitable;
 public class ASTDiffer {
     
     public static void main(String[] args) {     
-        Node base  = JavaParser.parse("class Foo { Foo foo = new Foo();  }");
-        Node local = JavaParser.parse("class Foo { Foo foo =  new Foo(a); }");          
-        NodeListWrapper.wrapAST(base);
-        NodeListWrapper.wrapAST(local);        
-        DiffResult localDiff  = new ASTDiffer(base, local).diff();
-        base.accept(new ASTMergeVisitor(), localDiff);
-        base.accept(new CleanUpVisitor(), null); 
+        Node base  = JavaParser.parse("class Foo { int x = 3 + 1 + 2; }");
+        Node local = JavaParser.parse("class Foo { int x = 1 + 2 + 3; }");   
+
+        base.accept(new NodeListWrapperVisitor(), "A"); 
+        local.accept(new NodeListWrapperVisitor(), "B");
+        
+        DiffResult res = new ASTDiffer(base, local).diff();
+        
+        base.accept(new MergeVisitor(), res);   
+        base.accept(new NodeListUnwrapperVisitor(), null); 
+        
         System.out.println("\n" + base.toString());
     }
     
@@ -35,9 +39,8 @@ public class ASTDiffer {
     private Map<Node, Node> alignsA = new IdentityHashMap<>();
     private Map<Node, Node> alignsB = new IdentityHashMap<>();
     
-    private Map<Node, List<Node>> insertPre  = new IdentityHashMap<>();
-    private Map<Node, List<Node>> insertPost = new IdentityHashMap<>();
     private Map<NodeListWrapperNode, List<Node>> insertedUnder  = new IdentityHashMap<>();
+    private Map<Node, Node> shittyInserts = new IdentityHashMap<>();
     
     public final Map<Node, Node> parentsA;
     public final Map<Node, Node> parentsB;
@@ -71,12 +74,14 @@ public class ASTDiffer {
     public DiffResult diff() {
         computeEdits();
         recoverEdits();
+        
+        // IMPORTANT: Inserts are highly problematic....
+        
+        for (Node n : pruneMap(shittyInserts).keySet()) {
+            replaces.put(alignsB.get(parentsB.get(n)), parentsB.get(n));
+        }
 
-        return new DiffResult(pruneMap(deletes),
-                              pruneMap(replaces),
-                              splitMap(insertPre), 
-                              splitMap(insertPost), 
-                              getInsertedUnder(insertedUnder));
+        return new DiffResult(pruneMap(deletes), pruneMap(replaces), processInserts(insertedUnder));
     }
 
     //-MMDiff-Algorithm---------------------------------------------
@@ -131,7 +136,8 @@ public class ASTDiffer {
     }
      
     private void addAlign(int i, int j) {
-        if (updateCost(aN[i], bN[j]) == 0) {
+        //TODO: investigate why this is necessary
+        if (updateCost(aN[i], bN[j]) == 0 || ((aN[i] instanceof NodeListWrapperNode) && (bN[j] instanceof NodeListWrapperNode)))  {
             alignsA.put(aN[i], bN[j]);
             alignsB.put(bN[j], aN[i]);
         } else {
@@ -144,79 +150,60 @@ public class ASTDiffer {
     }
     
     private void addInsert(int i, int j) {
-        Node parent = parentsB.get(bN[j]);
-        List<? extends Node> children;
-        if (parent instanceof NodeListWrapperNode) {
-            NodeList<? extends Node> nl = ((NodeListWrapperNode)parent).list.nodeList;
-            children = new ArrayList<>(nl);
+        Node parent = parentsB.get(bN[j]);     
+        if (parentsB.get(bN[j]) instanceof NodeListWrapperNode) {
             if (!insertedUnder.containsKey(parent)) {
-                insertedUnder.put((NodeListWrapperNode) parent, new ArrayList<Node>());
+              insertedUnder.put((NodeListWrapperNode) parent, new ArrayList<Node>());
             }
             insertedUnder.get(parent).add(bN[j]);
         } else {
-            children = new ArrayList<>(parent.getChildNodes());
-        }
-        
-        int idx = 0; 
-        for (Node n : children) {
-            if (n == bN[j]) break;
-            idx++;
-        }
-        
-        if (idx > 0) {
-            Node pre = children.get(idx - 1);
-            if (!insertPre.containsKey(pre)) {
-                insertPre.put(pre, new ArrayList<Node>());
-            }
-            insertPre.get(pre).add(bN[j]);
-        }
-        
-        if (idx < children.size() - 1) {
-            Node post = children.get(idx + 1);
-            if (!insertPost.containsKey(post)) {
-                insertPost.put(post, new ArrayList<Node>());
-            }
-            insertPost.get(post).add(bN[j]);
+            shittyInserts.put(bN[j], bN[j]);
         }
     }   
     
     //-Output-Processing---------------------------------------------
 
     private Map<Node, Node> pruneMap(Map<Node, Node> m) {
-       m.keySet().removeIf(node -> 
-           (!node.getParentNode().isPresent() || 
-                   !unmodified(node.getParentNode().get())));    
+//       m.keySet().removeIf(node -> 
+//           (!node.getParentNode().isPresent() || 
+//                   !unmodified(node.getParentNode().get())));    
        return m;
    }
-
-    private Map<Visitable, List<Node>> getInsertedUnder(Map<NodeListWrapperNode, List<Node>> parents) {
-       Map<Visitable, List<Node>> res = new IdentityHashMap<>();
-       for (NodeListWrapperNode context : parents.keySet()) {
-           if (parents.get(context).isEmpty()) continue;
-           if (alignsB.containsKey(context)) {
-               res.put(((NodeListWrapperNode) alignsB.get(context)).list.nodeList, parents.get(context));
-               Collections.reverse(parents.get(context));
-           }   
-       }
-       return res;
-   }
-
-   private Map<Node, Node> splitMap(Map<Node, List<Node>> m) {
-       for (Visitable node : m.keySet()) {
-           m.get(node).removeIf(n -> !unmodified(parentsB.get(n)));   
-           Collections.reverse(m.get(node));
-       }
-       Map<Node, Node> res  = new IdentityHashMap<>();
-       for (Node key : m.keySet()) {
-           if (m.get(key).isEmpty()) continue;
-           if (alignsB.containsKey(key)) {
-               res.put(alignsB.get(key), m.get(key).get(0));
-           } else {
-               res.put(key, m.get(key).get(0));
-           }      
-       }
-       return res;
-   }
+    
+    private Map<NodeListWrapper, Map<Integer, List<Node>>> processInserts(Map<NodeListWrapperNode, List<Node>> insertedUnder) {
+        Map<NodeListWrapper, Map<Integer, List<Node>>> nlToIndexToInserts = new IdentityHashMap<>();        
+        for (NodeListWrapperNode nlwn : insertedUnder.keySet()) {
+            NodeList<? extends Node> nl = nlwn.list.nodeList;
+            Map<Integer, List<Node>> inserts = new HashMap<>();
+            Collections.reverse(insertedUnder.get(nlwn));
+            for (Node insert : insertedUnder.get(nlwn)) {               
+                int i = indexOfObj(nl, insert);
+                while (i >= 0 && !alignsB.containsKey(nl.get(i))) {
+                    i--;
+                }
+                int insertIndex;
+                if (i >= 0) {
+                    Node match = alignsB.get(nl.get(i));
+                    NodeListWrapperNode matchedParent = (NodeListWrapperNode) parentsA.get(match);
+                    insertIndex = indexOfObj(matchedParent.list.nodeList, match) + 1;
+                } else {
+                    insertIndex = 0;
+                }
+                
+                if (!inserts.containsKey(insertIndex)) {
+                    inserts.put(insertIndex, new ArrayList<Node>());
+                }
+                inserts.get(insertIndex).add(insert);
+            }
+            
+            //TODO: do this first, so you don't have to do tha computation if it's null.
+            NodeListWrapperNode match = (NodeListWrapperNode) alignsB.get(nlwn);
+            if (match != null) {
+                nlToIndexToInserts.put(match.list, inserts);
+            }
+        }
+        return nlToIndexToInserts;
+    }
         
     //-Input-Processing----------------------------------------------
    
@@ -228,7 +215,7 @@ public class ASTDiffer {
     
     private Map<Node, Node> getParentMap(Node root, Map<Node, Node> parents) {
         List<Node> children = new ArrayList<>(root.getChildNodes());   
-        List<NodeList<?>> nodeLists = getNodeLists(root);
+        List<NodeList<?>> nodeLists = root.getNodeLists();
         for (NodeList<?> nl : nodeLists) {
             if (nl instanceof NodeListWrapper) {
                 NodeListWrapper nlw = (NodeListWrapper) nl;
@@ -261,7 +248,7 @@ public class ASTDiffer {
     private static void getDepths(Node root, List<Integer> list, int d) {
         list.add(d);
         List<Node> children = new ArrayList<>(root.getChildNodes());   
-        List<NodeList<?>> nodeLists = getNodeLists(root); 
+        List<NodeList<?>> nodeLists = root.getNodeLists();
         for (NodeList<?> nl : nodeLists) {
             if (nl instanceof NodeListWrapper) {
                 list.add(d + 1);
@@ -286,7 +273,7 @@ public class ASTDiffer {
     private  void getOrderedNodes(Node root, List<Node> list) {
         list.add(root);
         List<Node> children = new ArrayList<>(root.getChildNodes());   
-        List<NodeList<?>> nodeLists = getNodeLists(root); 
+        List<NodeList<?>> nodeLists = root.getNodeLists(); 
         for (NodeList<?> nl : nodeLists) {
             if (nl instanceof NodeListWrapper) {
                 NodeListWrapper nlw = (NodeListWrapper) nl;
@@ -303,22 +290,19 @@ public class ASTDiffer {
             getOrderedNodes(n, list);
         }
     }
-    
-    private static List<NodeList<?>> getNodeLists(Node root) {
-        // This method SHOULDN't have to exist, but there's a strange behavior
-        // that looks a lot like a javaparser bug that causes one type of node
-        // to NOT return all its NodeLists. If more of this behavior is discovered, 
-        // adopt a new pattern.
-        List<NodeList<?>> nodeLists = new ArrayList<>(root.getNodeLists());
-        
-        // I do not understand. It even returns this field in the github source code.
-        if (root instanceof ObjectCreationExpr) {
-            nodeLists.add(((ObjectCreationExpr)root).getArguments());
-        }
-        return nodeLists;
-    }
-
+  
     //-Utility-Methods---------------------------------------------
+    
+    private static int indexOfObj(Iterable<?> items, Object item) {
+        int i = 0;
+        for (Object o : items) {
+            if (o == item) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
     
     private static int min(int... args) {
         int min = Integer.MAX_VALUE;

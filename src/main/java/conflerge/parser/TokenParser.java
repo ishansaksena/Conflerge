@@ -4,7 +4,9 @@ import static com.github.javaparser.Providers.provider;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.github.javaparser.JavaParser;
@@ -13,6 +15,9 @@ import com.github.javaparser.ParseStart;
 import com.github.javaparser.Provider;
 import com.github.javaparser.Token;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.comments.Comment;
 
 /**
  * Contains static methods for tokenizing Java code. All token lists 
@@ -28,6 +33,17 @@ public class TokenParser {
      */
     public static List<JavaToken> tokenizeFile(String filename) throws FileNotFoundException {
         return tokenize(provider(new File(filename)));
+    }
+    
+    /**
+     * @param filename
+     * @return List of tokens corresponding to the given file's Java code.
+     * @throws FileNotFoundException
+     */
+    public static List<JavaToken> tokenizeFileNoImports(String filename) throws FileNotFoundException {
+        CompilationUnit cu = JavaParser.parse(new File(filename));
+        cu.getImports().clear();
+        return tokenizeString(cu.toString());
     }
     
     /**
@@ -55,6 +71,8 @@ public class TokenParser {
         tokens.add(0, new JavaToken(new Token(0, ""))); 
         return tokens;  
     }
+    
+    
 
     /**
      * @param tokens
@@ -64,10 +82,25 @@ public class TokenParser {
         StringBuilder sb = new StringBuilder();
         for (JavaToken t : tokens) {
             sb.append(t.getText());
-            sb.append(' ');
+            sb.append(" ");
         }
 
+        Map<Comment, Boolean> comments = new IdentityHashMap<>();
         CompilationUnit cu = JavaParser.parse(sb.toString());
+        
+  //      removeComments(cu, comments);
         return cu.toString();
     }
+
+//    private static void removeComments(Node root, Map<Comment, Boolean> comments) {
+//        Comment comment = root.getComment().isPresent() ?  root.getComment().get() : null;
+//        if (comments.containsKey(comment)) {
+//            root.setComment(null);
+//        } else if (comment != null) {
+//            comments.put(comment, true);
+//        }
+//        for (Node n : root.getChildNodes()) {
+//            removeComments(n, comments);
+//        }
+//    }
 }

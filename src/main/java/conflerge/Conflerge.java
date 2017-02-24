@@ -18,7 +18,6 @@ public class Conflerge {
     public static final int MIN_ARGS = 4;
     
     /**
-     * 
      * @param args [BASE, LOCAL, REMOTE, MERGED] files
      */
     public static void main(String[] args) {
@@ -60,12 +59,14 @@ public class Conflerge {
             PrintWriter writer = new PrintWriter(mergedFileDest, "UTF-8");
             writer.println(mergedFile);
             writer.close();
+            System.out.println("SUCCESS");
         } catch (IOException e) {
             fail("Unexpected error writing to file");
         }
     }
 
     private static void fail(String message) {
+        System.out.println("FAILURE");
         System.err.println(message);
     }
 }
