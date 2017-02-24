@@ -13,12 +13,7 @@ import conflerge.differ.ast.MergeVisitor;
 import conflerge.differ.ast.NodeListUnwrapperVisitor;
 import conflerge.differ.ast.NodeListWrapperVisitor;
 
-/**
- * The tests in this file are pretty tricky...
- * Strictly for failing tests. Tests that pass
- * should be moved to TestRegressionCases.
- */
-public class TestFailingCases {
+public class TestTrickyCases {
 
     public void eval(String str1, String str2) {     
         Node n1  = JavaParser.parse(str1);
@@ -39,8 +34,6 @@ public class TestFailingCases {
         eval(str1, str2);
         eval(str2, str1);
     }
-    
-    // PASSING
     
     @Test
     public void test1() {

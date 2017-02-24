@@ -8,7 +8,6 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 
 import conflerge.differ.ast.ASTDiffer;
-import conflerge.differ.ast.ASTMergeVisitor;
 import conflerge.differ.ast.CleanUpVisitor;
 import conflerge.differ.ast.DiffResult;
 import conflerge.differ.ast.MergeVisitor;
