@@ -149,7 +149,7 @@ public class TestTrickyCases {
         
         String m1 = "class Foo { void foo(int a) { } }";
         
-        String m2 =  "class Foo { void foo(boolean b, boolean c) { } }";
+        String m2 =  "public static class Foo { void foo(int a) { } }";
              
         eval(m1, m2);
     }

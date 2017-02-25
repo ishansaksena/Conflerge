@@ -13,6 +13,7 @@ import conflerge.differ.ast.DiffResult;
 import conflerge.differ.ast.MergeVisitor;
 import conflerge.differ.ast.NodeListUnwrapperVisitor;
 import conflerge.differ.ast.NodeListWrapperVisitor;
+import conflerge.merger.TreeMerger;
 
 /**
  * TODO: update this file so it functions with the most recent modifications.
@@ -32,12 +33,12 @@ public class TestBasicASTDiffer3WayNoConflict {
         DiffResult localDiff = new ASTDiffer(base, local).diff();
         DiffResult remoteDiff = new ASTDiffer(base, remote).diff();
         
-        ASTDiffer.conflict = false;
+        TreeMerger.conflict = false;
         
         base.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(localDiff, remoteDiff));   
         base.accept(new NodeListUnwrapperVisitor(), null); 
         
-        assertEquals(ASTDiffer.conflict, false);
+        assertEquals(TreeMerger.conflict, false);
         assertEquals(JavaParser.parse(expectedStr), base);
         
     }
