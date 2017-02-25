@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.utils.Pair;
 
 import conflerge.differ.ast.ASTDiffer;
 import conflerge.differ.ast.DiffResult;
@@ -22,9 +23,10 @@ public class TestTrickyCases {
         n1.accept(new NodeListWrapperVisitor(), "A"); 
         n2.accept(new NodeListWrapperVisitor(), "B");
         
-        DiffResult res = new ASTDiffer(n1, n2).diff();
+        DiffResult res1 = new ASTDiffer(n1, n2).diff();
+        DiffResult res2 = new ASTDiffer(n1, n1).diff();
         
-        n1.accept(new MergeVisitor(), res);   
+        n1.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(res1, res2));   
         n1.accept(new NodeListUnwrapperVisitor(), null); 
         
         assertEquals(JavaParser.parse(str2), n1);
@@ -142,10 +144,23 @@ public class TestTrickyCases {
                 test(m1, m2);
     }
     
-//  TODO: Idk about this one, don't wanna stress it rn.
-//    @Test
-//    public void test4() {
-//        test("class Foo { int bar() {}}", "public class Foo { int bar() {}}");
-//        test("public class Foo { int bar() {}}", "class Foo { int bar() {}}");
-//    }
+    @Test
+    public void test() {
+        
+        String m1 = "class Foo { void foo(int a) { } }";
+        
+        String m2 =  "class Foo { void foo(boolean b, boolean c) { } }";
+             
+        eval(m1, m2);
+    }
+    
+    @Test
+    public void test4() {
+        
+        String m1 = "class Foo { void foo(Map<A> m) { } }";
+        
+        String m2 =  "class Foo { void foo(Map<B, C> m) { } }";
+             
+        eval(m1, m2);
+    }
 }

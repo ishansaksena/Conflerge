@@ -107,18 +107,15 @@ public class ShallowEqualsVisitor implements GenericVisitor<Boolean, Visitable> 
     private ShallowEqualsVisitor() { }
 
     private <T extends Node> boolean nodeEquals(final T n1, final T n2) {
-        if (n1 == n2) return true;      
+        if (n1 == n2) return true;    
         if (n1 == null || n2 == null) return false;
         if (n1.getClass() != n2.getClass()) return false;
+        // TODO: investigate this. I couldn't get the visitor to acknowledge a visit method for
+        // NodeListWrapperNodes.
+        if (n1 instanceof NodeListWrapperNode && n2 instanceof NodeListWrapperNode) return true;
         return n1.accept(this, n2);
     }
     
-    /**
-     * Not being called?
-     * @param n1
-     * @param arg
-     * @return
-     */
     public Boolean visit(final NodeListWrapperNode n1, final Visitable arg) {
         return true;
     }

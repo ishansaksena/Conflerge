@@ -6,64 +6,120 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.visitor.Visitable;
 
 /**
- * Uses the mmdiff algorithm to diff ASTs!
+ * Uses the mmdiff algorithm (by Sudarshan S. Chawathe, available at http://www.vldb.org/conf/1999/P8.pdf)
+ * to diff two ASTs (referred to as A and B throughout) and generate an edit script from tree A to tree B.
+ * 
+ * This algorithm gives the minimum-cost sequence of insert, delete, and replace edits between the two
+ * trees, where all edits occur on the tree's leaf nodes. So although the edits themselves are single node
+ * operations, after they are computed they can view them as entire subtree insertions, deletions, and 
+ * replacements. This is particularly useful for merging.
+ * 
+ * TODO: explain list-nonlist insterts, nodelistwrapping, etc.
  */
 public class ASTDiffer {
     
-    public static void main(String[] args) {     
-        Node base  = JavaParser.parse("class Foo { int x = 3 + 1 + 2; }");
-        Node local = JavaParser.parse("class Foo { int x = 1 + 2 + 3; }");   
-
-        base.accept(new NodeListWrapperVisitor(), "A"); 
-        local.accept(new NodeListWrapperVisitor(), "B");
-        
-        DiffResult res = new ASTDiffer(base, local).diff();
-        
-        base.accept(new MergeVisitor(), res);   
-        base.accept(new NodeListUnwrapperVisitor(), null); 
-        
-        System.out.println("\n" + base.toString());
-    }
+    /*
+     * The cost of an edit operation.
+     */
+    public static final int editCost = 1;
     
-    public static int editCost = 1;
+    /*
+     * TODO: replace this temporary flag with a permanent implementation.
+     */
+    public static boolean conflict = false;
     
+    /*  
+     * Nodes in A that were deleted in B. Logically this is a Set
+     *  --not a Map--but we use IdentityHashMap because nodes are 
+     *  tracked based on object identity rather than equality.
+     */
     private Map<Node, Node> deletes = new IdentityHashMap<>();
-    private Map<Node, Node> replaces = new IdentityHashMap<>();
     
+    /*
+     *  Mapping from nodes in B that replaced nodes in A and the 
+     *  opposite mapping from nodes replaced in A to replacements 
+     *  in B.
+     */
+    private Map<Node, Node> replacesA = new IdentityHashMap<>();
+    private Map<Node, Node> replacesB = new IdentityHashMap<>();
+    
+    /*
+     * Mappings between nodes in A and B that were aligned. 
+     * The mmdiff algorithm enforces that key, values nodes MUST be 
+     * shallowly equal. (otherwise it would be a replacement, 
+     * not an alignment)
+     */
     private Map<Node, Node> alignsA = new IdentityHashMap<>();
     private Map<Node, Node> alignsB = new IdentityHashMap<>();
     
-    private Map<NodeListWrapperNode, List<Node>> insertedUnder  = new IdentityHashMap<>();
-    private Map<Node, Node> shittyInserts = new IdentityHashMap<>();
+    /*
+     * A map from NodeListWrapperNodes to all nodes that were
+     * inserted under their NodeList. These represent list
+     * insertions, 
+     */
+    private Map<NodeListWrapperNode, List<Node>> listInserts  = new IdentityHashMap<>();
     
+    /*
+     *  Sometimes mmdiff will return insertions that do not correspond
+     *  to inserting a node into a list of parameters. If these insertions
+     *  are top-level (That is, there are no modifications on these insertion's
+     *  ancestors) performing the merge is problematic. These insertions
+     *  are stored separately so they can later be translated into replace
+     *  operations and merged correctly.
+     */
+    private Map<Node, Node> nonListInserts = new IdentityHashMap<>();
+    
+    /*
+     * 
+     */
     public final Map<Node, Node> parentsA;
     public final Map<Node, Node> parentsB;
+    
        
+    /*
+     * opt: Array of optimal subproblem edit distances.
+     * m  : Length of opt's first dimension, equal to the number of nodes in A.
+     * n  : Length of opt's second dimension, equal to the number of nodes in B.
+     */
     private int[][] opt;
     private final int m;
     private final int n;
     
+    /*
+     * The nodes in A, B in pre-order.
+     */
     private final Node[] aN;
     private final Node[] bN;
     
+    /*
+     * The depth of nodes in A, B in pre-order.
+     * if Node n is the ith node in A and has depth d,
+     * then: aD[i] = d
+     */
     private final int[] aD;
     private final int[] bD;
 
-    public ASTDiffer(Node a, Node b) {        
-        this.aN = getOrderedNodes(a);
-        this.bN = getOrderedNodes(b);
+    /**
+     * Constructs a new ASTDiffer to operate on trees A, B.
+     * A call to diff() will return a DiffResult containing
+     * an edit script from A to B.
+     * 
+     * @param A 'Base' tree for the diff.
+     * @param B 'Dest' tree for the diff.
+     */
+    public ASTDiffer(Node A, Node B) {        
+        this.aN = ASTInputProcessing.getOrderedNodes(A);
+        this.bN = ASTInputProcessing.getOrderedNodes(B);
        
-        this.aD = getDepths(a);
-        this.bD = getDepths(b);
+        this.aD = ASTInputProcessing.getDepths(A);
+        this.bD = ASTInputProcessing.getDepths(B);
         
-        this.parentsA = getParentMap(a);
-        this.parentsB = getParentMap(b);
+        this.parentsA = ASTInputProcessing.getParentMap(A);
+        this.parentsB = ASTInputProcessing.getParentMap(B);
         
         m = aN.length;
         n = bN.length;
@@ -71,21 +127,35 @@ public class ASTDiffer {
         this.opt = new int[m][n];
     }
 
+    /**
+     * @return An edit script from this ASTDiffer's A tree to its B tree.
+     */
     public DiffResult diff() {
+        // Run mmdiff to compute the edit distance between trees A and B.
         computeEdits();
+        
+        // Run mmdiff backward to recover the edit script, stored in the
+        // replace, align, and insert fields.
         recoverEdits();
         
-        // IMPORTANT: Inserts are highly problematic....
+        // mmDiff may return an edit script that includes an insertion that
+        // isn't inserting a node into a list of nodes. Performing these inserts
+        // is prohibitively complicated on trees where edges are labeled (eg., ASTs).
+        // When this occurs, add a 'replace' operation for the inserted node's parent
+        // to avoid performing the non-list insert.
+        replaceNonListInserts();
+         
+        // Produce a mapping of NodeLists -> indexes to insert -> Nodes to insert.
+        // This operation must be performed last because it depends on complete
+        // alignment and replacement maps.
+        Map<NodeListWrapper, Map<Integer, List<Node>>> indexInserts = processInserts(listInserts);
         
-        for (Node n : pruneMap(shittyInserts).keySet()) {
-            replaces.put(alignsB.get(parentsB.get(n)), parentsB.get(n));
-        }
-
-        return new DiffResult(pruneMap(deletes), pruneMap(replaces), processInserts(insertedUnder));
+        return new DiffResult(deletes, replacesA, indexInserts);
     }
 
-    //-MMDiff-Algorithm---------------------------------------------
-
+    /*
+     * Runs the mmdiff algorithm. Popluates opt with the computation's results.
+     */
     private void computeEdits() {
        int max = m + n + 1;
        for (int i = 1; i < m; i++) {
@@ -113,8 +183,10 @@ public class ASTDiffer {
        }
     }    
   
-    //-Path-Recovery---------------------------------------------
-    
+    /*
+     * Recovers the edit script. Must not be called until opt has been
+     * populated by a call to computeEdits.
+     */
     private void recoverEdits() {
        int i = m - 1;
        int j = n - 1;    
@@ -126,7 +198,7 @@ public class ASTDiffer {
                addInsert(i, j);
                j--;
            } else {
-               addAlign(i, j);
+               addAlignOrDelete(i, j);
                i--;
                j--;
            } 
@@ -135,13 +207,13 @@ public class ASTDiffer {
        while (j > 0) { addInsert(i, j); j--; }
     }
      
-    private void addAlign(int i, int j) {
-        //TODO: investigate why this is necessary
-        if (updateCost(aN[i], bN[j]) == 0 || ((aN[i] instanceof NodeListWrapperNode) && (bN[j] instanceof NodeListWrapperNode)))  {
+    private void addAlignOrDelete(int i, int j) {
+        if (updateCost(aN[i], bN[j]) == 0)  {
             alignsA.put(aN[i], bN[j]);
             alignsB.put(bN[j], aN[i]);
         } else {
-            replaces.put(aN[i], bN[j]);
+            replacesA.put(aN[i], bN[j]);
+            replacesB.put(bN[j], aN[i]);
         }
     }
 
@@ -152,147 +224,74 @@ public class ASTDiffer {
     private void addInsert(int i, int j) {
         Node parent = parentsB.get(bN[j]);     
         if (parentsB.get(bN[j]) instanceof NodeListWrapperNode) {
-            if (!insertedUnder.containsKey(parent)) {
-              insertedUnder.put((NodeListWrapperNode) parent, new ArrayList<Node>());
+            if (!listInserts.containsKey(parent)) {
+              listInserts.put((NodeListWrapperNode) parent, new ArrayList<Node>());
             }
-            insertedUnder.get(parent).add(bN[j]);
+            listInserts.get(parent).add(bN[j]);
         } else {
-            shittyInserts.put(bN[j], bN[j]);
+            nonListInserts.put(bN[j], bN[j]);
         }
     }   
     
     //-Output-Processing---------------------------------------------
-
-    private Map<Node, Node> pruneMap(Map<Node, Node> m) {
-//       m.keySet().removeIf(node -> 
-//           (!node.getParentNode().isPresent() || 
-//                   !unmodified(node.getParentNode().get())));    
-       return m;
-   }
     
+    /*
+     *  Replaces any non-list insert operation with the replacement of that
+     *  Node's parent. This operation spares our merge visitor from performing 
+     *  inserts that are not into lists of nodes.
+     */
+    private void replaceNonListInserts() {
+        for (Node n : nonListInserts.keySet()) {
+            if (alignsB.containsKey(parentsB.get(n))) {
+                replacesA.put(alignsB.get(parentsB.get(n)), parentsB.get(n));
+            }
+        }
+    }
+    
+    /*
+     * TODO: Document this method.
+     */
     private Map<NodeListWrapper, Map<Integer, List<Node>>> processInserts(Map<NodeListWrapperNode, List<Node>> insertedUnder) {
         Map<NodeListWrapper, Map<Integer, List<Node>>> nlToIndexToInserts = new IdentityHashMap<>();        
         for (NodeListWrapperNode nlwn : insertedUnder.keySet()) {
+            NodeListWrapperNode alignedNlwn = (NodeListWrapperNode) alignsB.get(nlwn);
+            if (alignedNlwn == null) {
+                continue;
+            }
             NodeList<? extends Node> nl = nlwn.list.nodeList;
             Map<Integer, List<Node>> inserts = new HashMap<>();
             Collections.reverse(insertedUnder.get(nlwn));
             for (Node insert : insertedUnder.get(nlwn)) {               
                 int i = indexOfObj(nl, insert);
-                while (i >= 0 && !alignsB.containsKey(nl.get(i))) {
+                while (i >= 0 && !alignsB.containsKey(nl.get(i)) && !replacesB.containsKey(nl.get(i))) {
                     i--;
                 }
                 int insertIndex;
                 if (i >= 0) {
-                    Node match = alignsB.get(nl.get(i));
-                    NodeListWrapperNode matchedParent = (NodeListWrapperNode) parentsA.get(match);
-                    insertIndex = indexOfObj(matchedParent.list.nodeList, match) + 1;
+                    Node matchedSibling = alignsB.containsKey(nl.get(i)) ? 
+                                                alignsB.get(nl.get(i)) : 
+                                                    replacesB.get(nl.get(i));      
+                    NodeListWrapperNode matchedParent = (NodeListWrapperNode) parentsA.get(matchedSibling);
+                    insertIndex = indexOfObj(matchedParent.list.nodeList, matchedSibling) + 1;
                 } else {
                     insertIndex = 0;
-                }
-                
+                } 
                 if (!inserts.containsKey(insertIndex)) {
                     inserts.put(insertIndex, new ArrayList<Node>());
                 }
                 inserts.get(insertIndex).add(insert);
             }
-            
-            //TODO: do this first, so you don't have to do tha computation if it's null.
-            NodeListWrapperNode match = (NodeListWrapperNode) alignsB.get(nlwn);
-            if (match != null) {
-                nlToIndexToInserts.put(match.list, inserts);
-            }
+            nlToIndexToInserts.put(alignedNlwn.list, inserts);
         }
         return nlToIndexToInserts;
     }
-        
-    //-Input-Processing----------------------------------------------
-   
-    private Map<Node, Node> getParentMap(Node a) {
-        Map<Node, Node> parents = new IdentityHashMap<>();
-        parents.put(a, null);
-        return getParentMap(a, parents);
-    }
-    
-    private Map<Node, Node> getParentMap(Node root, Map<Node, Node> parents) {
-        List<Node> children = new ArrayList<>(root.getChildNodes());   
-        List<NodeList<?>> nodeLists = root.getNodeLists();
-        for (NodeList<?> nl : nodeLists) {
-            if (nl instanceof NodeListWrapper) {
-                NodeListWrapper nlw = (NodeListWrapper) nl;
-                parents.put(nlw.node, root);
-                for (Node n : nlw.nodeList) {
-                    parents.put(n, nlw.node);
-                    getParentMap(n, parents);       
-                    children.remove(n);
-                }
-            }
-        }
-        for (Node n : children) {
-            parents.put(n, root);
-            getParentMap(n, parents);
-        }
-        return parents;
-    }
-    
-    private static int[] getDepths(Node root) {
-        List<Integer> list = new ArrayList<Integer>();
-        list.add(null); 
-        getDepths(root, list, 0);
-        int[] res = new int[list.size()];
-        for (int i = 1; i < list.size(); i++) {
-            res[i] = list.get(i);
-        }
-        return res;
-    }
-    
-    private static void getDepths(Node root, List<Integer> list, int d) {
-        list.add(d);
-        List<Node> children = new ArrayList<>(root.getChildNodes());   
-        List<NodeList<?>> nodeLists = root.getNodeLists();
-        for (NodeList<?> nl : nodeLists) {
-            if (nl instanceof NodeListWrapper) {
-                list.add(d + 1);
-                for (Node n : ((NodeListWrapper)nl).nodeList) {
-                    getDepths(n, list, d + 2);
-                    children.remove(n);
-                }
-            }
-        }
-        for (Node n : children) {
-            getDepths(n, list, d + 1);
-        }
-    }
-    
-    private Node[] getOrderedNodes(Node root) {
-        List<Node> res = new ArrayList<Node>();
-        res.add(null);
-        getOrderedNodes(root, res);
-        return res.toArray(new Node[res.size()]);
-    }
-      
-    private  void getOrderedNodes(Node root, List<Node> list) {
-        list.add(root);
-        List<Node> children = new ArrayList<>(root.getChildNodes());   
-        List<NodeList<?>> nodeLists = root.getNodeLists(); 
-        for (NodeList<?> nl : nodeLists) {
-            if (nl instanceof NodeListWrapper) {
-                NodeListWrapper nlw = (NodeListWrapper) nl;
-                NodeListWrapperNode nlwn = new NodeListWrapperNode(nlw);
-                nlw.node = nlwn;
-                list.add(nlwn);
-                for (Node n : nlw.nodeList) {
-                    getOrderedNodes(n, list);
-                    children.remove(n);
-                }
-            }
-        }
-        for (Node n : children) {
-            getOrderedNodes(n, list);
-        }
-    }
-  
+
     //-Utility-Methods---------------------------------------------
     
+    /*
+     * Nodes are identified strictly by object equality, so this
+     * method is the only correct way to located a Node in a list.
+     */
     private static int indexOfObj(Iterable<?> items, Object item) {
         int i = 0;
         for (Object o : items) {
@@ -304,6 +303,9 @@ public class ASTDiffer {
         return -1;
     }
     
+    /*
+     * Returns the minimum value from the parameters.
+     */
     private static int min(int... args) {
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < args.length; i++)
@@ -312,12 +314,20 @@ public class ASTDiffer {
         return min;
     }
       
+    /*
+     * Returns 1 iff Node n1, n2 are shallowly equal. 
+     */
     private int updateCost(Node n1, Node n2) {
         return ShallowEqualsVisitor.equals(n1, n2) ? 0 : editCost;
     }
     
-    private boolean unmodified(Visitable n) {
-        return alignsA.containsKey(n) || alignsB.containsKey(n);
+
+    /*
+     * TODO: replace this with a better pattern.
+     */
+    public static void handleConflict() {
+        System.err.println("CONFLICT!");
+        conflict = true;
     }
     
 }
