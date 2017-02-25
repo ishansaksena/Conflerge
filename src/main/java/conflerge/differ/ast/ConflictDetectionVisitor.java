@@ -90,6 +90,8 @@ import com.github.javaparser.ast.type.VoidType;
 import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.Visitable;
 
+import conflerge.merger.TreeMerger;
+
 /**
  * This visitor traverses a tree with a DiffResult, and reports a conflict
  * if it encounters a node corresponding to an operation in that DiffResult.
@@ -104,7 +106,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     public Visitable visit(NodeList n, DiffResult args) {
         if (n instanceof NodeListWrapper) {
             if (args.insertsUnder.containsKey(n)) {
-                ASTDiffer.handleConflict();
+                TreeMerger.reportConflict();
                 return n;
             }
             NodeList nl = ((NodeListWrapper) n).nodeList; 
@@ -124,7 +126,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final AnnotationDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -133,7 +135,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final AnnotationMemberDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -142,7 +144,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ArrayAccessExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -151,7 +153,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ArrayCreationExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -160,7 +162,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ArrayInitializerExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -169,7 +171,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final AssertStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -178,7 +180,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final AssignExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -187,7 +189,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final BinaryExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -196,7 +198,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final BlockStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -205,7 +207,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final BooleanLiteralExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -214,7 +216,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final BreakStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -223,7 +225,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final CastExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -232,7 +234,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final CatchClause n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -241,7 +243,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final CharLiteralExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -250,7 +252,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ClassExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -259,7 +261,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ClassOrInterfaceDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -268,7 +270,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ClassOrInterfaceType n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -277,7 +279,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final CompilationUnit n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -286,7 +288,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ConditionalExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -295,7 +297,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ConstructorDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -304,7 +306,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ContinueStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -313,7 +315,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final DoStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -322,7 +324,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final DoubleLiteralExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -331,7 +333,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final EmptyMemberDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -340,7 +342,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final EmptyStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -349,7 +351,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final EnclosedExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -358,7 +360,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final EnumConstantDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -367,7 +369,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final EnumDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -376,7 +378,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ExplicitConstructorInvocationStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -385,7 +387,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ExpressionStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -394,7 +396,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final FieldAccessExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -403,7 +405,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final FieldDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -412,7 +414,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ForeachStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -421,7 +423,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ForStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -430,7 +432,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final IfStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -439,7 +441,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final InitializerDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -448,7 +450,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final InstanceOfExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -457,7 +459,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final IntegerLiteralExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -466,7 +468,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final JavadocComment n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -475,7 +477,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final LabeledStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -484,7 +486,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final LongLiteralExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -493,7 +495,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final MarkerAnnotationExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -502,7 +504,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final MemberValuePair n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -511,7 +513,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final MethodCallExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -520,7 +522,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final MethodDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -529,7 +531,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final NameExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -538,7 +540,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final NormalAnnotationExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -547,7 +549,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final NullLiteralExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -556,7 +558,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ObjectCreationExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -565,7 +567,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final PackageDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -574,7 +576,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final Parameter n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -583,7 +585,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final Name n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -592,7 +594,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final PrimitiveType n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -601,7 +603,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(SimpleName n, DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -610,7 +612,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(ArrayType n, DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -619,7 +621,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(ArrayCreationLevel n, DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -628,7 +630,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final IntersectionType n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -637,7 +639,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final UnionType n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -646,7 +648,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ReturnStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -655,7 +657,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final SingleMemberAnnotationExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -664,7 +666,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final StringLiteralExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -673,7 +675,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final SuperExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -682,7 +684,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final SwitchEntryStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -691,7 +693,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final SwitchStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -700,7 +702,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final SynchronizedStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -709,7 +711,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ThisExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -718,7 +720,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final ThrowStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -727,7 +729,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final TryStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -736,7 +738,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final LocalClassDeclarationStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -745,7 +747,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final TypeParameter n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -754,7 +756,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final UnaryExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -763,7 +765,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final UnknownType n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -772,7 +774,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final VariableDeclarationExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -781,7 +783,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final VariableDeclarator n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -790,7 +792,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final VoidType n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -799,7 +801,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final WhileStmt n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -808,7 +810,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final WildcardType n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -817,7 +819,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final LambdaExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -826,7 +828,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final MethodReferenceExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -835,7 +837,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final TypeExpr n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -844,7 +846,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Node visit(final ImportDeclaration n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -853,7 +855,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final BlockComment n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);
@@ -862,7 +864,7 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
     @Override
     public Visitable visit(final LineComment n, final DiffResult arg) {
         if (arg.replaced(n) || arg.deleted(n)) {
-            ASTDiffer.handleConflict();
+            TreeMerger.reportConflict();
             return n;
         }
         return super.visit(n, arg);

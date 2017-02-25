@@ -93,6 +93,8 @@ import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.Visitable;
 import com.github.javaparser.utils.Pair;
 
+import conflerge.merger.TreeMerger;
+import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 /**
  * Performs merge operations from two DiffResults. Detects conflicts, if any.
  */
@@ -119,7 +121,7 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
             Map<Integer, List<Node>> map = args.b.insertsUnder.get(n);
             for (Integer i : map.keySet()) {
                 if (inserts.containsKey(i)) {
-                    ASTDiffer.handleConflict();
+                    TreeMerger.reportConflict();
                 }
                 inserts.put(i, map.get(i));
             }
@@ -166,6 +168,7 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
             n.accept(new ConflictDetectionVisitor(), remote);
             return null;
         }
+        
         if (remote.replaced(n)) {
             n.accept(new ConflictDetectionVisitor(), local);
             return remote.getReplacement(n);
@@ -173,6 +176,19 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
             n.accept(new ConflictDetectionVisitor(), local);
             return null;
         }
+        
+        if (local.modifiers.containsKey(n)) {
+            if (remote.modifiers.containsKey(n) && !remote.modifiers.get(n).equals(local.modifiers.get(n))) {
+                TreeMerger.reportConflict();
+            } else {
+                ((NodeWithModifiers<?>) n).setModifiers(local.modifiers.get(n));
+            }
+        }
+        
+        if (remote.modifiers.containsKey(n)) {
+            ((NodeWithModifiers<?>) n).setModifiers(remote.modifiers.get(n));
+        }
+        
         return n;
     }
     

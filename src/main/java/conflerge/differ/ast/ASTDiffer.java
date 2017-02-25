@@ -1,13 +1,16 @@
 package conflerge.differ.ast;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 
 /**
  * Uses the mmdiff algorithm (by Sudarshan S. Chawathe, available at http://www.vldb.org/conf/1999/P8.pdf)
@@ -26,11 +29,6 @@ public class ASTDiffer {
      * The cost of an edit operation.
      */
     public static final int editCost = 1;
-    
-    /*
-     * TODO: replace this temporary flag with a permanent implementation.
-     */
-    public static boolean conflict = false;
     
     /*  
      * Nodes in A that were deleted in B. Logically this is a Set
@@ -55,6 +53,8 @@ public class ASTDiffer {
      */
     private Map<Node, Node> alignsA = new IdentityHashMap<>();
     private Map<Node, Node> alignsB = new IdentityHashMap<>();
+    
+    private Map<Node, EnumSet<Modifier>> modifiers = new IdentityHashMap<>();
     
     /*
      * A map from NodeListWrapperNodes to all nodes that were
@@ -150,7 +150,7 @@ public class ASTDiffer {
         // alignment and replacement maps.
         Map<NodeListWrapper, Map<Integer, List<Node>>> indexInserts = processInserts(listInserts);
         
-        return new DiffResult(deletes, replacesA, indexInserts);
+        return new DiffResult(deletes, replacesA, indexInserts, modifiers);
     }
 
     /*
@@ -198,7 +198,7 @@ public class ASTDiffer {
                addInsert(i, j);
                j--;
            } else {
-               addAlignOrDelete(i, j);
+               addAlignOrReplace(i, j);
                i--;
                j--;
            } 
@@ -207,8 +207,15 @@ public class ASTDiffer {
        while (j > 0) { addInsert(i, j); j--; }
     }
      
-    private void addAlignOrDelete(int i, int j) {
+    private void addAlignOrReplace(int i, int j) {
         if (updateCost(aN[i], bN[j]) == 0)  {
+            if (aN[i] instanceof NodeWithModifiers) {
+                EnumSet<Modifier> aMods = ((NodeWithModifiers<?>) aN[i]).getModifiers();
+                EnumSet<Modifier> bMods = ((NodeWithModifiers<?>) bN[j]).getModifiers();
+                if (!aMods.equals(bMods)) {
+                    modifiers.put(aN[i], bMods);
+                }
+            }
             alignsA.put(aN[i], bN[j]);
             alignsB.put(bN[j], aN[i]);
         } else {
@@ -319,15 +326,5 @@ public class ASTDiffer {
      */
     private int updateCost(Node n1, Node n2) {
         return ShallowEqualsVisitor.equals(n1, n2) ? 0 : editCost;
-    }
-    
-
-    /*
-     * TODO: replace this with a better pattern.
-     */
-    public static void handleConflict() {
-        System.err.println("CONFLICT!");
-        conflict = true;
-    }
-    
+    } 
 }
