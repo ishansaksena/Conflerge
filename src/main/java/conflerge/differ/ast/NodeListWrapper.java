@@ -7,9 +7,9 @@ import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 
 /**
- * Unfortunately, Javaparser's trees don't play nicely with out algorithm. We need to add another layer
- * of indirection to correctly distinguish children of one type from children of another in nodes that
- * contain lists of children. That's the motivation for the hacky approach.
+ * Unfortunately, Javaparser's trees don't play nicely with our algorithm. We need to add another \
+ * layer of indirection to  distinguish children of one type from children of another in nodes that
+ * contain lists of children..
  */
 @SuppressWarnings({ "rawtypes" })
 public class NodeListWrapper extends NodeList {
@@ -54,10 +54,9 @@ class NodeListWrapperNode extends SimpleName {
     }
 
     @Override
-    public <R, A> R accept(GenericVisitor<R, A> arg0, A arg1) { return arg0.visit((SimpleName) this, arg1); }
+    public <R, A> R accept(GenericVisitor<R, A> arg0, A arg1) { return arg0.visit(this, arg1); }
 
     @Override
-    public <A> void accept(VoidVisitor<A> arg0, A arg1) { arg0.visit((SimpleName) this, arg1); }
-    
+    public <A> void accept(VoidVisitor<A> arg0, A arg1) { arg0.visit(this, arg1); }
 }
 

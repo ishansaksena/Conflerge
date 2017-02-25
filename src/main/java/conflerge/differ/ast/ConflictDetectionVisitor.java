@@ -90,7 +90,13 @@ import com.github.javaparser.ast.type.VoidType;
 import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.Visitable;
 
-
+/**
+ * This visitor traverses a tree with a DiffResult, and reports a conflict
+ * if it encounters a node corresponding to an operation in that DiffResult.
+ * 
+ * Used to check that a subtree that's been deleted or replaced by one set of
+ * edits doesn't contain edits from the other set.
+ */
 public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

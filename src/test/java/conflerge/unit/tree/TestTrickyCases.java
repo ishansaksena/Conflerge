@@ -144,10 +144,23 @@ public class TestTrickyCases {
                 test(m1, m2);
     }
     
-//  TODO: Idk about this one, don't wanna stress it rn.
-//    @Test
-//    public void test4() {
-//        test("class Foo { int bar() {}}", "public class Foo { int bar() {}}");
-//        test("public class Foo { int bar() {}}", "class Foo { int bar() {}}");
-//    }
+    @Test
+    public void test() {
+        
+        String m1 = "class Foo { void foo(int a) { } }";
+        
+        String m2 =  "class Foo { void foo(boolean b, boolean c) { } }";
+             
+        eval(m1, m2);
+    }
+    
+    @Test
+    public void test4() {
+        
+        String m1 = "class Foo { void foo(Map<A> m) { } }";
+        
+        String m2 =  "class Foo { void foo(Map<B, C> m) { } }";
+             
+        eval(m1, m2);
+    }
 }

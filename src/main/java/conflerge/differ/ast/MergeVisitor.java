@@ -93,6 +93,9 @@ import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.Visitable;
 import com.github.javaparser.utils.Pair;
 
+/**
+ * Performs merge operations from two DiffResults. Detects conflicts, if any.
+ */
 @SuppressWarnings("deprecation")
 public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> {
     
@@ -100,7 +103,7 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
     @Override
     public Visitable visit(NodeList n, Pair<DiffResult, DiffResult> args) {
         
-        // Will store all inserts under this NodeList
+        // Store any inserts that apply to this NodeList
         Map<Integer, List<Node>> inserts = new HashMap<>();
         
         // Add all the inserts from the first DiffResult
@@ -111,7 +114,7 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
             }
         }
         
-        // Add all the inserts from the second DiffResult, failing if they collide
+        // Add all the inserts from the second DiffResult, failing if they overlap.
         if (args.b.insertsUnder.containsKey(n)) {
             Map<Integer, List<Node>> map = args.b.insertsUnder.get(n);
             for (Integer i : map.keySet()) {

@@ -14,10 +14,6 @@ import conflerge.differ.ast.MergeVisitor;
 import conflerge.differ.ast.NodeListUnwrapperVisitor;
 import conflerge.differ.ast.NodeListWrapperVisitor;
 
-/**
- * 
- *
- */
 public class TestInserts {
 
     public void eval(String str1, String str2) {     
