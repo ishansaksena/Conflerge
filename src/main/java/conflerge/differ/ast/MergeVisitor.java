@@ -96,29 +96,30 @@ import com.github.javaparser.utils.Pair;
 import conflerge.merger.TreeMerger;
 import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 /**
- * Performs merge operations from two DiffResults. Detects conflicts, if any.
+ * Performs merge operations from two DiffResults and detects conflicts, if any.
  */
 @SuppressWarnings("deprecation")
 public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> {
     
+    
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public Visitable visit(NodeList n, Pair<DiffResult, DiffResult> args) {
+    public Visitable visit(NodeList n, Pair<DiffResult, DiffResult> args) {    
         
-        // Store any inserts that apply to this NodeList
+        // Construct a Map to store any inserts that apply to this NodeList
         Map<Integer, List<Node>> inserts = new HashMap<>();
         
         // Add all the inserts from the first DiffResult
-        if (args.a.insertsUnder.containsKey(n)) {
-            Map<Integer, List<Node>> map = args.a.insertsUnder.get(n);
+        if (args.a.listInserts.containsKey(n)) {
+            Map<Integer, List<Node>> map = args.a.listInserts.get(n);
             for (Integer i : map.keySet()) {
                 inserts.put(i, map.get(i));
             }
         }
         
         // Add all the inserts from the second DiffResult, failing if they overlap.
-        if (args.b.insertsUnder.containsKey(n)) {
-            Map<Integer, List<Node>> map = args.b.insertsUnder.get(n);
+        if (args.b.listInserts.containsKey(n)) {
+            Map<Integer, List<Node>> map = args.b.listInserts.get(n);
             for (Integer i : map.keySet()) {
                 if (inserts.containsKey(i)) {
                     TreeMerger.reportConflict();
@@ -133,7 +134,7 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
             List<Node> nodes = new ArrayList<>(nl);
             nl.clear();
             
-            // Perform insert operations and vist unmodified nodes
+            // Perform insert operations, vist nodes.
             int i = 0;
             for (Node node : nodes) {
                 if (inserts.containsKey(i)) { 
@@ -161,36 +162,48 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
     }
     
     private Visitable mergeOperation(Node n, DiffResult local, DiffResult remote) {
+        
+        // If local deleted or replaced this node, return the appropriate
+        // value and check for modifications made by remote to the deleted 
+        // or replaced subtree.
         if (local.replaced(n)) {
             n.accept(new ConflictDetectionVisitor(), remote);
-            return local.getReplacement(n);
+            return local.replaces.get(n);
         } else if (local.deleted(n)) {
             n.accept(new ConflictDetectionVisitor(), remote);
             return null;
         }
         
+        // Perform the operation above with the roles reversed.
         if (remote.replaced(n)) {
             n.accept(new ConflictDetectionVisitor(), local);
-            return remote.getReplacement(n);
+            return remote.replaces.get(n);
         } else if (remote.deleted(n)) {
             n.accept(new ConflictDetectionVisitor(), local);
             return null;
         }
         
+        // If local changed the modifiers on this node, check them against remote.
         if (local.modifiers.containsKey(n)) {
             if (remote.modifiers.containsKey(n) && !remote.modifiers.get(n).equals(local.modifiers.get(n))) {
                 TreeMerger.reportConflict();
             } else {
                 ((NodeWithModifiers<?>) n).setModifiers(local.modifiers.get(n));
             }
-        }
-        
-        if (remote.modifiers.containsKey(n)) {
+            
+        // Otherwise, add any changes made by remote.
+        } else if (remote.modifiers.containsKey(n)) {
             ((NodeWithModifiers<?>) n).setModifiers(remote.modifiers.get(n));
         }
         
         return n;
     }
+    
+    /*
+     * It would be nice to refactor the methods below, but we can't: they
+     * need to call the superclass methods, which won't work if the Node
+     * type is generic.
+     */    
     
     @Override
     public Visitable visit(final AnnotationDeclaration n, final Pair<DiffResult, DiffResult> arg) {

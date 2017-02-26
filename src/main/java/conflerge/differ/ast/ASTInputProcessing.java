@@ -3,7 +3,6 @@ package conflerge.differ.ast;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
@@ -15,13 +14,21 @@ import com.github.javaparser.ast.NodeList;
  */
 public class ASTInputProcessing {
 
-    public static Map<Node, Node> getParentMap(Node a) {
-        Map<Node, Node> parents = new IdentityHashMap<>();
-        parents.put(a, null);
-        return getParentMap(a, parents);
+    /**
+     * Returns an identity map from each Node in n to its parent node.
+     * If the node is a member of a NodeListWrapper with a NodeListWrapperNode,
+     * that NodeListWrapperNode will be the parent.
+     * 
+     * @param root
+     * @return IdentityHashMap of Node -> Parent(Node)
+     */
+    public static IdentityHashMap<Node, Node> getParentMap(Node root) {
+        IdentityHashMap<Node, Node> parents = new IdentityHashMap<>();
+        parents.put(root, null);
+        return getParentMap(root, parents);
     }
     
-    private static Map<Node, Node> getParentMap(Node root, Map<Node, Node> parents) {
+    private static IdentityHashMap<Node, Node> getParentMap(Node root, IdentityHashMap<Node, Node> parents) {
         List<Node> children = new ArrayList<>(root.getChildNodes());   
         List<NodeList<?>> nodeLists = root.getNodeLists();
         for (NodeList<?> nl : nodeLists) {
@@ -30,8 +37,8 @@ public class ASTInputProcessing {
                 parents.put(nlw.node, root);
                 for (Node n : nlw.nodeList) {
                     parents.put(n, nlw.node);
-                    getParentMap(n, parents);       
                     children.remove(n);
+                    getParentMap(n, parents);       
                 }
             }
         }
@@ -42,6 +49,13 @@ public class ASTInputProcessing {
         return parents;
     }
     
+    /**
+     * Returns the depth of nodes in root in pre-order. If Node n is the ith node in 
+     * the tree rooted at root and has depth d then: getDepths(root)[i] = d.
+     * 
+     * @param root
+     * @return int[] of depths
+     */
     public static int[] getDepths(Node root) {
         List<Integer> list = new ArrayList<Integer>();
         list.add(null); 
@@ -71,6 +85,15 @@ public class ASTInputProcessing {
         }
     }
     
+    /**
+     * Returns Node[] of pre-order nodes in root. This array is intended
+     * to be treated as 1-indexed, so the 0th element is null. Additionally,
+     * any NodeListWrapper in root will be reflected as a NodeListWrapperNode
+     * in this array.
+     * 
+     * @param root
+     * @return Node[] of pre-order nodes in root.
+     */
     public static Node[] getOrderedNodes(Node root) {
         List<Node> res = new ArrayList<Node>();
         res.add(null);

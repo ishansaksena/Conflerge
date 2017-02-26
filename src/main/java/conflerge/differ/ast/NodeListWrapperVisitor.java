@@ -6,9 +6,11 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.visitor.Visitable;
 
+/**
+ * 'Wraps' the NodeLists in an AST. In the resulting AST, all 
+ * NodeList fields are replaced with NodeListWrappers. 
+ */
 public class NodeListWrapperVisitor extends ModifierVisitor<String> {
-    
-    int modcount = 0;
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
@@ -16,12 +18,6 @@ public class NodeListWrapperVisitor extends ModifierVisitor<String> {
         for (Node node : new ArrayList<Node>(n)) {
             node.accept(this, arg);
         }
-        
-        n = new NodeListWrapper(n, modcount  + arg);
-        modcount++;
-        
-        //System.out.println("wrap   " + n);
-       
-        return n;
+        return new NodeListWrapper(n);       
     }
 }
