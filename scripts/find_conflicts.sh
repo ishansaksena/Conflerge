@@ -1,8 +1,8 @@
 #!/bin/bash
 
-touch $2
-rm $2
-touch $2
+touch $2/merge_conflicts.txt
+rm $2/merge_conflicts.txt
+touch $2/merge_conflicts.txt
 
 DEFAULT_BRANCH=$(git -C $1 rev-parse --abbrev-ref HEAD)
 
@@ -17,10 +17,10 @@ do
 
 	# Attempt to merge the parents
 	git -C $1 checkout commit1
-	git -C $1 merge commit2 > merge.txt
+	git -C $1 merge commit2 > $2/merge.txt
 
 	# Handle conflicts
-	CONFLICTS=$(grep CONFLICT merge.txt | grep content | wc -l)
+	CONFLICTS=$(grep CONFLICT $2/merge.txt | grep content | wc -l)
 	if [ $CONFLICTS -gt 0 ]; then
 			echo "$COMMIT_1 $COMMIT_2 $MERGE" >> $2
 			git -C $1 reset --merge
@@ -36,7 +36,7 @@ do
 	git -C $1 reset --hard $DEFAULT_BRANCH
 done <<< "$(git -C $1 rev-list --merges --max-parents=2 HEAD)"
 
-rm merge.txt
+rm $2/merge.txt
 
 echo "--------------------------------"
 echo "    Finished Finding Conflicts"
