@@ -1,4 +1,4 @@
-package conflerge.differ;
+package zhangshasha;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -9,8 +9,11 @@ import java.util.Set;
 import java.util.Stack;
 
 /**
- * This file is still experimental. It needs to be converted to work with
- * ASTs and return real edits before it can be used in Conflerge.
+ * This file is no longer part of the project. It's still quite
+ * neat, though, and should possibly be cleaned up and moved to 
+ * its own repository at some point. To my knowledge, there aren't
+ * any other publicly available impelementations of the Zhang-Shasha
+ * algorithm.
  */
 public class TreeDiffer {
     
