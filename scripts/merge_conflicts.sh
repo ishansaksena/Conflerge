@@ -2,6 +2,7 @@
 REPO_DIR=$1
 RESULTS_DIR=$2
 DEFAULT_BRANCH=$(git -C $1 rev-parse --abbrev-ref HEAD)
+TOOL=$3
 
 function mergeCommits {
 
@@ -30,7 +31,7 @@ function mergeCommits {
 
         # Found one! Get its name and apply our mergetool
         FILE=${BASH_REMATCH[1]}
-        RES="$(yes | git -C ${REPO_DIR} mergetool --tool=conflerge-$3 $FILE)"
+        RES="$(yes | git -C ${REPO_DIR} mergetool --tool=conflerge-$TOOL $FILE)"
 
         # Check if Conflerge succeeded
         if [[ $RES == *"SUCCESS"* ]] 
