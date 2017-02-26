@@ -57,7 +57,7 @@ function mergeCommits {
             done
             
             # Write the file contents to the file in RESULTS_DIR/
-            cat $FILE > $FILENAME         
+            cat ${REPO_DIR}$FILE > $FILENAME
           fi   
         else
           # Conflerge failed; output this so we can grep for it
@@ -91,9 +91,9 @@ function mergeCommits {
       do
         FILENAME+=1
       done
-      cat $FILE > $FILENAME
+      cat ${REPO_DIR}$FILE > $FILENAME
     fi
-   done < ${RESULTS_DIR}/files.txt
+  done < ${RESULTS_DIR}/files.txt
 
   # Clean up the git state
   git -C ${REPO_DIR} reset --merge

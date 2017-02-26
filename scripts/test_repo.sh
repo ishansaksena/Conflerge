@@ -5,7 +5,6 @@ REPO_NAME=$(cut -d'-' -f2 <<< $1)
 REPO_DIR=/tmp/${REPO_NAME}
 RESULTS_DIR=${REPO_FULL_NAME}_test_results
 
-
 # create a directory to store this repo's data
 if [ ! -d ${RESULTS_DIR} ]
 	then
