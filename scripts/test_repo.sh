@@ -24,9 +24,9 @@ if [ ! -f {$RESULTS_DIR}/merge_conflicts.txt ]
 fi
 
 # Run Conflerge on found conflicts in the repo
-#if [ ! -f res.txt ] || [ ! -d conflerge_results ]
+#if [ ! -f ${RESULTS_DIR}/res.txt ] ]
 #then
-#  ./merge_conflicts.sh ${REPO_DIR} > res.txt
+#  ./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} > ${RESULTS_DIR}/res.txt
 #fi
 
 # Output <repositoryname>.csv file

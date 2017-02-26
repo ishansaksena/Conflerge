@@ -1,5 +1,6 @@
 #!/bin/bash
 REPO_DIR=$1
+RESULTS_DIR=$2
 
 function mergeCommits {
 
@@ -7,12 +8,12 @@ function mergeCommits {
   git -C ${REPO_DIR} checkout --force -b commit1 $1
   git -C ${REPO_DIR} checkout --force -b commit2 $2
   git -C ${REPO_DIR} checkout commit1
-  git -C ${REPO_DIR} merge commit2 > merge.txt
+  git -C ${REPO_DIR} merge commit2 > ${RESULTS_DIR}/merge.txt
   
   # Clear the file we'll save successful files in
-  touch files.txt
-  rm files.txt
-  touch files.txt
+  touch ${RESULTS_DIR}/files.txt
+  rm ${RESULTS_DIR}/files.txt
+  touch ${RESULTS_DIR}/files.txt
   
   # Read each conflict line
   while read CONFLICT
@@ -42,10 +43,10 @@ function mergeCommits {
           then
 
             # Save the name of this file so we can use it later
-            echo $FILE >> files.txt        
+            echo $FILE >> ${RESULTS_DIR}/files.txt
 
             # Write the merged file to the results folder
-            FILENAME="conflerge_results/actual_"
+            FILENAME="${RESULTS_DIR}/actual_"
             FILENAME+="${BASH_REMATCH[1]}"
 
             # Make sure this file has unique name
@@ -54,7 +55,7 @@ function mergeCommits {
               FILENAME+=1
             done
             
-            # Write the file contents to the file in conflerge_results/
+            # Write the file contents to the file in RESULTS_DIR/
             cat $FILE > $FILENAME         
           fi   
         else
@@ -64,7 +65,7 @@ function mergeCommits {
       fi
     fi
 
-  done <<< "$(grep CONFLICT merge.txt)"
+  done <<< "$(grep CONFLICT ${RESULTS_DIR}/merge.txt)"
 
   # Clean up the git state
   git -C ${REPO_DIR} reset --merge
@@ -78,12 +79,12 @@ function mergeCommits {
   while read FILE
   do
 
-    # Write the result file to conflerge_results/...
+    # Write the result file to $RESULTS_DIR/...
     if [[ $FILE =~ .*/([^/]*.java) ]]
     then
 
       # Write the merged file to the results folder
-      FILENAME="conflerge_results/expected_"
+      FILENAME="${RESULTS_DIR}/expected_"
       FILENAME+="${BASH_REMATCH[1]}"      
       while [ -f $FILENAME ]
       do
@@ -91,7 +92,7 @@ function mergeCommits {
       done
       cat $FILE > $FILENAME
     fi
-   done < files.txt
+   done < ${RESULTS_DIR}/files.txt
 
   # Clean up the git state
   git -C ${REPO_DIR} reset --merge
@@ -101,19 +102,13 @@ function mergeCommits {
 
 }
 
-# Set up the destination 
-if [ ! -d conflerge_results ]
-then
-  mkdir conflerge_results
-fi
-
 # Outer loop: read the contents of merge_conflicts.txt line by line
 while read line
 do
   COMMITS=($line)
   mergeCommits ${COMMITS[0]} ${COMMITS[1]} ${COMMITS[2]}
 
-done < merge_conflicts.txt
+done < ${RESULTS_DIR}/merge_conflicts.txt
 
-rm files.txt
-rm merge.txt
+rm ${RESULTS_DIR}/files.txt
+rm ${RESULTS_DIR}/merge.txt
