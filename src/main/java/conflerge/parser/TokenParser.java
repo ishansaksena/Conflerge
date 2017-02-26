@@ -16,7 +16,6 @@ import com.github.javaparser.Provider;
 import com.github.javaparser.Token;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.comments.Comment;
 
 /**
@@ -88,19 +87,25 @@ public class TokenParser {
         Map<Comment, Boolean> comments = new IdentityHashMap<>();
         CompilationUnit cu = JavaParser.parse(sb.toString());
         
-  //      removeComments(cu, comments);
+        removeComments(cu, comments);
         return cu.toString();
     }
 
-//    private static void removeComments(Node root, Map<Comment, Boolean> comments) {
-//        Comment comment = root.getComment().isPresent() ?  root.getComment().get() : null;
-//        if (comments.containsKey(comment)) {
-//            root.setComment(null);
-//        } else if (comment != null) {
-//            comments.put(comment, true);
-//        }
-//        for (Node n : root.getChildNodes()) {
-//            removeComments(n, comments);
-//        }
-//    }
+    /*
+     * Unfortunately, sometimes the same comment gets attached to many nodes and
+     * duplicated in the output. As far as I know, the bug is in javaparser. This
+     * method prevents the same comments (the same object, not equality) from 
+     * appearing multiple times.
+     */
+    private static void removeComments(Node root, Map<Comment, Boolean> comments) {
+        Comment comment = root.getComment().isPresent() ?  root.getComment().get() : null;
+        if (comments.containsKey(comment)) {
+            root.setComment(null);
+        } else if (comment != null) {
+            comments.put(comment, true);
+        }
+        for (Node n : root.getChildNodes()) {
+            removeComments(n, comments);
+        }
+    }
 }

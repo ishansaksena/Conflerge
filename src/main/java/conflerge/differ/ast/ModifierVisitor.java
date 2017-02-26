@@ -139,6 +139,7 @@ import com.github.javaparser.utils.Pair;
  * We need this, the latest copy of ModifierVisitor.java, because the version from the offical
  * release contains a bug that causes stack-overflow errors.
  */
+
 @SuppressWarnings("deprecation")
 public class ModifierVisitor<A> implements GenericVisitor<Visitable, A> {
 

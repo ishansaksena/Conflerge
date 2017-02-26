@@ -1,62 +1,53 @@
 package conflerge.differ.ast;
 
+import com.github.javaparser.Position;
+import com.github.javaparser.Range;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 
 /**
- * Unfortunately, Javaparser's trees don't play nicely with our algorithm. We need to add another \
- * layer of indirection to  distinguish children of one type from children of another in nodes that
- * contain lists of children..
+ * Unfortunately, Javaparser's trees don't play nicely with our algorithm. This Visitor adds a
+ * layer of indirection to  distinguish between children of one type from children of another in 
+ * nodes that contain lists of children.
  */
 @SuppressWarnings({ "rawtypes" })
 public class NodeListWrapper extends NodeList {
     NodeList<? extends Node> nodeList;
-    boolean removeIfEmpty = false;
-    String id = "";
     
     public Node node;
-    
-    public String toString() {
-        return "NodelistWrapper:" + id;
-    }
     
     public NodeListWrapper(NodeList<? extends Node> nodeList) {
         this.nodeList = nodeList;
     }
     
-    public NodeListWrapper(NodeList<? extends Node> nodeList, String id) {
-        this.nodeList = nodeList;
-        this.id = id;
-    }
-    
-    public NodeListWrapper(NodeList<? extends Node> nodeList, boolean removeIfEmpty) {
-        this.nodeList = nodeList;
-        this.removeIfEmpty = removeIfEmpty;
-    }
-    
     @Override
-    public boolean isEmpty() { return false; }
+    public boolean isEmpty() { 
+        return nodeList.isEmpty();
+    }
 }
 
 /**
  * A Node representation of the NodeListWrapper, used by the diff algorithm.
+ * These should only be used to keep track of NodeListWrappers in collections of 
+ * Nodes, and should never be added to an ASTs.
  */
-class NodeListWrapperNode extends SimpleName {
+class NodeListWrapperNode extends Node {
+    
+    private static final Range dummy_range = new Range(new Position(0, 0), new Position(0, 0));
     
     public final NodeListWrapper list;
     
     public NodeListWrapperNode(NodeListWrapper list) { 
-        super("Node(" + list + ")");
+        super(dummy_range);
         this.list = list;
     }
+    
+    @Override
+    public <R, A> R accept(GenericVisitor<R, A> v, A arg) { return null; }
 
     @Override
-    public <R, A> R accept(GenericVisitor<R, A> arg0, A arg1) { return arg0.visit(this, arg1); }
-
-    @Override
-    public <A> void accept(VoidVisitor<A> arg0, A arg1) { arg0.visit(this, arg1); }
+    public <A> void accept(VoidVisitor<A> v, A arg) { }
 }
 

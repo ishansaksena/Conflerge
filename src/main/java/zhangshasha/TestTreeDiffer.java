@@ -1,4 +1,4 @@
-package conflerge.unit.tree;
+package zhangshasha;
 
 import static org.junit.Assert.*;
 
@@ -6,11 +6,9 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import conflerge.differ.TreeDiffer;
-import conflerge.differ.TreeDiffer.Node;
+import zhangshasha.TreeDiffer.Node;
 
 public class TestTreeDiffer {
-    
     Node LARGE_TREE = 
             new Node("a0", 
                     new Node("a1",
