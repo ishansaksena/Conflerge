@@ -14,7 +14,6 @@ for FILE in `ls`
       echo $F2
       java -jar ../DiffTool.jar $F1 $F2 > $F.out
       java -jar ../DiffTool.jar -c $F1 $F2 > $F.outc
-      java -jar ../DiffTool.jar -c -i $F1 $F2 > $F.outci
     fi
 done
 popd
