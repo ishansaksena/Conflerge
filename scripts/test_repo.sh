@@ -1,7 +1,8 @@
 #!/bin/bash
 
 REPO_FULL_NAME=$2
-REPO_DIR=/tmp/$(cut -d'-' -f2 <<< $1)
+REPO_NAME=$(cut -d'-' -f2 <<< $1)
+REPO_DIR=/tmp/${REPO_NAME}
 RESULTS_DIR=${REPO_FULL_NAME}_test_results
 
 
@@ -31,4 +32,4 @@ if [ ! -f ${RESULTS_DIR}/res.txt ]
 fi
 
 # Output <repositoryname>.csv file
-#./make_csv.sh
+./make_csv.sh ${REPO_NAME} ${RESULTS_DIR}

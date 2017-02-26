@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pushd conflerge_results
+pushd $1
 for FILE in `ls`
   do
     if [[ $FILE =~ (expected_|actual_)(.*) ]]
