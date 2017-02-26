@@ -33,8 +33,8 @@ fi
 # Output <repositoryname>.csv file
 ./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} tree
 
-rm ${RESULTS_DIR}/*
+#rm ${RESULTS_DIR}/*
 
 # Run Conflerge again with tokens instead of trees
-./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} token > ${RESULTS_DIR}/res.txt
-./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} token
+#./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} token > ${RESULTS_DIR}/res.txt
+#./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} token
