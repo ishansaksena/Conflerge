@@ -22,7 +22,7 @@ do
 	# Handle conflicts
 	CONFLICTS=$(grep CONFLICT $2/merge.txt | grep content | wc -l)
 	if [ $CONFLICTS -gt 0 ]; then
-			echo "$COMMIT_1 $COMMIT_2 $MERGE" >> $2
+			echo "$COMMIT_1 $COMMIT_2 $MERGE" >> $2/merge_conflicts.txt
 			git -C $1 reset --merge
 			echo "--------------------------------"
 			echo "   Found $CONFLICTS conflicts" 
