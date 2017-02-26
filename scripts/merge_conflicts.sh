@@ -1,6 +1,7 @@
 #!/bin/bash
 REPO_DIR=$1
 RESULTS_DIR=$2
+DEFAULT_BRANCH=$(git -C $1 rev-parse --abbrev-ref HEAD)
 
 function mergeCommits {
 
@@ -69,10 +70,10 @@ function mergeCommits {
 
   # Clean up the git state
   git -C ${REPO_DIR} reset --merge
-  git -C ${REPO_DIR} checkout --force master
+  git -C ${REPO_DIR} checkout --force $DEFAULT_BRANCH
   git -C ${REPO_DIR} branch -D commit1
   git -C ${REPO_DIR} branch -D commit2
-  git -C ${REPO_DIR} reset --hard master
+  git -C ${REPO_DIR} reset --hard $DEFAULT_BRANCH
 
   # Now, get the human merged files
   git -C ${REPO_DIR} checkout --force -b merged $3
@@ -96,9 +97,9 @@ function mergeCommits {
 
   # Clean up the git state
   git -C ${REPO_DIR} reset --merge
-  git -C ${REPO_DIR} checkout --force master
+  git -C ${REPO_DIR} checkout --force $DEFAULT_BRANCH
   git -C ${REPO_DIR} branch -D merged
-  git -C ${REPO_DIR} reset --hard master
+  git -C ${REPO_DIR} reset --hard $DEFAULT_BRANCH
 
 }
 
