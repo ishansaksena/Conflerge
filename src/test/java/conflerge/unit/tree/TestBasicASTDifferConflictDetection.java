@@ -13,10 +13,8 @@ import conflerge.differ.ast.DiffResult;
 import conflerge.differ.ast.MergeVisitor;
 import conflerge.differ.ast.NodeListUnwrapperVisitor;
 import conflerge.differ.ast.NodeListWrapperVisitor;
+import conflerge.merger.TreeMerger;
 
-/**
- *
- */
 public class TestBasicASTDifferConflictDetection {
     
     private static void merge(String baseStr, String localStr, String remoteStr, boolean conflict) { 
@@ -31,12 +29,12 @@ public class TestBasicASTDifferConflictDetection {
         DiffResult localDiff = new ASTDiffer(base, local).diff();
         DiffResult remoteDiff = new ASTDiffer(base, remote).diff();
         
-        ASTDiffer.conflict = false;
+        TreeMerger.conflict = false;
         
         base.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(localDiff, remoteDiff));   
         base.accept(new NodeListUnwrapperVisitor(), null); 
         
-        assertEquals(ASTDiffer.conflict, conflict);
+        assertEquals(TreeMerger.conflict, conflict);
         
     }
     
@@ -118,6 +116,16 @@ public class TestBasicASTDifferConflictDetection {
                 "class Foo { void foo() { }}",
                 "class Foo { }",
                 "class Foo { void foo(int a) { }}",
+                true
+        );
+    }
+    
+    @Test
+    public void testOverlappingModifiers() {
+        merge(
+                "class Foo { void foo() { }}",
+                "public class Foo { void foo() { }}",
+                "private class Foo { void foo() { }}",
                 true
         );
     }

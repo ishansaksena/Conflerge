@@ -1,13 +1,16 @@
 package conflerge.differ.ast;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 
 /**
  * Uses the mmdiff algorithm (by Sudarshan S. Chawathe, available at http://www.vldb.org/conf/1999/P8.pdf)
@@ -18,7 +21,6 @@ import com.github.javaparser.ast.NodeList;
  * operations, after they are computed they can view them as entire subtree insertions, deletions, and 
  * replacements. This is particularly useful for merging.
  * 
- * TODO: explain list-nonlist insterts, nodelistwrapping, etc.
  */
 public class ASTDiffer {
     
@@ -26,11 +28,6 @@ public class ASTDiffer {
      * The cost of an edit operation.
      */
     public static final int editCost = 1;
-    
-    /*
-     * TODO: replace this temporary flag with a permanent implementation.
-     */
-    public static boolean conflict = false;
     
     /*  
      * Nodes in A that were deleted in B. Logically this is a Set
@@ -57,16 +54,22 @@ public class ASTDiffer {
     private Map<Node, Node> alignsB = new IdentityHashMap<>();
     
     /*
+     * Javaparser does not treat modifiers (public, private, static, etc) as 
+     * nodes, so the mmdiff algorithm ignores them. This map stores a mapping
+     * from nodes in A to their altered modifiers in B, if any. 
+     */
+    private Map<Node, EnumSet<Modifier>> modifiers = new IdentityHashMap<>();
+    
+    /*
      * A map from NodeListWrapperNodes to all nodes that were
-     * inserted under their NodeList. These represent list
-     * insertions, 
+     * inserted under their NodeList.
      */
     private Map<NodeListWrapperNode, List<Node>> listInserts  = new IdentityHashMap<>();
     
     /*
      *  Sometimes mmdiff will return insertions that do not correspond
      *  to inserting a node into a list of parameters. If these insertions
-     *  are top-level (That is, there are no modifications on these insertion's
+     *  are top-level (defn: there are no modifications to these insertion's
      *  ancestors) performing the merge is problematic. These insertions
      *  are stored separately so they can later be translated into replace
      *  operations and merged correctly.
@@ -74,7 +77,9 @@ public class ASTDiffer {
     private Map<Node, Node> nonListInserts = new IdentityHashMap<>();
     
     /*
-     * 
+     * Maps from nodes to their parents. Unlike the node's 'getParent' method,
+     * this returns NodeListWrapperNodes if the node is a member of a wrapped 
+     * NodeList. Never use 'getParent' if you expected wrapper nodes.
      */
     public final Map<Node, Node> parentsA;
     public final Map<Node, Node> parentsB;
@@ -96,9 +101,8 @@ public class ASTDiffer {
     private final Node[] bN;
     
     /*
-     * The depth of nodes in A, B in pre-order.
-     * if Node n is the ith node in A and has depth d,
-     * then: aD[i] = d
+     * The depth of nodes in A, B in pre-order. If Node n is the ith node in A 
+     * and has depth d, then: aD[i] = d
      */
     private final int[] aD;
     private final int[] bD;
@@ -148,9 +152,9 @@ public class ASTDiffer {
         // Produce a mapping of NodeLists -> indexes to insert -> Nodes to insert.
         // This operation must be performed last because it depends on complete
         // alignment and replacement maps.
-        Map<NodeListWrapper, Map<Integer, List<Node>>> indexInserts = processInserts(listInserts);
+        Map<NodeListWrapper, Map<Integer, List<Node>>> indexInserts = processListInserts();
         
-        return new DiffResult(deletes, replacesA, indexInserts);
+        return new DiffResult(deletes, replacesA, modifiers, indexInserts);
     }
 
     /*
@@ -198,7 +202,7 @@ public class ASTDiffer {
                addInsert(i, j);
                j--;
            } else {
-               addAlignOrDelete(i, j);
+               addAlignOrReplace(i, j);
                i--;
                j--;
            } 
@@ -207,8 +211,15 @@ public class ASTDiffer {
        while (j > 0) { addInsert(i, j); j--; }
     }
      
-    private void addAlignOrDelete(int i, int j) {
+    private void addAlignOrReplace(int i, int j) {
         if (updateCost(aN[i], bN[j]) == 0)  {
+            if (aN[i] instanceof NodeWithModifiers) {
+                EnumSet<Modifier> aMods = ((NodeWithModifiers<?>) aN[i]).getModifiers();
+                EnumSet<Modifier> bMods = ((NodeWithModifiers<?>) bN[j]).getModifiers();
+                if (!aMods.equals(bMods)) {
+                    modifiers.put(aN[i], bMods);
+                }
+            }
             alignsA.put(aN[i], bN[j]);
             alignsB.put(bN[j], aN[i]);
         } else {
@@ -249,48 +260,77 @@ public class ASTDiffer {
     }
     
     /*
-     * TODO: Document this method.
+     * Returns a mapping of NodeList -> index of insertion(s) into that NodeList -> Node(s) inserted.
+     * 
+     * This operation must be performed after the edits have been computed and
+     * recovered because it depends on the compelete alignment and replacement maps. 
      */
-    private Map<NodeListWrapper, Map<Integer, List<Node>>> processInserts(Map<NodeListWrapperNode, List<Node>> insertedUnder) {
-        Map<NodeListWrapper, Map<Integer, List<Node>>> nlToIndexToInserts = new IdentityHashMap<>();        
-        for (NodeListWrapperNode nlwn : insertedUnder.keySet()) {
-            NodeListWrapperNode alignedNlwn = (NodeListWrapperNode) alignsB.get(nlwn);
-            if (alignedNlwn == null) {
+    private Map<NodeListWrapper, Map<Integer, List<Node>>> processListInserts() {
+        
+        Map<NodeListWrapper, Map<Integer, List<Node>>> result = new IdentityHashMap<>();       
+        
+        for (NodeListWrapperNode nlwn : listInserts.keySet()) {
+            
+            // If the list wasn't aligned it won't be relevant 
+            if (!alignsB.containsKey(nlwn)) {
                 continue;
             }
+            
+            // Get the wrapper node's NodeList
             NodeList<? extends Node> nl = nlwn.list.nodeList;
+            
+            // The recoverEdits step returns the inserts in reverse order, so correct that.
+            Collections.reverse(listInserts.get(nlwn));
+            
+            // Get the corresponding NodeListWrapperNode from A
+            NodeListWrapperNode alignedNlwn = (NodeListWrapperNode) alignsB.get(nlwn);
+           
+            // Set up the index -> inserts 
             Map<Integer, List<Node>> inserts = new HashMap<>();
-            Collections.reverse(insertedUnder.get(nlwn));
-            for (Node insert : insertedUnder.get(nlwn)) {               
-                int i = indexOfObj(nl, insert);
-                while (i >= 0 && !alignsB.containsKey(nl.get(i)) && !replacesB.containsKey(nl.get(i))) {
-                    i--;
-                }
-                int insertIndex;
-                if (i >= 0) {
-                    Node matchedSibling = alignsB.containsKey(nl.get(i)) ? 
-                                                alignsB.get(nl.get(i)) : 
-                                                    replacesB.get(nl.get(i));      
-                    NodeListWrapperNode matchedParent = (NodeListWrapperNode) parentsA.get(matchedSibling);
-                    insertIndex = indexOfObj(matchedParent.list.nodeList, matchedSibling) + 1;
-                } else {
-                    insertIndex = 0;
-                } 
+           
+            // Add the index, insert pairs  
+            for (Node insert : listInserts.get(nlwn)) {
+                int insertIndex = getInsertIndex(nl, insert);
                 if (!inserts.containsKey(insertIndex)) {
                     inserts.put(insertIndex, new ArrayList<Node>());
                 }
                 inserts.get(insertIndex).add(insert);
             }
-            nlToIndexToInserts.put(alignedNlwn.list, inserts);
+            
+            // Map the NodeList in A to the index -> inserts map
+            result.put(alignedNlwn.list, inserts);
         }
-        return nlToIndexToInserts;
+        
+        return result;
+    }
+    
+    private int getInsertIndex(NodeList<? extends Node> nl, Node insert) {
+        // Get the inserted node's index in it's NodeList
+        int i = indexOfObj(nl, insert);
+        
+        // Look back through the NodeList for a 'reference node': a node in B that aligns with
+        // a node in A.
+        while (i >= 0 && !alignsB.containsKey(nl.get(i)) && !replacesB.containsKey(nl.get(i))) {
+            i--;
+        }
+        
+        // Return the index be after the reference node in A, or 0 if no reference node was found.
+        if (i >= 0) {
+            Node matchedSibling = alignsB.containsKey(nl.get(i)) ? 
+                                        alignsB.get(nl.get(i)) : 
+                                            replacesB.get(nl.get(i));      
+            NodeListWrapperNode matchedParent = (NodeListWrapperNode) parentsA.get(matchedSibling);
+             return indexOfObj(matchedParent.list.nodeList, matchedSibling) + 1;
+        } else {
+            return  0;
+        } 
     }
 
     //-Utility-Methods---------------------------------------------
     
     /*
      * Nodes are identified strictly by object equality, so this
-     * method is the only correct way to located a Node in a list.
+     * method is the correct way to locate a Node in a list.
      */
     private static int indexOfObj(Iterable<?> items, Object item) {
         int i = 0;
@@ -319,15 +359,5 @@ public class ASTDiffer {
      */
     private int updateCost(Node n1, Node n2) {
         return ShallowEqualsVisitor.equals(n1, n2) ? 0 : editCost;
-    }
-    
-
-    /*
-     * TODO: replace this with a better pattern.
-     */
-    public static void handleConflict() {
-        System.err.println("CONFLICT!");
-        conflict = true;
-    }
-    
+    } 
 }

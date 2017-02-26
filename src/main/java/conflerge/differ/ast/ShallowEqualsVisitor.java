@@ -1,7 +1,5 @@
 package conflerge.differ.ast;
 
-import java.util.Optional;
-
 import com.github.javaparser.ast.ArrayCreationLevel;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
@@ -110,24 +108,12 @@ public class ShallowEqualsVisitor implements GenericVisitor<Boolean, Visitable> 
         if (n1 == n2) return true;    
         if (n1 == null || n2 == null) return false;
         if (n1.getClass() != n2.getClass()) return false;
-        // TODO: investigate this. I couldn't get the visitor to acknowledge a visit method for
-        // NodeListWrapperNodes.
         if (n1 instanceof NodeListWrapperNode && n2 instanceof NodeListWrapperNode) return true;
         return n1.accept(this, n2);
     }
     
     public Boolean visit(final NodeListWrapperNode n1, final Visitable arg) {
         return true;
-    }
-
-    @SuppressWarnings("unused")
-    private <T extends Node> boolean nodeEquals(final Optional<T> n1, final Optional<T> n2) {
-        return nodeEquals(n1.orElse(null), n2.orElse(null));
-    }
-
-    @SuppressWarnings("unused")
-    private <T extends Node> boolean nodesEquals(final Optional<NodeList<T>> n1, final Optional<NodeList<T>> n2) {
-        return false;
     }
 
     private boolean objEquals(final Object n1, final Object n2) {
