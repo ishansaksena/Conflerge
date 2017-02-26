@@ -24,11 +24,17 @@ if [ ! -f ${RESULTS_DIR}/merge_conflicts.txt ]
 	fi
 fi
 
-# Run Conflerge on found conflicts in the repo
+# Run Conflerge w/ trees on found conflicts in the repo
 if [ ! -f ${RESULTS_DIR}/res.txt ]
 	then
-	./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} > ${RESULTS_DIR}/res.txt
+	./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} tree > ${RESULTS_DIR}/res.txt
 fi
 
 # Output <repositoryname>.csv file
-./make_csv.sh ${REPO_NAME} ${RESULTS_DIR}
+./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} tree
+
+rm ${RESULTS_DIR}/*
+
+# Run Conflerge again with tokens instead of trees
+./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} token > ${RESULTS_DIR}/res.txt
+./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} token

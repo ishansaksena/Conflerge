@@ -30,7 +30,7 @@ function mergeCommits {
 
         # Found one! Get its name and apply our mergetool
         FILE=${BASH_REMATCH[1]}
-        RES="$(yes | git -C ${REPO_DIR} mergetool --tool=conflerge $FILE)"
+        RES="$(yes | git -C ${REPO_DIR} mergetool --tool=conflerge-$3 $FILE)"
 
         # Check if Conflerge succeeded
         if [[ $RES == *"SUCCESS"* ]] 
