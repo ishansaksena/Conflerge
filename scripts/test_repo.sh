@@ -1,5 +1,8 @@
 #!/bin/bash
 
+REPO_FULL_NAME=$1
+REPO_DIR=$(cut -d'-' -f2 <<< $1)
+
 # Find all merge conflicts
 if [ ! -f merge_conflicts.txt ]
 then
