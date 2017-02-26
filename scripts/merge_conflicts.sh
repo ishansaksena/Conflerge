@@ -57,7 +57,7 @@ function mergeCommits {
             done
             
             # Write the file contents to the file in RESULTS_DIR/
-            cat ${REPO_DIR}$FILE > $FILENAME
+            cat "${REPO_DIR}/$FILE" > $FILENAME
           fi   
         else
           # Conflerge failed; output this so we can grep for it
@@ -91,7 +91,7 @@ function mergeCommits {
       do
         FILENAME+=1
       done
-      cat ${REPO_DIR}$FILE > $FILENAME
+      cat "${REPO_DIR}/$FILE" > $FILENAME
     fi
   done < ${RESULTS_DIR}/files.txt
 
