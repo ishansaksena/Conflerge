@@ -15,10 +15,6 @@ import conflerge.differ.ast.NodeListUnwrapperVisitor;
 import conflerge.differ.ast.NodeListWrapperVisitor;
 import conflerge.merger.TreeMerger;
 
-/**
- * TODO: update this file so it functions with the most recent modifications.
- *
- */
 public class TestBasicASTDiffer3WayNoConflict {    
     
     private static void merge(String baseStr, String localStr, String remoteStr, String expectedStr) { 

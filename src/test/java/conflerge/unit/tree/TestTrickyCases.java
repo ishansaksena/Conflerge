@@ -56,13 +56,21 @@ public class TestTrickyCases {
     }
     
     @Test
+    public void test4() {
+        
+        String m1 = "class Foo { void foo(Map<A> m) { } }";
+        
+        String m2 =  "class Foo { void foo(Map<B, C> m) { } }";
+             
+        eval(m1, m2);
+    }
+    
+    @Test
     public void test5() {
         test("class Foo { List l; }", "class Foo { List<T> l; }");
         test("class Foo { List<T> l; }", "class Foo { List l; }");
         test("class Foo { List<T> l; }", "class Foo { List<? extends T> l; }");
     }
-    
-    // THE ONLY ERROR IS THE FIRST LINE
     
     @Test
     public void testMethod() {
@@ -145,21 +153,11 @@ public class TestTrickyCases {
     }
     
     @Test
-    public void test() {
+    public void testModifers() {
         
         String m1 = "class Foo { void foo(int a) { } }";
         
         String m2 =  "public static class Foo { void foo(int a) { } }";
-             
-        eval(m1, m2);
-    }
-    
-    @Test
-    public void test4() {
-        
-        String m1 = "class Foo { void foo(Map<A> m) { } }";
-        
-        String m2 =  "class Foo { void foo(Map<B, C> m) { } }";
              
         eval(m1, m2);
     }
