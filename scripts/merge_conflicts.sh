@@ -1,33 +1,34 @@
 #!/bin/bash
+REPO_DIR=$1
 
 function mergeCommits {
 
-	# Get and merge the conflicting commits
-  git checkout --force -b commit1 $1 
-  git checkout --force -b commit2 $2
-  git checkout commit1
-  git merge commit2 > merge.txt
-	
+  # Get and merge the conflicting commits
+  git -C ${REPO_DIR} checkout --force -b commit1 $1
+  git -C ${REPO_DIR} checkout --force -b commit2 $2
+  git -C ${REPO_DIR} checkout commit1
+  git -C ${REPO_DIR} merge commit2 > merge.txt
+  
   # Clear the file we'll save successful files in
   touch files.txt
   rm files.txt
   touch files.txt
-	
+  
   # Read each conflict line
-	while read CONFLICT
-	do
+  while read CONFLICT
+  do
 
-		# Try to extract a .java file from the conflict line
-		if [[ $CONFLICT =~ .*[[:space:]]([^\.]*\.java) ]]
-		then
+    # Try to extract a .java file from the conflict line
+    if [[ $CONFLICT =~ .*[[:space:]]([^\.]*\.java) ]]
+    then
 
       # Make sure it's a content merge, not a file insertion or deletion
       if [[ $CONFLICT == *"content"* ]]
-			then
+      then
 
-				# Found one! Get its name and apply our mergetool
-	      FILE=${BASH_REMATCH[1]}
-  			RES="$(yes | git mergetool --tool=conflerge $FILE)"
+        # Found one! Get its name and apply our mergetool
+        FILE=${BASH_REMATCH[1]}
+        RES="$(yes | git -C ${REPO_DIR} mergetool --tool=conflerge $FILE)"
 
         # Check if Conflerge succeeded
         if [[ $RES == *"SUCCESS"* ]] 
@@ -61,19 +62,19 @@ function mergeCommits {
           echo "FAILURE"
         fi
       fi
-		fi
+    fi
 
-	done <<< "$(grep CONFLICT merge.txt)"
+  done <<< "$(grep CONFLICT merge.txt)"
 
-	# Clean up the git state
-  git reset --merge
-  git checkout --force master
-  git branch -D commit1
-  git branch -D commit2
-  git reset --hard master
+  # Clean up the git state
+  git -C ${REPO_DIR} reset --merge
+  git -C ${REPO_DIR} checkout --force master
+  git -C ${REPO_DIR} branch -D commit1
+  git -C ${REPO_DIR} branch -D commit2
+  git -C ${REPO_DIR} reset --hard master
 
   # Now, get the human merged files
-  git checkout --force -b merged $3
+  git -C ${REPO_DIR} checkout --force -b merged $3
   while read FILE
   do
 
@@ -88,15 +89,15 @@ function mergeCommits {
       do
         FILENAME+=1
       done
-      cat $FILE > $FILENAME         
+      cat $FILE > $FILENAME
     fi
    done < files.txt
 
   # Clean up the git state
-  git reset --merge
-  git checkout --force master
-  git branch -D merged
-  git reset --hard master
+  git -C ${REPO_DIR} reset --merge
+  git -C ${REPO_DIR} checkout --force master
+  git -C ${REPO_DIR} branch -D merged
+  git -C ${REPO_DIR} reset --hard master
 
 }
 
@@ -109,8 +110,8 @@ fi
 # Outer loop: read the contents of merge_conflicts.txt line by line
 while read line
 do
-	COMMITS=($line)
-	mergeCommits ${COMMITS[0]} ${COMMITS[1]} ${COMMITS[2]}
+  COMMITS=($line)
+  mergeCommits ${COMMITS[0]} ${COMMITS[1]} ${COMMITS[2]}
 
 done < merge_conflicts.txt
 

@@ -15,18 +15,18 @@ fi
 if [ ! -f {$RESULTS_DIR}/merge_conflicts.txt ]
 	then
 	# copy if this is one of the repos already checked (in previous versions of this script)
-	if [ -f /tmp/${REPO_FULL_NAME}_conflicts.txt ]
+	if [ -f /tmp/${REPO_FULL_NAME}-conflicts.txt ]
 		then
 		cp /tmp/${REPO_FULL_NAME}-conflicts.txt ${RESULTS_DIR}/merge_conflicts.txt
 	else
-		./find_conflicts.sh $REPO_DIR $RESULTS_DIR
+		./find_conflicts.sh ${REPO_DIR} ${RESULTS_DIR}
 	fi
 fi
 
 # Run Conflerge on found conflicts in the repo
 #if [ ! -f res.txt ] || [ ! -d conflerge_results ]
 #then
-#  ./merge_conflicts.sh > res.txt
+#  ./merge_conflicts.sh ${REPO_DIR} > res.txt
 #fi
 
 # Output <repositoryname>.csv file
