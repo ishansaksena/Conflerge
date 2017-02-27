@@ -1,11 +1,20 @@
 package conflerge.merger;
 
+import static com.github.javaparser.ASTParserConstants.JAVA_DOC_COMMENT;
+import static com.github.javaparser.ASTParserConstants.MULTI_LINE_COMMENT;
+import static com.github.javaparser.ASTParserConstants.SINGLE_LINE_COMMENT;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import com.github.javaparser.JavaParser;
 import com.github.javaparser.JavaToken;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.Node;
 
 import conflerge.Edit;
 import conflerge.differ.TokenDiffer;
@@ -20,6 +29,8 @@ public class TokenMerger {
     private List<JavaToken> local;
     private List<JavaToken> remote;
     
+    public final List<ImportDeclaration> imports;
+    
     /**
      * Constructs a new TokenMerger for the given base, local, and remote files.
      * 
@@ -29,9 +40,20 @@ public class TokenMerger {
      * @throws FileNotFoundException
      */
     public TokenMerger(String baseFile, String localFile, String remoteFile) throws FileNotFoundException {
-        this.base = TokenParser.tokenizeFile(baseFile);
-        this.local = TokenParser.tokenizeFile(localFile);
-        this.remote = TokenParser.tokenizeFile(remoteFile);
+        Node baseTree = JavaParser.parse(new File(baseFile));
+        Node localTree = JavaParser.parse(new File(localFile));
+        Node remoteTree = JavaParser.parse(new File(remoteFile));
+        
+        this.imports = TreeMerger.mergeImports((CompilationUnit) localTree, (CompilationUnit) remoteTree);
+        
+        TreeMerger.removeImports((CompilationUnit) baseTree);
+        TreeMerger.removeImports((CompilationUnit) localTree);
+        TreeMerger.removeImports((CompilationUnit) remoteTree);
+    	
+    	
+    	this.base = TokenParser.tokenizeString(baseTree.toString());
+        this.local = TokenParser.tokenizeString(localTree.toString());
+        this.remote = TokenParser.tokenizeString(remoteTree.toString());
     }
     
     /**
@@ -62,7 +84,21 @@ public class TokenMerger {
             
             // Case: Conflict
             if (e1.type != Edit.Type.MATCH && e2.type != Edit.Type.MATCH) {
-                return null;
+            	
+            	// Temporarily, we want to avoid letting comments cause conflicts.
+            	// Otherwise, we won't be able to fairly compare token-based merging
+            	// to tree based merging, which doesn't currently allow comments
+            	// to conflict.
+            	if (isComment(local.get(e1.icur))) {
+            		res.add(local.get(e1.icur));
+            		remoteEdits.push(e2);
+            	} else if (isComment(remote.get(e2.icur))) {
+            		res.add(remote.get(e2.icur));
+            		localEdits.push(e1);
+            	
+            	} else {
+            		return null;
+            	}
             }
             
             // Case: Match
@@ -90,4 +126,10 @@ public class TokenMerger {
         res.remove(0);
         return res;
     }
+
+	private boolean isComment(JavaToken token) {
+	    return token.kind == SINGLE_LINE_COMMENT ||  
+	           token.kind == MULTI_LINE_COMMENT  ||  
+	           token.kind == JAVA_DOC_COMMENT;
+	}
 }
