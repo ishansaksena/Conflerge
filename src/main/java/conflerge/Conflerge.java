@@ -70,7 +70,7 @@ public class Conflerge {
                 fail("Conflict encountered");
                 return;
             }
-            writeMergedFile(TokenParser.unparseTokens(mergedTokens),  args[3]);
+            writeMergedFile(TokenParser.unparseTokens(mergedTokens, merger),  args[3]);
         } catch (FileNotFoundException e) {
             fail("Files not found");
         } catch (Exception e) {
