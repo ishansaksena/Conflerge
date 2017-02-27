@@ -1,9 +1,9 @@
 #!/bin/bash
 
 pushd $1
-for FILE in `ls`
+for FILE in `ls actual*`
   do
-    if [[ $FILE =~ (expected_|actual_)(.*) ]]
+    if [[ $FILE =~ (actual_)(.*) ]]
     then
       F1="expected_"
       F2="actual_"

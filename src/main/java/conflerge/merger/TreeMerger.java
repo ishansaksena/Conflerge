@@ -68,7 +68,7 @@ public class TreeMerger {
         conflict = true;
     }
     
-    private static List<ImportDeclaration> mergeImports(CompilationUnit local, CompilationUnit remote) {
+    public static List<ImportDeclaration> mergeImports(CompilationUnit local, CompilationUnit remote) {
         List<ImportDeclaration> imports = new ArrayList<>(local.getImports());
         for (ImportDeclaration imprt : remote.getImports()) {
             if (!imports.contains(imprt)) {
@@ -84,13 +84,13 @@ public class TreeMerger {
         return imports;
     }
     
-    private static void addImports(CompilationUnit cu, List<ImportDeclaration> imports) {
+    public static void addImports(CompilationUnit cu, List<ImportDeclaration> imports) {
         for (ImportDeclaration imprt : imports) {
             ((CompilationUnit) cu).addImport(imprt);
         } 
     }
     
-    private static void removeImports(CompilationUnit cu) {
+    public static void removeImports(CompilationUnit cu) {
         cu.getImports().clear();
     }
 

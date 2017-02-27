@@ -18,6 +18,9 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.comments.Comment;
 
+import conflerge.merger.TokenMerger;
+import conflerge.merger.TreeMerger;
+
 /**
  * Contains static methods for tokenizing Java code. All token lists 
  * are currently returned with an empty "start token" as the first element,
@@ -77,7 +80,7 @@ public class TokenParser {
      * @param tokens
      * @return Pretty-printed String representation of the given tokens.
      */
-    public static String unparseTokens(List<JavaToken> tokens) {
+    public static String unparseTokens(List<JavaToken> tokens, TokenMerger merger) {
         StringBuilder sb = new StringBuilder();
         for (JavaToken t : tokens) {
             sb.append(t.getText());
@@ -86,8 +89,9 @@ public class TokenParser {
 
         Map<Comment, Boolean> comments = new IdentityHashMap<>();
         CompilationUnit cu = JavaParser.parse(sb.toString());
+        TreeMerger.addImports(cu, merger.imports);
         
-        removeComments(cu, comments);
+        removeExtraComments(cu, comments);
         return cu.toString();
     }
 
@@ -97,7 +101,7 @@ public class TokenParser {
      * method prevents the same comments (the same object, not equality) from 
      * appearing multiple times.
      */
-    private static void removeComments(Node root, Map<Comment, Boolean> comments) {
+    private static void removeExtraComments(Node root, Map<Comment, Boolean> comments) {
         Comment comment = root.getComment().isPresent() ?  root.getComment().get() : null;
         if (comments.containsKey(comment)) {
             root.setComment(null);
@@ -105,7 +109,7 @@ public class TokenParser {
             comments.put(comment, true);
         }
         for (Node n : root.getChildNodes()) {
-            removeComments(n, comments);
+        	removeExtraComments(n, comments);
         }
     }
 }
