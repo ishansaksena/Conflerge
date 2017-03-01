@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import com.github.javaparser.JavaToken;
 
-import conflerge.Conflerge;
+import conflerge.ConflergeTokens;
 import conflerge.parser.TokenParser;
 
 /**
@@ -52,7 +52,7 @@ public class TestTokens {
         writeFile(BASE, base);
         writeFile(LOCAL, local);
         writeFile(REMOTE, remote);
-        Conflerge.main(new String[] { BASE, LOCAL, REMOTE, MERGED });
+        ConflergeTokens.main(new String[] { BASE, LOCAL, REMOTE, MERGED });
     }
     
     private void checkFileContents(String filename, String expected) {
