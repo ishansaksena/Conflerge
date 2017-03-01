@@ -27,11 +27,11 @@ fi
 # Run Conflerge w/ trees on found conflicts in the repo
 if [ ! -f ${RESULTS_DIR}/res.txt ]
 	then
-	./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} tree > ${RESULTS_DIR}/res.txt
+	./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} $3 > ${RESULTS_DIR}/res.txt
 fi
 
 # Output <repositoryname>.csv file
-./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} tree
+./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} $3
 
 #rm ${RESULTS_DIR}/*
 

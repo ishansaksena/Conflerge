@@ -1,19 +1,30 @@
 Testing Conflerge
 -----------------
 
-1) Clone the repo you want to test on and move all the files in this directory into that repo.
-We used the Javaparser project (https://github.com/javaparser/javaparser) in the example in our 
-paper. As the paper mentions, these scripts do not generate interesting results on all repositories.
+# Testing on a Single Repository
+
+1) Clone the repo you want to test on into /tmp/
 
 2)	Add these lines to your ~/.gitconfig file:
 
-		[mergetool "conflerge"]
-		  cmd = java -jar Conflerge.jar $BASE $LOCAL $REMOTE $MERGED
-		[merge]
-		  tool = conflerge
+[mergetool "conflerge-tree"]
+    cmd = java -jar ~/Conflerge/scripts/ConflergeTree.jar $BASE $LOCAL $REMOTE $MERGED
+[mergetool "conflerge-token"]
+    cmd = java -jar ~/Conflerge/scripts/ConflergeToken.jar $BASE $LOCAL $REMOTE $MERGED
+[merge]
+    tool = conflerge-tree
+    tool = conflerge-token
 
-3) Ensure that all the .sh files have run permission.
+3) Ensure that all the .sh files in Conflerge/scripts have run permission.
 
-4) Run ./test_repo.sh in the repo being tested.
+4) Run ./test-repo.sh from inside the Conflerge/scripts directory
 
-5) Once this finishes, the results will be stored in <repo name>.csv
+	- test_repo.sh accepts 3 arguments with the form:
+
+	`./test_repo.sh [repo name] [repouser-reponame] [merging approach]`
+
+	- As an example, to test Conflerge using the tree-based merging approach on the 'elasticsearch' repo (https://github.com/elastic/elasticsearch) you would run:
+
+	`./test_repo.sh elasticsearch elastic-elasticsearch tree`
+
+5) Once this finishes, the results will be stored in <repo name>_<mergeapproach>.csv (ie elasticsearch_tree.csv)
