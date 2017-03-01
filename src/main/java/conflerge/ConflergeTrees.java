@@ -3,22 +3,16 @@ package conflerge;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
-import com.github.javaparser.JavaToken;
 import com.github.javaparser.ast.Node;
 
-import conflerge.merger.TokenMerger;
 import conflerge.merger.TreeMerger;
-import conflerge.parser.TokenParser;
 
 /**
  * Runs Conflerge!
  */
-public class Conflerge {
-    
-    public static final boolean MERGE_BY_TREE = false;
-    
+public class ConflergeTrees {
+     
     public static final int MIN_ARGS = 4;
     
     /**
@@ -30,11 +24,7 @@ public class Conflerge {
             return;
         }
         
-        if (MERGE_BY_TREE) {
-            mergeTrees(args);
-        } else {
-            mergeTokens(args);
-        }
+        mergeTrees(args);
     }
     
     /**
@@ -50,27 +40,6 @@ public class Conflerge {
                 return;
             }
             writeMergedFile(mergedTree.toString(), args[3]);
-        } catch (FileNotFoundException e) {
-            fail("Files not found");
-        } catch (Exception e) {
-            fail("Unexpected failure");
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * Attempts to merge LOCAL and REMOTE. Writes result to MERGED on success.
-     * @param args
-     */
-    private static void mergeTokens(String[] args) {
-        try {
-            TokenMerger merger = new TokenMerger(args[0], args[1], args[2]);
-            List<JavaToken> mergedTokens = merger.merge();         
-            if (mergedTokens == null) {
-                fail("Conflict encountered");
-                return;
-            }
-            writeMergedFile(TokenParser.unparseTokens(mergedTokens, merger),  args[3]);
         } catch (FileNotFoundException e) {
             fail("Files not found");
         } catch (Exception e) {
