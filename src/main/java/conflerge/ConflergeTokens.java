@@ -3,16 +3,18 @@ package conflerge;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
-import com.github.javaparser.ast.Node;
+import com.github.javaparser.JavaToken;
 
-import conflerge.merger.TreeMerger;
+import conflerge.merger.TokenMerger;
+import conflerge.parser.TokenParser;
 
 /**
  * Runs Conflerge!
  */
-public class ConflergeTrees {
-     
+public class ConflergeTokens {
+    
     public static final int MIN_ARGS = 4;
     
     /**
@@ -23,23 +25,23 @@ public class ConflergeTrees {
             fail("Expected args: BASE LOCAL REMOTE MERGED");
             return;
         }
-        
-        mergeTrees(args);
+        mergeTokens(args);
     }
+
     
     /**
      * Attempts to merge LOCAL and REMOTE. Writes result to MERGED on success.
      * @param args
      */
-    private static void mergeTrees(String[] args) {
+    private static void mergeTokens(String[] args) {
         try {
-            TreeMerger merger = new TreeMerger(args[0], args[1], args[2]);
-            Node mergedTree = merger.merge();         
-            if (mergedTree == null) {
+            TokenMerger merger = new TokenMerger(args[0], args[1], args[2]);
+            List<JavaToken> mergedTokens = merger.merge();         
+            if (mergedTokens == null) {
                 fail("Conflict encountered");
                 return;
             }
-            writeMergedFile(mergedTree.toString(), args[3]);
+            writeMergedFile(TokenParser.unparseTokens(mergedTokens, merger),  args[3]);
         } catch (FileNotFoundException e) {
             fail("Files not found");
         } catch (Exception e) {
