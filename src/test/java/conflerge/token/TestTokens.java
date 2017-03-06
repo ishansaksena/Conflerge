@@ -16,7 +16,6 @@ import org.junit.Test;
 import com.github.javaparser.JavaToken;
 
 import conflerge.ConflergeTokens;
-import conflerge.parser.TokenParser;
 
 /**
  * System tests for Conflerge's token merging.

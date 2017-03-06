@@ -6,11 +6,9 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.utils.Pair;
 
-import conflerge.differ.ast.ASTDiffer;
-import conflerge.differ.ast.DiffResult;
-import conflerge.differ.ast.MergeVisitor;
-import conflerge.differ.ast.NodeListUnwrapperVisitor;
-import conflerge.differ.ast.NodeListWrapperVisitor;
+import conflerge.tree.visitor.MergeVisitor;
+import conflerge.tree.visitor.NodeListUnwrapperVisitor;
+import conflerge.tree.visitor.NodeListWrapperVisitor;
 
 public class TestASTUtils {
     
@@ -21,8 +19,8 @@ public class TestASTUtils {
         n1.accept(new NodeListWrapperVisitor(), "A"); 
         n2.accept(new NodeListWrapperVisitor(), "B");
     
-        DiffResult res1 = new ASTDiffer(n1, n2).diff();
-        DiffResult res2 = new ASTDiffer(n1, n1).diff();
+        DiffResult res1 = new TreeDiffer(n1, n2).diff();
+        DiffResult res2 = new TreeDiffer(n1, n1).diff();
     
         n1.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(res1, res2));   
         n1.accept(new NodeListUnwrapperVisitor(), null); 

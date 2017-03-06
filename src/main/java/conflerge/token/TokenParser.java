@@ -1,4 +1,4 @@
-package conflerge.parser;
+package conflerge.token;
 
 import static com.github.javaparser.Providers.provider;
 
@@ -18,8 +18,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.comments.Comment;
 
-import conflerge.merger.TokenMerger;
-import conflerge.merger.TreeMerger;
+import conflerge.tree.TreeMerger;
 
 /**
  * Contains static methods for tokenizing Java code. All token lists 

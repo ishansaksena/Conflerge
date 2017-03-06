@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 import com.github.javaparser.ast.Node;
 
-import conflerge.merger.TreeMerger;
+import conflerge.tree.TreeMerger;
 
 /**
  * Runs Conflerge!

@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.Map;
 
 import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
+
+import conflerge.tree.ast.NodeListWrapper;
 
 /**
  * Stores the data associated with a Diff between two trees A and B.

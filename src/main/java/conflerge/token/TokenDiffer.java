@@ -1,4 +1,4 @@
-package conflerge.differ;
+package conflerge.token;
 
 import java.util.ArrayList;
 import java.util.List;

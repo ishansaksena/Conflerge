@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -12,6 +12,11 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 
+import conflerge.tree.ast.ASTInputProcessing;
+import conflerge.tree.ast.NodeListWrapper;
+import conflerge.tree.ast.NodeListWrapperNode;
+import conflerge.tree.visitor.ShallowEqualsVisitor;
+
 /**
  * Uses the mmdiff algorithm (by Sudarshan S. Chawathe, available at http://www.vldb.org/conf/1999/P8.pdf)
  * to diff two ASTs (referred to as A and B throughout) and generate an edit script from tree A to tree B.
@@ -22,7 +27,7 @@ import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
  * replacements. This is particularly useful for merging.
  * 
  */
-public class ASTDiffer {
+public class TreeDiffer {
     
     /*
      * The cost of an edit operation.
@@ -115,7 +120,7 @@ public class ASTDiffer {
      * @param A 'Base' tree for the diff.
      * @param B 'Dest' tree for the diff.
      */
-    public ASTDiffer(Node A, Node B) {        
+    public TreeDiffer(Node A, Node B) {        
         this.aN = ASTInputProcessing.getOrderedNodes(A);
         this.bN = ASTInputProcessing.getOrderedNodes(B);
        

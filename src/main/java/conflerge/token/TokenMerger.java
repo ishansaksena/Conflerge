@@ -1,4 +1,4 @@
-package conflerge.merger;
+package conflerge.token;
 
 import static com.github.javaparser.ASTParserConstants.JAVA_DOC_COMMENT;
 import static com.github.javaparser.ASTParserConstants.MULTI_LINE_COMMENT;
@@ -17,8 +17,7 @@ import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 
 import conflerge.Edit;
-import conflerge.differ.TokenDiffer;
-import conflerge.parser.TokenParser;
+import conflerge.tree.TreeMerger;
 
 /**
  * Merges Java files by token.

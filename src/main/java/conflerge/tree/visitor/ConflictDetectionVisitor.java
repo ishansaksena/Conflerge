@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,9 @@ import com.github.javaparser.ast.type.VoidType;
 import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.Visitable;
 
-import conflerge.merger.TreeMerger;
+import conflerge.tree.DiffResult;
+import conflerge.tree.TreeMerger;
+import conflerge.tree.ast.NodeListWrapper;
 
 /**
  * Traverses a tree with a DiffResult, and reports a conflict if it encounters a 

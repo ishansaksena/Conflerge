@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree.ast;
 
 import java.util.ArrayList;
 import java.util.IdentityHashMap;

@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree.visitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,7 +93,10 @@ import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.Visitable;
 import com.github.javaparser.utils.Pair;
 
-import conflerge.merger.TreeMerger;
+import conflerge.tree.DiffResult;
+import conflerge.tree.TreeMerger;
+import conflerge.tree.ast.NodeListWrapper;
+
 import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 /**
  * Performs merge operations from two DiffResults and detects conflicts, if any.

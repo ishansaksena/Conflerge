@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.github.javaparser.JavaToken;
 
-import conflerge.differ.TokenDiffer;
-import conflerge.parser.TokenParser;
+import conflerge.token.TokenDiffer;
+import conflerge.token.TokenParser;
 
 import static com.github.javaparser.ASTParserConstants.*;
 

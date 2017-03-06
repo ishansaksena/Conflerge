@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree.visitor;
 
 /*
  * Copyright (C) 2007-2010 Júlio Vilmar Gesser.

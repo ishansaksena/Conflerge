@@ -1,10 +1,13 @@
-package conflerge.differ.ast;
+package conflerge.tree.visitor;
 
 import java.util.ArrayList;
 
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.visitor.Visitable;
+
+import conflerge.tree.DiffResult;
+import conflerge.tree.ast.NodeListWrapper;
 
 /**
  * 'Unwraps' a tree that has been wrapped by NodeListWrapperVisitor.

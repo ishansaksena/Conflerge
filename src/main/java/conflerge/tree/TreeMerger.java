@@ -1,4 +1,4 @@
-package conflerge.merger;
+package conflerge.tree;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,11 +13,9 @@ import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.utils.Pair;
 
-import conflerge.differ.ast.ASTDiffer;
-import conflerge.differ.ast.DiffResult;
-import conflerge.differ.ast.MergeVisitor;
-import conflerge.differ.ast.NodeListUnwrapperVisitor;
-import conflerge.differ.ast.NodeListWrapperVisitor;
+import conflerge.tree.visitor.MergeVisitor;
+import conflerge.tree.visitor.NodeListUnwrapperVisitor;
+import conflerge.tree.visitor.NodeListWrapperVisitor;
 
 public class TreeMerger {
 
@@ -45,8 +43,8 @@ public class TreeMerger {
         local.accept(new NodeListWrapperVisitor(), "B");
         remote.accept(new NodeListWrapperVisitor(), "C");
         
-        DiffResult localDiff = new ASTDiffer(base, local).diff();
-        DiffResult remoteDiff = new ASTDiffer(base, remote).diff();
+        DiffResult localDiff = new TreeDiffer(base, local).diff();
+        DiffResult remoteDiff = new TreeDiffer(base, remote).diff();
         
         conflict = false;
         

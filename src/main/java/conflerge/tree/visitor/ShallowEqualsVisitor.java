@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree.visitor;
 
 import com.github.javaparser.ast.ArrayCreationLevel;
 import com.github.javaparser.ast.CompilationUnit;
@@ -87,6 +87,8 @@ import com.github.javaparser.ast.type.VoidType;
 import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.Visitable;
+
+import conflerge.tree.ast.NodeListWrapperNode;
 
 
 /**

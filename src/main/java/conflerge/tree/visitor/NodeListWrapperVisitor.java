@@ -1,10 +1,12 @@
-package conflerge.differ.ast;
+package conflerge.tree.visitor;
 
 import java.util.ArrayList;
 
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.visitor.Visitable;
+
+import conflerge.tree.ast.NodeListWrapper;
 
 /**
  * 'Wraps' the NodeLists in an AST. In the resulting AST, all 

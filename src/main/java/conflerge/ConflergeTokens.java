@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.github.javaparser.JavaToken;
 
-import conflerge.merger.TokenMerger;
-import conflerge.parser.TokenParser;
+import conflerge.token.TokenMerger;
+import conflerge.token.TokenParser;
 
 /**
  * Runs Conflerge!
