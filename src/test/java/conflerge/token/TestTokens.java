@@ -1,4 +1,4 @@
-package conflerge.system.token;
+package conflerge.token;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -19,8 +19,7 @@ import conflerge.ConflergeTokens;
 import conflerge.parser.TokenParser;
 
 /**
- * Some straightforward system tests for Conflerge's token merging.
- *
+ * System tests for Conflerge's token merging.
  */
 public class TestTokens {
 
@@ -89,7 +88,7 @@ public class TestTokens {
     }
     
     @Test
-    public void testTrivialCommentMerge() {
+    public void testCommentMerge() {
         String b = "class Foo { }";
         String l = "class Foo {/* comment */  }";
         String r = "class Foo { }";
