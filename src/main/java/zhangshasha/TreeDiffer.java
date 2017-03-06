@@ -9,11 +9,11 @@ import java.util.Set;
 import java.util.Stack;
 
 /**
- * This file is no longer part of the project. It's still quite
- * neat, though, and should possibly be cleaned up and moved to 
- * its own repository at some point. To my knowledge, there aren't
- * any other publicly available impelementations of the Zhang-Shasha
- * algorithm.
+ * This file is no longer part of the project. It's still neat, though, 
+ * and should possibly be cleaned up and moved to its own repository at
+ * some point. To my knowledge, there aren't any other publicly available
+ * implementations of the Zhang-Shasha algorithm that include edit script
+ * recovery.
  */
 public class TreeDiffer {
     
@@ -26,12 +26,12 @@ public class TreeDiffer {
     private static final int ALIGN_IDX   = 2;
     private static final int NUM_OPS     = 3;
     
-    private final Node[] An;
-    private final Node[] Bn;
-    private final int[] Al;
-    private final int[] Bl;
-    private final int[] Akr;
-    private final int[] Bkr;
+    private final Node[] aNodes;
+    private final Node[] bNodes;
+    private final int[] aLs;
+    private final int[] bLs;
+    private final int[] aKR;
+    private final int[] bKR;
     
     private int[][] treeDist;   
     private int[][][][] krToForestDist;
@@ -39,24 +39,24 @@ public class TreeDiffer {
     private Point[][] treeDistToForestIndexes;
     
     public TreeDiffer(Node A, Node B) {
-        An  = getOrderedNodes(A);
-        Bn  = getOrderedNodes(B);
+        aNodes  = getOrderedNodes(A);
+        bNodes  = getOrderedNodes(B);
         
-        Al  = getLValues(An);
-        Bl  = getLValues(Bn);
+        aLs  = getLValues(aNodes);
+        bLs  = getLValues(bNodes);
         
-        Akr = getKeyroots(A, An);
-        Bkr = getKeyroots(B, Bn);
+        aKR = getKeyroots(A, aNodes);
+        bKR = getKeyroots(B, bNodes);
         
-        treeDist                = new int  [An.length][Bn.length];
-        krToForestDist          = new int  [An.length][Bn.length][][];
-        treeDistIdxToForestKr   = new Point[An.length][Bn.length];
-        treeDistToForestIndexes = new Point[An.length][Bn.length];
+        treeDist                = new int  [aNodes.length][bNodes.length];
+        krToForestDist          = new int  [aNodes.length][bNodes.length][][];
+        treeDistIdxToForestKr   = new Point[aNodes.length][bNodes.length];
+        treeDistToForestIndexes = new Point[aNodes.length][bNodes.length];
     }
     
-    public Set<String> diff() {
-        for (int i : Akr) {
-            for (int j : Bkr) {
+    public Set<String> runZhangShasha() {
+        for (int i : aKR) {
+            for (int j : bKR) {
                 krToForestDist[i][j] = computeForestDist(i,j);
             }
         }
@@ -64,10 +64,10 @@ public class TreeDiffer {
     }
     
     private int[][] computeForestDist(int i, int j) {
-        int m = i - Al[i] + 2;
-        int n = j - Bl[j] + 2; 
-        int ioff = Al[i] - 1;
-        int joff = Bl[j] - 1;
+        int m = i - aLs[i] + 2;
+        int n = j - bLs[j] + 2; 
+        int ioff = aLs[i] - 1;
+        int joff = bLs[j] - 1;
         
         int[][] fd = new int[m][n];
         int[] ops = new int[NUM_OPS];
@@ -82,8 +82,11 @@ public class TreeDiffer {
     
         for (int x = 1; x < m; x++) {         
             for (int y = 1; y < n; y++) {             
-                boolean bothTrees = (Al[i] == Al[x+ioff] && Bl[j] == Bl[y+joff]);
+                
+                boolean bothTrees = (aLs[i] == aLs[x+ioff] && bLs[j] == bLs[y+joff]);
+                
                 fd[x][y] = min(computeOps(fd, ops, x, y, ioff, joff, bothTrees));
+                
                 if (bothTrees) {
                     treeDist               [x+ioff][y+joff] = fd[x][y];          
                     treeDistIdxToForestKr  [x+ioff][y+joff] = new Point(i, j); 
@@ -98,10 +101,10 @@ public class TreeDiffer {
         ops[DELETE_IDX] = fd[x-1][y] + DELETE_COST;   
         ops[INSERT_IDX] = fd[x][y-1] + INSERT_COST;  
         if (bothTrees) {       
-            ops[ALIGN_IDX] = fd[x-1][y-1] + (An[x+ioff].label.equals(Bn[y+joff].label) ? 0 : REPLACE_COST);
+            ops[ALIGN_IDX] = fd[x-1][y-1] + (aNodes[x+ioff].label.equals(bNodes[y+joff].label) ? 0 : REPLACE_COST);
         } else {
-            int p = Al[x+ioff] - 1 - ioff;
-            int q = Bl[y+joff] - 1 - joff;
+            int p = aLs[x+ioff] - 1 - ioff;
+            int q = bLs[y+joff] - 1 - joff;
             ops[ALIGN_IDX] = fd[p][q] + treeDist[x+ioff][y+joff];
         }
         return ops;
@@ -110,7 +113,7 @@ public class TreeDiffer {
     private Set<String> computeEdits() {
         Stack<Point> S = new Stack<>(); 
         Set<String> M = new HashSet<>();  
-        S.add(new Point(An.length - 1, Bn.length - 1)); 
+        S.add(new Point(aNodes.length - 1, bNodes.length - 1)); 
       
         while (!S.isEmpty()) {             
             Point treeIdx = S.pop();
@@ -123,58 +126,50 @@ public class TreeDiffer {
     }
     
     private void recoverSoln(int i, int j, int x, int y, Stack<Point> S, Set<String> M, int[][] fd) {
-        int ioff = Al[i] - 1;
-        int joff = Bl[j] - 1;       
+        int ioff = aLs[i] - 1;
+        int joff = bLs[j] - 1;       
         
         int[] ops = new int[NUM_OPS];       
         
         while (x > 0 && y > 0) {        
-            boolean bothTrees = (Al[i] == Al[x+ioff] && Bl[j] == Bl[y+joff]);          
+            boolean bothTrees = (aLs[i] == aLs[x+ioff] && bLs[j] == bLs[y+joff]);          
             int min = min(computeOps(fd, ops, x, y, ioff, joff, bothTrees));     
         
             String edit = null;
             if (ops[DELETE_IDX] == min) {
-                edit = "DELETE " + An[x+ioff];
+                edit = "DELETE " + aNodes[x+ioff];
                 x--;
             } else if (ops[INSERT_IDX] == min) {
-                edit = "INSERT " + Bn[y + joff];
+                edit = "INSERT " + bNodes[y + joff];
                 y--;
             } else {
                 if (bothTrees) {     
-                    if (An[x+ioff].label.equals(Bn[y+joff].label)) {
-                        edit = "MATCH " + An[x+ioff] + " " + Bn[y+joff];
+                    if (aNodes[x+ioff].label.equals(bNodes[y+joff].label)) {
+                        edit = "MATCH " + aNodes[x+ioff] + " " + bNodes[y+joff];
                     } else {
-                        edit = "REPLACE " + An[x+ioff] + " " + Bn[y+joff];
+                        edit = "REPLACE " + aNodes[x+ioff] + " " + bNodes[y+joff];
                     }
                     x--;
                     y--;
                 } else {
                     S.push(new Point(x + ioff, y + joff));
-                    x = Al[x+ioff] - 1 - ioff;
-                    y = Bl[y+joff] - 1 - joff;
+                    x = aLs[x+ioff] - 1 - ioff;
+                    y = bLs[y+joff] - 1 - joff;
                 }
             }
-            addEdit(M, edit);
+            M.add(edit);
         }
         while (x > 0) {
-            addEdit(M, "DELETE " + An[x+ioff]);
+            M.add("DELETE " + aNodes[x+ioff]);
             x--;
         }
         while (y > 0) {
-            addEdit(M, "INSERT " + Bn[y+joff]);
+            M.add("INSERT " + bNodes[y+joff]);
             y--;
         }
     }
     
-    private void addEdit(Set<String> M, String edit) {
-        if (edit != null) {
-            if (M.contains(edit)) {
-                System.err.println("Duplicate edit");
-                throw new IllegalStateException();
-            }
-            M.add(edit);
-        }
-    }
+    //-Pre-Processing----------------------------------------------------------
     
     private static Node[] getOrderedNodes(Node root) {
         List<Node> list = getOrderedNodes(root, new ArrayList<Node>());
@@ -212,19 +207,21 @@ public class TreeDiffer {
         
         int[] KRs = new int[KRNodes.size()];
         for (int i = 0; i < KRs.length; i++) {
-            KRs[i] = nodeList.indexOf(KRNodes.get(i)); //  PROBLEMATIC -- requires unique labels
+            KRs[i] = nodeList.indexOf(KRNodes.get(i));
         }
         return KRs;
     }
     
-    private static List<Node> getKeyroots(Node root, ArrayList<Node> KRNodes, boolean kr) {
+    private static List<Node> getKeyroots(Node root, ArrayList<Node> krNodes, boolean kr) {
         for (int i = 0; i < root.children.size(); i++) {
-            getKeyroots(root.children.get(i), KRNodes, i > 0);
+            getKeyroots(root.children.get(i), krNodes, i > 0);
         }
-        if (kr) KRNodes.add(root);
-        return KRNodes;
+        if (kr) krNodes.add(root);
+        return krNodes;
     }
     
+    //-Utility-Methods----------------------------------------------------------
+  
     private static int min(int[] args) {
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < args.length; i++)
@@ -233,17 +230,16 @@ public class TreeDiffer {
         return min;
     }
     
+    /**
+     * A simple node class for demonstration.
+     */
     public static class Node {
         String label;
         List<Node> children;
-        Node parent;
         
         public Node(String label, Node... children) {
             this.label = label;
             this.children = Arrays.asList(children);
-            for (Node n : this.children) {
-                n.parent = this;
-            }
         }
         
         public void printTree() {
@@ -260,19 +256,6 @@ public class TreeDiffer {
         @Override
         public String toString() { 
             return this.label; 
-        }
-        
-        @Override
-        public boolean equals(Object o) { 
-            if (o instanceof Node) {
-                return this.label.equals(((Node) o).label);
-            }
-            return false;
-        }
-        
-        @Override
-        public int hashCode() { 
-            return this.label.hashCode(); 
         }
     }
 }

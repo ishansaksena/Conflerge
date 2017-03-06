@@ -26,7 +26,7 @@ public class TestTreeDiffer {
 
     private void assertExpected(Node t1, Node t2, String[] expected) {
         TreeDiffer differ = new TreeDiffer(t1, t2);
-        Set<String> actual = differ.diff();
+        Set<String> actual = differ.runZhangShasha();
 
         assertEquals(actual.size(), expected.length);
         for (String e : expected) {
