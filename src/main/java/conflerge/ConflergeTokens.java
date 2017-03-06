@@ -15,13 +15,13 @@ import conflerge.token.TokenParser;
  */
 public class ConflergeTokens {
     
-    public static final int MIN_ARGS = 4;
+    public static final int NUM_ARGS = 4;
     
     /**
      * @param args [BASE, LOCAL, REMOTE, MERGED] files
      */
     public static void main(String[] args) {
-        if (args.length < MIN_ARGS) {
+        if (args.length != NUM_ARGS) {
             fail("Expected args: BASE LOCAL REMOTE MERGED");
             return;
         }
