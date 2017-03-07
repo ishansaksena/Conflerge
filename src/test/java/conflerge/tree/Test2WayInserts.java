@@ -4,7 +4,11 @@ import static conflerge.tree.TestASTUtils.test;
 
 import org.junit.Test;
 
-public class TestInserts2Way {
+/**
+ * Insert operations are the most complex. This file tests edit script correctness 
+ * for insert operations in a number of different contexts.
+ */
+public class Test2WayInserts {
 
     //-Field-Declarations------------------------------------
 

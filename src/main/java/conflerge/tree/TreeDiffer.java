@@ -29,49 +29,49 @@ import conflerge.tree.visitor.ShallowEqualsVisitor;
  */
 public class TreeDiffer {
     
-    /*
+    /**
      * The cost of an edit operation.
      */
     public static final int editCost = 1;
     
-    /*  
-     * Nodes in A that were deleted in B. Logically this is a Set
-     *  --not a Map--but we use IdentityHashMap because nodes are 
+    /**  
+     *  Nodes in A that were deleted in B. Logically this is a Set,
+     *  not a Map, but we use IdentityHashMap because nodes are 
      *  tracked based on object identity rather than equality.
      */
-    private Map<Node, Node> deletes = new IdentityHashMap<>();
+    private IdentityHashMap<Node, Node> deletes = new IdentityHashMap<>();
     
-    /*
+    /**
      *  Mapping from nodes in B that replaced nodes in A and the 
      *  opposite mapping from nodes replaced in A to replacements 
      *  in B.
      */
-    private Map<Node, Node> replacesA = new IdentityHashMap<>();
-    private Map<Node, Node> replacesB = new IdentityHashMap<>();
+    private IdentityHashMap<Node, Node> replacesA = new IdentityHashMap<>();
+    private IdentityHashMap<Node, Node> replacesB = new IdentityHashMap<>();
     
-    /*
+    /**
      * Mappings between nodes in A and B that were aligned. 
      * The mmdiff algorithm enforces that key, values nodes MUST be 
      * shallowly equal. (otherwise it would be a replacement, 
      * not an alignment)
      */
-    private Map<Node, Node> alignsA = new IdentityHashMap<>();
-    private Map<Node, Node> alignsB = new IdentityHashMap<>();
+    private IdentityHashMap<Node, Node> alignsA = new IdentityHashMap<>();
+    private IdentityHashMap<Node, Node> alignsB = new IdentityHashMap<>();
     
-    /*
+    /**
      * Javaparser does not treat modifiers (public, private, static, etc) as 
      * nodes, so the mmdiff algorithm ignores them. This map stores a mapping
      * from nodes in A to their altered modifiers in B, if any. 
      */
-    private Map<Node, EnumSet<Modifier>> modifiers = new IdentityHashMap<>();
+    private IdentityHashMap<Node, EnumSet<Modifier>> modifiers = new IdentityHashMap<>();
     
-    /*
-     * A map from NodeListWrapperNodes to all nodes that were
+    /**
+     * A map from NodeListWrapperNodes to nodes that were
      * inserted under their NodeList.
      */
-    private Map<NodeListWrapperNode, List<Node>> listInserts  = new IdentityHashMap<>();
+    private IdentityHashMap<NodeListWrapperNode, List<Node>> listInserts  = new IdentityHashMap<>();
     
-    /*
+    /**
      *  Sometimes mmdiff will return insertions that do not correspond
      *  to inserting a node into a list of parameters. If these insertions
      *  are top-level (defn: there are no modifications to these insertion's
@@ -79,18 +79,18 @@ public class TreeDiffer {
      *  are stored separately so they can later be translated into replace
      *  operations and merged correctly.
      */
-    private Map<Node, Node> nonListInserts = new IdentityHashMap<>();
+    private IdentityHashMap<Node, Node> nonListInserts = new IdentityHashMap<>();
     
-    /*
+    /**
      * Maps from nodes to their parents. Unlike the node's 'getParent' method,
      * this returns NodeListWrapperNodes if the node is a member of a wrapped 
      * NodeList. Never use 'getParent' if you expected wrapper nodes.
      */
-    public final Map<Node, Node> parentsA;
-    public final Map<Node, Node> parentsB;
+    public final IdentityHashMap<Node, Node> parentsA;
+    public final IdentityHashMap<Node, Node> parentsB;
     
        
-    /*
+    /**
      * opt: Array of optimal subproblem edit distances.
      * m  : Length of opt's first dimension, equal to the number of nodes in A.
      * n  : Length of opt's second dimension, equal to the number of nodes in B.
@@ -99,13 +99,13 @@ public class TreeDiffer {
     private final int m;
     private final int n;
     
-    /*
+    /**
      * The nodes in A, B in pre-order.
      */
     private final Node[] aN;
     private final Node[] bN;
     
-    /*
+    /**
      * The depth of nodes in A, B in pre-order. If Node n is the ith node in A 
      * and has depth d, then: aD[i] = d
      */
@@ -157,12 +157,12 @@ public class TreeDiffer {
         // Produce a mapping of NodeLists -> indexes to insert -> Nodes to insert.
         // This operation must be performed last because it depends on complete
         // alignment and replacement maps.
-        Map<NodeListWrapper, Map<Integer, List<Node>>> indexInserts = processListInserts();
+        IdentityHashMap<NodeListWrapper, Map<Integer, List<Node>>> indexInserts = processListInserts();
         
         return new DiffResult(deletes, replacesA, modifiers, indexInserts);
     }
 
-    /*
+    /**
      * Runs the mmdiff algorithm. Popluates opt with the computation's results.
      */
     private void computeEdits() {
@@ -192,7 +192,7 @@ public class TreeDiffer {
        }
     }    
   
-    /*
+    /**
      * Recovers the edit script. Must not be called until opt has been
      * populated by a call to computeEdits.
      */
@@ -216,6 +216,11 @@ public class TreeDiffer {
        while (j > 0) { addInsert(i, j); j--; }
     }
      
+    /**
+     * Process an aligment or replacement operation.
+     * @param i index of A node in aN.
+     * @param j index of B node in bN.
+     */
     private void addAlignOrReplace(int i, int j) {
         if (updateCost(aN[i], bN[j]) == 0)  {
             if (aN[i] instanceof NodeWithModifiers) {
@@ -233,10 +238,20 @@ public class TreeDiffer {
         }
     }
 
+    /**
+     * Process a delete operation.
+     * @param i index of A node in aN.
+     * @param j index of B node in bN.
+     */
     private void addDelete(int i, int j) {
         deletes.put(aN[i], aN[i]);
     }
     
+    /**
+     * Process an insert operation.
+     * @param i index of A node in aN.
+     * @param j index of B node in bN.
+     */
     private void addInsert(int i, int j) {
         Node parent = parentsB.get(bN[j]);     
         if (parentsB.get(bN[j]) instanceof NodeListWrapperNode) {
@@ -251,7 +266,7 @@ public class TreeDiffer {
     
     //-Output-Processing---------------------------------------------
     
-    /*
+    /**
      *  Replaces any non-list insert operation with the replacement of that
      *  Node's parent. This operation spares our merge visitor from performing 
      *  inserts that are not into lists of nodes.
@@ -264,19 +279,19 @@ public class TreeDiffer {
         }
     }
     
-    /*
+    /**
      * Returns a mapping of NodeList -> index of insertion(s) into that NodeList -> Node(s) inserted.
      * 
      * This operation must be performed after the edits have been computed and
      * recovered because it depends on the compelete alignment and replacement maps. 
      */
-    private Map<NodeListWrapper, Map<Integer, List<Node>>> processListInserts() {
+    private IdentityHashMap<NodeListWrapper, Map<Integer, List<Node>>> processListInserts() {
         
-        Map<NodeListWrapper, Map<Integer, List<Node>>> result = new IdentityHashMap<>();       
+        IdentityHashMap<NodeListWrapper, Map<Integer, List<Node>>> result = new IdentityHashMap<>();       
         
         for (NodeListWrapperNode nlwn : listInserts.keySet()) {
             
-            // If the list wasn't aligned it won't be relevant 
+            // If the list wasn't aligned it won't be relevant; it's not a 'top-level' operation.
             if (!alignsB.containsKey(nlwn)) {
                 continue;
             }
@@ -309,6 +324,12 @@ public class TreeDiffer {
         return result;
     }
     
+    /**
+     * 
+     * @param nl
+     * @param insert
+     * @return
+     */
     private int getInsertIndex(NodeList<? extends Node> nl, Node insert) {
         // Get the inserted node's index in it's NodeList
         int i = indexOfObj(nl, insert);
@@ -333,7 +354,7 @@ public class TreeDiffer {
 
     //-Utility-Methods---------------------------------------------
     
-    /*
+    /**
      * Nodes are identified strictly by object equality, so this
      * method is the correct way to locate a Node in a list.
      */
@@ -348,7 +369,7 @@ public class TreeDiffer {
         return -1;
     }
     
-    /*
+    /**
      * Returns the minimum value from the parameters.
      */
     private static int min(int... args) {
@@ -359,7 +380,7 @@ public class TreeDiffer {
         return min;
     }
       
-    /*
+    /**
      * Returns 1 iff Node n1, n2 are shallowly equal. 
      */
     private int updateCost(Node n1, Node n2) {

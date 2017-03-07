@@ -67,8 +67,12 @@ public class DiffTool {
         }
     }
 
-    private static void removeComments(List<JavaToken> t) {
-        t.removeIf(token -> token.kind == SINGLE_LINE_COMMENT ||  
+    /**
+     * Removes all comment tokens.
+     * @param tokens
+     */
+    private static void removeComments(List<JavaToken> tokens) {
+        tokens.removeIf(token -> token.kind == SINGLE_LINE_COMMENT ||  
                    token.kind == MULTI_LINE_COMMENT ||  
                    token.kind == JAVA_DOC_COMMENT);
     }

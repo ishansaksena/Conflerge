@@ -9,10 +9,13 @@ import com.github.javaparser.ast.Node;
 import conflerge.tree.TreeMerger;
 
 /**
- * Runs Conflerge!
+ * Runs Conflerge with an AST-based merging strategy.
  */
 public class ConflergeTrees {
-     
+    
+    /**
+     * The number of expected command-line arguments.
+     */
     public static final int NUM_ARGS = 4;
     
     /**
@@ -65,6 +68,9 @@ public class ConflergeTrees {
         }
     }
 
+    /**
+     * Display a failure message and exit.
+     */
     private static void fail(String message) {
         System.out.println("FAILURE");
         System.err.println(message);

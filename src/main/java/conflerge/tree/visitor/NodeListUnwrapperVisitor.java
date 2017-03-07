@@ -13,6 +13,10 @@ import conflerge.tree.ast.NodeListWrapper;
  * 'Unwraps' a tree that has been wrapped by NodeListWrapperVisitor.
  */
 public class NodeListUnwrapperVisitor extends ModifierVisitor<DiffResult>  {  
+    
+    /**
+     * Replace a NodeListWrapper with its wrapped NodeList.
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Visitable visit(NodeList n, DiffResult arg) {

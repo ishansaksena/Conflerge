@@ -14,6 +14,9 @@ import conflerge.tree.ast.NodeListWrapper;
  */
 public class NodeListWrapperVisitor extends ModifierVisitor<String> {
     
+    /**
+     * Replace the NodeList with a NodeListWrapper.
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Visitable visit(NodeList n, String arg) {

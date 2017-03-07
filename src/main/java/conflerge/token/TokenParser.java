@@ -23,7 +23,7 @@ import conflerge.tree.TreeMerger;
 /**
  * Contains static methods for tokenizing Java code. All token lists 
  * are currently returned with an empty "start token" as the first element,
- * which is convenient for alignment algorithms.
+ * which is convenient for diffing algorithm.
  */
 public class TokenParser {
 
@@ -38,7 +38,8 @@ public class TokenParser {
     
     /**
      * @param filename
-     * @return List of tokens corresponding to the given file's Java code.
+     * @return List of tokens corresponding to the given file's Java code, ignoring all the
+     *  file's import declarations.
      * @throws FileNotFoundException
      */
     public static List<JavaToken> tokenizeFileNoImports(String filename) throws FileNotFoundException {
@@ -49,7 +50,7 @@ public class TokenParser {
     
     /**
      * @param code
-     * @return List of tokens corresponding to code.
+     * @return List of tokens corresponding to String code.
      */
     public static List<JavaToken> tokenizeString(String code) {
         return tokenize(provider(code));
@@ -94,11 +95,11 @@ public class TokenParser {
         return cu.toString();
     }
 
-    /*
+    /**
      * Unfortunately, sometimes the same comment gets attached to many nodes and
-     * duplicated in the output. As far as I know, the bug is in javaparser. This
-     * method prevents the same comments (the same object, not equality) from 
-     * appearing multiple times.
+     * duplicated in the output. As far as we know, this bug is from Javaparser. 
+     * This method prevents the same comments (as in the same object, not identical text) 
+     * from appearing multiple times in the output.
      */
     private static void removeExtraComments(Node root, Map<Comment, Boolean> comments) {
         Comment comment = root.getComment().isPresent() ?  root.getComment().get() : null;

@@ -16,7 +16,7 @@ public class TokenDiffer {
     /**
      * @param base
      * @param modified
-     * @return Smallest list of Edits than transforms base into modified
+     * @return The smallest list of Edits than transforms base into modified.
      */
     public static List<Edit> diff(List<JavaToken> base, List<JavaToken> modified) {        
         int n = base.size();
@@ -53,7 +53,7 @@ public class TokenDiffer {
      * @param op
      * @param base
      * @param modified
-     * @return List of edits corresponding to the computations in op.
+     * @return List of Edits corresponding to the computations in op.
      */
     private static List<Edit> recoverEdits(int[][] op, List<JavaToken> base, List<JavaToken> modified) {
         int i = op.length - 1;

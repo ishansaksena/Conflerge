@@ -12,6 +12,9 @@ import conflerge.tree.visitor.NodeListWrapperVisitor;
 
 public class TestASTUtils {
     
+    /**
+     * Performs a two-way merge on str1 and str2.
+     */
     public static void eval(String str1, String str2) {     
         Node n1  = JavaParser.parse(str1);
         Node n2 = JavaParser.parse(str2);   
@@ -28,6 +31,10 @@ public class TestASTUtils {
         assertEquals(JavaParser.parse(str2), n1);
     }
 
+    /**
+     * Performs two two-way merges, one in each direction,
+     * for str1 and str2.
+     */
     public static void test(String str1, String str2) {
         eval(str1, str2);
         eval(str2, str1);

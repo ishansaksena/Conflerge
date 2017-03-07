@@ -11,10 +11,13 @@ import conflerge.token.TokenMerger;
 import conflerge.token.TokenParser;
 
 /**
- * Runs Conflerge!
+ * Runs Conflerge with a token-based merging strategy.
  */
 public class ConflergeTokens {
     
+    /**
+     * The number of expected command-line arguments.
+     */
     public static final int NUM_ARGS = 4;
     
     /**
@@ -67,6 +70,9 @@ public class ConflergeTokens {
         }
     }
 
+    /**
+     * Display a failure message and exit.
+     */
     private static void fail(String message) {
         System.out.println("FAILURE");
         System.err.println(message);

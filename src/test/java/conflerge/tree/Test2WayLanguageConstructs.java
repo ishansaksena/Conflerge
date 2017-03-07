@@ -4,6 +4,9 @@ import static conflerge.tree.TestASTUtils.test;
 
 import org.junit.Test;
 
+/**
+ * Tests two way merges on a number of different language constructs.
+ */
 public class Test2WayLanguageConstructs {
     
     //-Conditionals--------------------------------

@@ -104,7 +104,11 @@ import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 @SuppressWarnings("deprecation")
 public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> {
     
-    
+    /**
+     * Visit a NodeList. This should be a NodeListWrapper, because the AST in question
+     * should have been wrapped before the merge operation is performed. Perform any
+     * inserts inserts into the wrapped NodeList, then visit the list's original nodes.
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Visitable visit(NodeList n, Pair<DiffResult, DiffResult> args) {    
@@ -164,6 +168,16 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
         }
     }
     
+    /**
+     * Perform deletions or replacements rooted at this node. 
+     * Dispatch a ConflictDetectionVisitor on any deleted or 
+     * replaced subtree.
+     * 
+     * @param n
+     * @param local
+     * @param remote
+     * @return Result of the merge operation.
+     */
     private Visitable mergeOperation(Node n, DiffResult local, DiffResult remote) {
         
         // If local deleted or replaced this node, return the appropriate
@@ -202,11 +216,9 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
         return n;
     }
     
-    /*
-     * It would be nice to refactor the methods below, but we can't: they
-     * need to call the superclass methods, which won't work if the Node
-     * type is generic.
-     */    
+    // It would be nice to refactor the methods below, but we can't: they
+    // need to call the superclass methods, which won't work if the Node
+    // type is genericized.     
     
     @Override
     public Visitable visit(final AnnotationDeclaration n, final Pair<DiffResult, DiffResult> arg) {

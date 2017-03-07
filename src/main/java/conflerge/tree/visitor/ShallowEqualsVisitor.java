@@ -93,7 +93,11 @@ import conflerge.tree.ast.NodeListWrapperNode;
 
 /**
  * This class checks for shallow equality, necessary in the tree diffing algorithm.
- * Returns true iff a both nodes have the same type and value.
+ * Most nodes are shallowly equal if they are instances of the same class. Nodes that
+ * have values, like those corresponding literal primitives or identifiers, are only
+ * shallowly equal if their values are equal.
+ * 
+ * Returns true iff a both nodes have the same type and value (if any).
  */
 @SuppressWarnings("deprecation")
 public class ShallowEqualsVisitor implements GenericVisitor<Boolean, Visitable> {

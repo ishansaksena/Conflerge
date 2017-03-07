@@ -24,10 +24,17 @@ import conflerge.tree.TreeMerger;
  */
 public class TokenMerger {
     
+    /**
+     * Token sequences of the base, local, and remote files.
+     */
     private List<JavaToken> base;
     private List<JavaToken> local;
     private List<JavaToken> remote;
     
+    /**
+     * The imports that will be included in the resulting merge, if successful.
+     * Contains the union of import declarations from local and remote.
+     */
     public final List<ImportDeclaration> imports;
     
     /**
@@ -126,6 +133,10 @@ public class TokenMerger {
         return res;
     }
 
+    /**
+     * @param token
+     * @return true iff the given token corresponds to a comment.
+     */
 	private boolean isComment(JavaToken token) {
 	    return token.kind == SINGLE_LINE_COMMENT ||  
 	           token.kind == MULTI_LINE_COMMENT  ||  

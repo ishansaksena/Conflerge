@@ -27,6 +27,9 @@ public class TestTokens {
     public static final String REMOTE = "REMOTE";
     public static final String MERGED = "MERGED";
     
+    /**
+     * Removes files created by testing.
+     */
     @After 
     public void deleteFiles() {
         new File(BASE).delete();
@@ -35,17 +38,27 @@ public class TestTokens {
         new File(MERGED).delete();
     }
     
+    /**
+     * Merge base, local, and remote. Fails if a conflict occurs or if the result
+     * does not match expected.
+     */
     public void checkMergeSucceeds(String base, String local, String remote, String expected) {
         runConflergeMain(base, local, remote);
         checkFileContents(MERGED, expected);
     }
     
+    /**
+     * Attempts to merge base, local, and remote. Fails if the merge succeeds.
+     */
     public void checkMergeFails(String base, String local, String remote) {
         runConflergeMain(base, local, remote);
         File f = new File(MERGED);
         assertFalse(f.exists());
     }
     
+    /**
+     * Executes Conflerge on the given base, local, and remote file contents.
+     */
     private void runConflergeMain(String base, String local, String remote) {
         writeFile(BASE, base);
         writeFile(LOCAL, local);
@@ -53,6 +66,10 @@ public class TestTokens {
         ConflergeTokens.main(new String[] { BASE, LOCAL, REMOTE, MERGED });
     }
     
+    /**
+     * Verifies that the file filename's tokens are identical to the tokens
+     * from expected.
+     */
     private void checkFileContents(String filename, String expected) {
         try {
             List<JavaToken> mergedTokens = TokenParser.tokenizeFile("MERGED");
@@ -68,6 +85,9 @@ public class TestTokens {
         }
     }
 
+    /**
+     * Write file filename with the given contents.
+     */
     private void writeFile(String filename, String contents) {
         try {
             PrintWriter writer = new PrintWriter(filename, "UTF-8");

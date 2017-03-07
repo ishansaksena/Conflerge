@@ -13,10 +13,22 @@ import com.github.javaparser.ast.visitor.VoidVisitor;
  */
 public class NodeListWrapperNode extends Node {
     
+    /**
+     * A useless 'Range' to placate the super constructor.
+     */
     private static final Range dummy_range = new Range(new Position(0, 0), new Position(0, 0));
     
+    /**
+     * The NodeListWrapper that corresponds to this NodeListWrapperNode.
+     */
     public final NodeListWrapper list;
     
+    /**
+     * Constructs a new NodeListWrapperNode corresponding to the
+     * given NodeListWrapper.
+     * 
+     * @param list
+     */
     public NodeListWrapperNode(NodeListWrapper list) { 
         super(dummy_range);
         this.list = list;

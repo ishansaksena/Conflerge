@@ -4,6 +4,9 @@ import static conflerge.tree.TestASTUtils.test;
 
 import org.junit.Test;
 
+/**
+ * Two-way test cases that failed in the development process.
+ */
 public class TestTrickyCases2Way {
     
     @Test

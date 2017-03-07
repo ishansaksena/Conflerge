@@ -4,6 +4,10 @@ import static conflerge.tree.TestASTUtils.test;
 
 import org.junit.Test;
 
+/**
+ * Two way merges check the correctness of the edit script: they verify that the 
+ * TreeDiffer algorithm produces an edit script that can transform tree A into tree B.
+ */
 public class Test2WayBasic {
     
     @Test

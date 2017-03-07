@@ -14,30 +14,87 @@ import java.util.Stack;
  * some point. To my knowledge, there aren't any other publicly available
  * implementations of the Zhang-Shasha algorithm that include edit script
  * recovery.
+ * 
+ * Performs the Zhang-Shasha algorithm for tree edit distance between two
+ * trees, A and B. Recovers the corresponding edit script.
  */
 public class TreeDiffer {
     
+    /**
+     * The costs of the edit operations.
+     */
     public static final int DELETE_COST  = 1;
     public static final int INSERT_COST  = 1;
     public static final int REPLACE_COST = 1;
     
+    /**
+     * Used for to index into a NUM_OPS size array of costs by operation.
+     */
     private static final int DELETE_IDX  = 0;
     private static final int INSERT_IDX  = 1;
     private static final int ALIGN_IDX   = 2;
     private static final int NUM_OPS     = 3;
     
+    /**
+     * The nodes in A and B, in post-order.
+     */
     private final Node[] aNodes;
     private final Node[] bNodes;
+    
+    /**
+     * L values for A and B.
+     * 
+     *  aLs[i] = post-order index of the leftmost leaf descendent
+     *           of the node with post-order index 'i', in tree A.
+     * 
+     */
     private final int[] aLs;
     private final int[] bLs;
+    
+    /**
+     * Keyroots for A and B: post-order indexes of nodes that have a left sibling.
+     */
     private final int[] aKR;
     private final int[] bKR;
     
+    /**
+     * treeDist[i][j] = Edit distance between the subtree in A rooted at
+     * Node i (where i is a post-order index in A) and the subtree in B
+     * rooted at Node j (where j is a post-order index in B)
+     */
     private int[][] treeDist;   
+    
+    /**
+     * Given two keyroots, get the forest distance matrix
+     * associated with those keyroots. 
+     * 
+     * Storing the forest distance matricies is an optimization 
+     * for speed but a major memory overhead: If this is applied
+     * to large trees, it may be neccessary to discard the forest
+     * distance matricies and recompute them in the edit-recovery step. 
+     */
     private int[][][][] krToForestDist;
+    
+    /**
+     * Given indexes i, j in treeDist, gives the keyroots for the 
+     * forest distance calculation, as a Point, that set that index
+     * in treeDist. 
+     */
     private Point[][] treeDistIdxToForestKr;
+    
+    /**
+     * Given indexes i, j in treeDist, gives the indexes in the 
+     * forest distance calculation, as a Point, that set that index
+     * in treeDist. 
+     */
     private Point[][] treeDistToForestIndexes;
     
+    /**
+     * Construct a new TreeDiffer for A and B.
+     * 
+     * @param A
+     * @param B
+     */
     public TreeDiffer(Node A, Node B) {
         aNodes  = getOrderedNodes(A);
         bNodes  = getOrderedNodes(B);
@@ -54,6 +111,11 @@ public class TreeDiffer {
         treeDistToForestIndexes = new Point[aNodes.length][bNodes.length];
     }
     
+    /**
+     * Performs the Zhang-Shasha algorithm with path recovery.
+     * 
+     * @return Set of strings corresponding to the edit operations.
+     */
     public Set<String> runZhangShasha() {
         for (int i : aKR) {
             for (int j : bKR) {
@@ -63,6 +125,14 @@ public class TreeDiffer {
         return computeEdits();
     }
     
+    /**
+     * Computes the forest distance between keyroots i and j 
+     * in A and B, respoectively.
+     *
+     * @param i
+     * @param j
+     * @return the computation matrix
+     */
     private int[][] computeForestDist(int i, int j) {
         int m = i - aLs[i] + 2;
         int n = j - bLs[j] + 2; 
@@ -97,6 +167,9 @@ public class TreeDiffer {
         return fd;
     }
     
+    /**
+     * Computes the optimal operation recurrence for computeForestDistance.
+     */
     private int[] computeOps(int[][] fd, int[] ops, int x, int y, int ioff, int joff, boolean bothTrees) {
         ops[DELETE_IDX] = fd[x-1][y] + DELETE_COST;   
         ops[INSERT_IDX] = fd[x][y-1] + INSERT_COST;  
@@ -110,6 +183,10 @@ public class TreeDiffer {
         return ops;
     }
     
+    /**
+     * 
+     * @return
+     */
     private Set<String> computeEdits() {
         Stack<Point> S = new Stack<>(); 
         Set<String> M = new HashSet<>();  
@@ -125,6 +202,9 @@ public class TreeDiffer {
         return M;
     }
     
+    /**
+     * Recovers the edit script for a given forest distance computation.
+     */
     private void recoverSoln(int i, int j, int x, int y, Stack<Point> S, Set<String> M, int[][] fd) {
         int ioff = aLs[i] - 1;
         int joff = bLs[j] - 1;       
@@ -171,6 +251,11 @@ public class TreeDiffer {
     
     //-Pre-Processing----------------------------------------------------------
     
+    /**
+     * 
+     * @param root
+     * @return
+     */
     private static Node[] getOrderedNodes(Node root) {
         List<Node> list = getOrderedNodes(root, new ArrayList<Node>());
         Node[] nodes = new Node[list.size()];
@@ -180,6 +265,9 @@ public class TreeDiffer {
         return nodes;
     }
     
+    /**
+     * Helper method for getOrderedNodes
+     */
     private static List<Node> getOrderedNodes(Node root, List<Node> list) {
         for (Node n : root.children) {
             getOrderedNodes(n, list);
@@ -188,6 +276,11 @@ public class TreeDiffer {
         return list;
     }
 
+    /**
+     * 
+     * @param nodes
+     * @return
+     */
     private static int[] getLValues(Node[] nodes) {
         int[] l = new int[nodes.length];
         List<Node> nodeList = Arrays.asList(nodes);
@@ -201,6 +294,12 @@ public class TreeDiffer {
         return l;
     }
 
+    /**
+     * 
+     * @param root
+     * @param nodes
+     * @return
+     */
     private static int[] getKeyroots(Node root, Node[] nodes) {
         List<Node> KRNodes = getKeyroots(root, new ArrayList<Node>(), true);
         List<Node> nodeList = Arrays.asList(nodes);
@@ -212,6 +311,9 @@ public class TreeDiffer {
         return KRs;
     }
     
+    /**
+     * Helper method for getKeyroots
+     */
     private static List<Node> getKeyroots(Node root, ArrayList<Node> krNodes, boolean kr) {
         for (int i = 0; i < root.children.size(); i++) {
             getKeyroots(root.children.get(i), krNodes, i > 0);

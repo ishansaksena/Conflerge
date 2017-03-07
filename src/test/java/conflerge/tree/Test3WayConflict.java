@@ -14,6 +14,10 @@ import conflerge.tree.visitor.NodeListWrapperVisitor;
 
 public class Test3WayConflict {
     
+    /**
+     * Perform a merge operation for baseStr, localStr, and remoteStr.
+     * Asserts that the expected conflict status was correct.
+     */
     private static void merge(String baseStr, String localStr, String remoteStr, boolean conflict) { 
         Node base   = JavaParser.parse(baseStr);
         Node local  = JavaParser.parse(localStr);    

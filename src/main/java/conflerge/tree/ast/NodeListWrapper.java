@@ -10,10 +10,21 @@ import com.github.javaparser.ast.NodeList;
  */
 @SuppressWarnings({ "rawtypes" })
 public class NodeListWrapper extends NodeList {
+    
+    /**
+     * The wrapped NodeList
+     */
     public NodeList<? extends Node> nodeList;
     
-    public Node node;
+    /**
+     * A NodeListWrapperNode that corresponds to this NodeListWrapper.
+     */
+    public NodeListWrapperNode node;
     
+    /**
+     * Constructs a new NodeListWrapper wrapping the given NodeList.
+     * @param nodeList
+     */
     public NodeListWrapper(NodeList<? extends Node> nodeList) {
         this.nodeList = nodeList;
     }
