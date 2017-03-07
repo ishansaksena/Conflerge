@@ -1,41 +1,14 @@
-package conflerge.unit.tree;
+package conflerge.tree;
 
-import static org.junit.Assert.assertEquals;
+import static conflerge.tree.TestASTUtils.test;
 
 import org.junit.Test;
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.Node;
-import com.github.javaparser.utils.Pair;
-
-import conflerge.differ.ast.ASTDiffer;
-import conflerge.differ.ast.DiffResult;
-import conflerge.differ.ast.MergeVisitor;
-import conflerge.differ.ast.NodeListUnwrapperVisitor;
-import conflerge.differ.ast.NodeListWrapperVisitor;
-
-public class TestBasicASTDiffer2WayLanguageConstructs {
+/**
+ * Tests two way merges on a number of different language constructs.
+ */
+public class Test2WayLanguageConstructs {
     
-    private static void eval(String str1, String str2) {   
-        Node n1  = JavaParser.parse(str1);
-        Node n2 = JavaParser.parse(str2);   
-
-        n1.accept(new NodeListWrapperVisitor(), "A"); 
-        n2.accept(new NodeListWrapperVisitor(), "B");
-        
-        DiffResult res1 = new ASTDiffer(n1, n2).diff();
-        DiffResult res2 = new ASTDiffer(n1, n1).diff();
-        
-        n1.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(res1, res2));   
-        n1.accept(new NodeListUnwrapperVisitor(), null); 
-        
-        assertEquals(JavaParser.parse(str2), n1);
-    }
-    
-    public void test(String str1, String str2) {
-        eval(str1, str2);
-        eval(str2, str1);
-    }
     //-Conditionals--------------------------------
     
     @Test

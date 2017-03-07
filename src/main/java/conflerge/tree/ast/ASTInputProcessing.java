@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree.ast;
 
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
@@ -9,15 +9,15 @@ import com.github.javaparser.ast.NodeList;
 
 /**
  * The diff algorithm requires several preprocessing steps on the ASTs.
- * They've been delegated to this file to keep ASTDiffer.java a bit more
+ * They've been moved to this file to keep ASTDiffer.java a bit more
  * managable.
  */
 public class ASTInputProcessing {
 
     /**
      * Returns an identity map from each Node in n to its parent node.
-     * If the node is a member of a NodeListWrapper with a NodeListWrapperNode,
-     * that NodeListWrapperNode will be the parent.
+     * If the node is a member of a NodeListWrapper linked to a 
+     * NodeListWrapperNode, that NodeListWrapperNode will be the parent.
      * 
      * @param root
      * @return IdentityHashMap of Node -> Parent(Node)
@@ -28,6 +28,9 @@ public class ASTInputProcessing {
         return getParentMap(root, parents);
     }
     
+    /**
+     * Private helper for getParentMap
+     */
     private static IdentityHashMap<Node, Node> getParentMap(Node root, IdentityHashMap<Node, Node> parents) {
         List<Node> children = new ArrayList<>(root.getChildNodes());   
         List<NodeList<?>> nodeLists = root.getNodeLists();
@@ -67,6 +70,9 @@ public class ASTInputProcessing {
         return res;
     }
     
+    /**
+     * Private helper for getDepths.
+     */
     private static void getDepths(Node root, List<Integer> list, int d) {
         list.add(d);
         List<Node> children = new ArrayList<>(root.getChildNodes());   
@@ -101,6 +107,9 @@ public class ASTInputProcessing {
         return res.toArray(new Node[res.size()]);
     }
       
+    /**
+     * Private helper for getOrderedNodes.
+     */
     private static void getOrderedNodes(Node root, List<Node> list) {
         list.add(root);
         List<Node> children = new ArrayList<>(root.getChildNodes());   

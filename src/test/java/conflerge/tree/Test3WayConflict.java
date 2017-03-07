@@ -1,4 +1,4 @@
-package conflerge.unit.tree;
+package conflerge.tree;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,15 +8,16 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.utils.Pair;
 
-import conflerge.differ.ast.ASTDiffer;
-import conflerge.differ.ast.DiffResult;
-import conflerge.differ.ast.MergeVisitor;
-import conflerge.differ.ast.NodeListUnwrapperVisitor;
-import conflerge.differ.ast.NodeListWrapperVisitor;
-import conflerge.merger.TreeMerger;
+import conflerge.tree.visitor.MergeVisitor;
+import conflerge.tree.visitor.NodeListUnwrapperVisitor;
+import conflerge.tree.visitor.NodeListWrapperVisitor;
 
-public class TestBasicASTDifferConflictDetection {
+public class Test3WayConflict {
     
+    /**
+     * Perform a merge operation for baseStr, localStr, and remoteStr.
+     * Asserts that the expected conflict status was correct.
+     */
     private static void merge(String baseStr, String localStr, String remoteStr, boolean conflict) { 
         Node base   = JavaParser.parse(baseStr);
         Node local  = JavaParser.parse(localStr);    
@@ -26,8 +27,8 @@ public class TestBasicASTDifferConflictDetection {
         local.accept(new NodeListWrapperVisitor(), "B");
         remote.accept(new NodeListWrapperVisitor(), "C");
         
-        DiffResult localDiff = new ASTDiffer(base, local).diff();
-        DiffResult remoteDiff = new ASTDiffer(base, remote).diff();
+        DiffResult localDiff = new TreeDiffer(base, local).diff();
+        DiffResult remoteDiff = new TreeDiffer(base, remote).diff();
         
         TreeMerger.conflict = false;
         

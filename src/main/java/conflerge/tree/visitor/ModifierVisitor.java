@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree.visitor;
 
 /*
  * Copyright (C) 2007-2010 Júlio Vilmar Gesser.
@@ -134,11 +134,8 @@ import com.github.javaparser.utils.Pair;
  * @author Julio Vilmar Gesser
  */
 
-
-/*
- * We need this, the latest copy of ModifierVisitor.java, because the version from the offical
- * release contains a bug that causes stack-overflow errors.
- */
+ // Unfortunately we need this, the latest copy of ModifierVisitor.java, because the version 
+ // from the offical release contains a bug that causes stack-overflow errors.
 
 @SuppressWarnings("deprecation")
 public class ModifierVisitor<A> implements GenericVisitor<Visitable, A> {

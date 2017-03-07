@@ -1,42 +1,15 @@
-package conflerge.unit.tree;
+package conflerge.tree;
+
+import static conflerge.tree.TestASTUtils.test;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+/**
+ * Insert operations are the most complex. This file tests edit script correctness 
+ * for insert operations in a number of different contexts.
+ */
+public class Test2WayInserts {
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.Node;
-import com.github.javaparser.utils.Pair;
-
-import conflerge.differ.ast.ASTDiffer;
-import conflerge.differ.ast.DiffResult;
-import conflerge.differ.ast.MergeVisitor;
-import conflerge.differ.ast.NodeListUnwrapperVisitor;
-import conflerge.differ.ast.NodeListWrapperVisitor;
-
-public class TestInserts {
-
-    public void eval(String str1, String str2) {     
-        Node n1  = JavaParser.parse(str1);
-        Node n2 = JavaParser.parse(str2);   
-
-        n1.accept(new NodeListWrapperVisitor(), "A"); 
-        n2.accept(new NodeListWrapperVisitor(), "B");
-        
-        DiffResult res1 = new ASTDiffer(n1, n2).diff();
-        DiffResult res2 = new ASTDiffer(n1, n1).diff();
-        
-        n1.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(res1, res2));   
-        n1.accept(new NodeListUnwrapperVisitor(), null); 
-        
-        assertEquals(JavaParser.parse(str2), n1);
-    }
-    
-    public void test(String str1, String str2) {
-        eval(str1, str2);
-        eval(str2, str1);
-    }
-    
     //-Field-Declarations------------------------------------
 
     @Test
@@ -302,73 +275,5 @@ public class TestInserts {
         
         test("class Foo { int[] i = new int[] { 1, 2 }; }",
                 "class Foo { int[] i = new int[] { x, 1, y, 2, z }; }");
-    }
-    
-    // TODO: Establish that insertions function in the cases below.
-    // For now, I'm convinced that the basic mechanism is correct.
-    
-    //-Block-Statements--------------------------------------
-    
-    //-Class-Extends-----------------------------------------
-    
-    //-Class-Implements--------------------------------------
-    
-    //-Class-TypeParams--------------------------------------
-    
-    //-Import-Statements-------------------------------------
-    
-    //-Compilation-Unit-Types--------------------------------
-    
-    //-Constructor-Exceptions--------------------------------
-    
-    //-Constructor-Type-Params-------------------------------
-    
-    //-Enum-Definition-Params--------------------------------
-    
-    //-Enum-Definition-Body----------------------------------
-    
-    //-Enum-Declaration-Entries------------------------------
-    
-    //-Enum-Declaration-Implements---------------------------
-    
-    //-Enum-Declaration-Members------------------------------
-    
-    //-Constructor-Invocation-TypeParams---------------------
-    
-    //-Constructor-Invocation-Args---------------------------
-    
-    //-Field-Access-Type-Params------------------------------
-
-    //-Field-Declaration-Variables-List----------------------
-    
-    //-For-Loop-Initialization-Stmts-------------------------
-    
-    //-Initializer-Declaration-------------------------------
-    
-    //-Method-Thrown-Exceptions------------------------------
-    
-    //-Method-Type-Parameter---------------------------------
-    
-    //-Object-Creation-Anonymous-Class-Body------------------
-    
-    //-Intersection-Type-Elems-------------------------------
-    
-    //-Union-Type-Elems--------------------------------------
-    
-    //-Switch-Stmt-Entries-----------------------------------
-    
-    //-Switch-Entry-Stmts------------------------------------
-    
-    //-Try-Catch-Clauses-------------------------------------
-    
-    //-Type-Param-Type-Bound---------------------------------
-    
-    //-Variable-DeclarationExpr-Variables--------------------
-    
-    //-Lambda-Params-----------------------------------------
-    
-    //-Method-Reference-Expr-Type-Arguments------------------
-    
-    
-    
+    }  
 }

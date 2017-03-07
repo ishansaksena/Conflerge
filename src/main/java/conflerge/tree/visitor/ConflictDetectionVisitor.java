@@ -1,4 +1,4 @@
-package conflerge.differ.ast;
+package conflerge.tree.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,9 @@ import com.github.javaparser.ast.type.VoidType;
 import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.Visitable;
 
-import conflerge.merger.TreeMerger;
+import conflerge.tree.DiffResult;
+import conflerge.tree.TreeMerger;
+import conflerge.tree.ast.NodeListWrapper;
 
 /**
  * Traverses a tree with a DiffResult, and reports a conflict if it encounters a 
@@ -101,6 +103,12 @@ import conflerge.merger.TreeMerger;
 @SuppressWarnings("deprecation")
 public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
 
+    /**
+     * Vist a NodeList. This must be a NodeListWrapper, because the AST in
+     * question should always be wrapped. Report a conflict if there are any
+     * insertions under this NodesListWrapper, then visit the nodes
+     * it contains.
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Visitable visit(NodeList n, DiffResult args) {
@@ -123,11 +131,9 @@ public class ConflictDetectionVisitor extends ModifierVisitor<DiffResult> {
         }
     }
     
-    /*
-     * It would be nice to refactor the methods below, but we can't: they
-     * need to call the superclass methods, which won't work if the Node
-     * type is generic.
-     */
+    // It would be nice to refactor the methods below, but we can't: they
+    // need to call the superclass methods, which won't work if the Node
+    // type is genericized.
     
     @Override
     public Visitable visit(final AnnotationDeclaration n, final DiffResult arg) {

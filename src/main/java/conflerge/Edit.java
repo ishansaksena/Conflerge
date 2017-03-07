@@ -1,19 +1,38 @@
 package conflerge;
 
+/**
+ * Represents an edit in the token-based merging strategy.
+ */
 public class Edit {
     
+    /**
+     * The edit operations. Type.MATCH is not actually an
+     * edit, but it's useful in practice.
+     */
     public enum Type {
         MATCH, REPLACE, INSERT, DELETE
     }
     
-    public final int  ibase;
-    public final int  icur;
+    /**
+     * This edit's index in the base token sequence.
+     */
+    public final int ibase;
+    
+    /**
+     * This edit's index in the current (either local or remote)
+     * token sequence.
+     */
+    public final int icur;
+    
+    /**
+     * This edit's type.
+     */
     public final Type type;
 
     /**
-     * @param type The type of this edit
-     * @param ibase This edit's location in the base version
-     * @param icur This edit's location in the current version
+     * @param type
+     * @param ibase
+     * @param icur
      */
     public Edit(Type type, int ibase, int icur) {
         this.type = type;

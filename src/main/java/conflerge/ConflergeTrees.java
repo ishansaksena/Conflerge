@@ -6,20 +6,23 @@ import java.io.PrintWriter;
 
 import com.github.javaparser.ast.Node;
 
-import conflerge.merger.TreeMerger;
+import conflerge.tree.TreeMerger;
 
 /**
- * Runs Conflerge!
+ * Runs Conflerge with an AST-based merging strategy.
  */
 public class ConflergeTrees {
-     
-    public static final int MIN_ARGS = 4;
+    
+    /**
+     * The number of expected command-line arguments.
+     */
+    public static final int NUM_ARGS = 4;
     
     /**
      * @param args [BASE, LOCAL, REMOTE, MERGED] files
      */
     public static void main(String[] args) {
-        if (args.length < MIN_ARGS) {
+        if (args.length != NUM_ARGS) {
             fail("Expected args: BASE LOCAL REMOTE MERGED");
             return;
         }
@@ -65,6 +68,9 @@ public class ConflergeTrees {
         }
     }
 
+    /**
+     * Display a failure message and exit.
+     */
     private static void fail(String message) {
         System.out.println("FAILURE");
         System.err.println(message);

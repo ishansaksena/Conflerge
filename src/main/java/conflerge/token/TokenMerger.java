@@ -1,4 +1,4 @@
-package conflerge.merger;
+package conflerge.token;
 
 import static com.github.javaparser.ASTParserConstants.JAVA_DOC_COMMENT;
 import static com.github.javaparser.ASTParserConstants.MULTI_LINE_COMMENT;
@@ -17,18 +17,24 @@ import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 
 import conflerge.Edit;
-import conflerge.differ.TokenDiffer;
-import conflerge.parser.TokenParser;
+import conflerge.tree.TreeMerger;
 
 /**
  * Merges Java files by token.
  */
 public class TokenMerger {
     
+    /**
+     * Token sequences of the base, local, and remote files.
+     */
     private List<JavaToken> base;
     private List<JavaToken> local;
     private List<JavaToken> remote;
     
+    /**
+     * The imports that will be included in the resulting merge, if successful.
+     * Contains the union of import declarations from local and remote.
+     */
     public final List<ImportDeclaration> imports;
     
     /**
@@ -127,6 +133,10 @@ public class TokenMerger {
         return res;
     }
 
+    /**
+     * @param token
+     * @return true iff the given token corresponds to a comment.
+     */
 	private boolean isComment(JavaToken token) {
 	    return token.kind == SINGLE_LINE_COMMENT ||  
 	           token.kind == MULTI_LINE_COMMENT  ||  

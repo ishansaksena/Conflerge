@@ -1,4 +1,4 @@
-package conflerge.merger;
+package conflerge.tree;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,21 +13,41 @@ import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.utils.Pair;
 
-import conflerge.differ.ast.ASTDiffer;
-import conflerge.differ.ast.DiffResult;
-import conflerge.differ.ast.MergeVisitor;
-import conflerge.differ.ast.NodeListUnwrapperVisitor;
-import conflerge.differ.ast.NodeListWrapperVisitor;
+import conflerge.tree.visitor.MergeVisitor;
+import conflerge.tree.visitor.NodeListUnwrapperVisitor;
+import conflerge.tree.visitor.NodeListWrapperVisitor;
 
+/**
+ * Merges Java files by AST.
+ */
 public class TreeMerger {
 
+    /**
+     * ASTs parsed from the base, local, and remote files.
+     */
     private Node base;
     private Node local;
     private Node remote;
     
+    /**
+     * true iff a conflict has been detected.
+     */
     public static boolean conflict;
+    
+    /**
+     * The imports that will be included in the resulting merge, if successful.
+     * Contains the union of import declarations from local and remote.
+     */
     private List<ImportDeclaration> imports;
     
+    /**
+     * Constructs a new TreeMerger for merging the given files.
+     * 
+     * @param baseFile
+     * @param localFile
+     * @param remoteFile
+     * @throws FileNotFoundException
+     */
     public TreeMerger(String baseFile, String localFile, String remoteFile) throws FileNotFoundException {
         this.base = JavaParser.parse(new File(baseFile));
         this.local = JavaParser.parse(new File(localFile));
@@ -40,13 +60,18 @@ public class TreeMerger {
         removeImports((CompilationUnit) remote);
     }
 
+    /**
+     * Perform the merge operation on this TreeMerger's base, local, and remote files.
+     * 
+     * @return A merged AST iff no conflicts were detected, otherwise null.
+     */
     public Node merge() {      
         base.accept(new NodeListWrapperVisitor(), "A"); 
         local.accept(new NodeListWrapperVisitor(), "B");
         remote.accept(new NodeListWrapperVisitor(), "C");
         
-        DiffResult localDiff = new ASTDiffer(base, local).diff();
-        DiffResult remoteDiff = new ASTDiffer(base, remote).diff();
+        DiffResult localDiff = new TreeDiffer(base, local).diff();
+        DiffResult remoteDiff = new TreeDiffer(base, remote).diff();
         
         conflict = false;
         
@@ -64,10 +89,18 @@ public class TreeMerger {
         return base;
     }
     
+    /**
+     * Reports the detection of a conflict.
+     */
     public static void reportConflict() {
         conflict = true;
     }
     
+    /**
+     * @param local
+     * @param remote
+     * @return The union of local and remote's import declarations.
+     */
     public static List<ImportDeclaration> mergeImports(CompilationUnit local, CompilationUnit remote) {
         List<ImportDeclaration> imports = new ArrayList<>(local.getImports());
         for (ImportDeclaration imprt : remote.getImports()) {
@@ -84,12 +117,23 @@ public class TreeMerger {
         return imports;
     }
     
+    /**
+     * Adds the given import declarations to the given CompilationUnit.
+     * 
+     * @param cu
+     * @param imports
+     */
     public static void addImports(CompilationUnit cu, List<ImportDeclaration> imports) {
         for (ImportDeclaration imprt : imports) {
             ((CompilationUnit) cu).addImport(imprt);
         } 
     }
     
+    /**
+     * Removes all import declarations from the given CompilationUnit.
+     * 
+     * @param cu
+     */
     public static void removeImports(CompilationUnit cu) {
         cu.getImports().clear();
     }
