@@ -63,7 +63,7 @@ with open("totals.csv", "w") as file:
         sum_perf += int(line.split(",")[3])
         sum_perf_noc += int(line.split(",")[4])
 
-    file.write("TOTAL,"
+    file.write("TOTAL (using {0},".format(args.merging_strategy)
         + str(sum_found) + ","
         + str(sum_resolved) + ","
         + str(sum_perf) + ","
