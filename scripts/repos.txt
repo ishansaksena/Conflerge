@@ -1,0 +1,10 @@
+https://github.com/androidannotations/androidannotations.git
+https://github.com/elastic/elasticsearch.git
+https://github.com/alibaba/fastjson.git
+https://github.com/bumptech/glide.git
+https://github.com/libgdx/libgdx.git
+https://github.com/PhilJay/MPAndroidChart.git
+https://github.com/netty/netty.git
+https://github.com/square/retrofit.git
+https://github.com/ReactiveX/RxJava.git
+https://github.com/javaparser/javaparser.git

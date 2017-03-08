@@ -20,5 +20,5 @@ PERCENT_PERFECT=$[PERFECT_MERGES*100/SUCCESSES]
 
 PERCENT_PERFECT_NO_COMMENTS=$[PERFECT_NO_COMMENTS*100/SUCCESSES]
 
-echo ",Conflicts Found,Conflicts Resolved,Perfect Resolutions, Perfect w/o Comments,% Conflicts Resolved,% Perfect Resolutions, % Perfect No Comments" > ${REPO}_$3.csv
+echo "Repo,Conflicts Found,Conflicts Resolved,Perfect Resolutions, Perfect w/o Comments,% Conflicts Resolved,% Perfect Resolutions, % Perfect No Comments" > ${REPO}_$3.csv
 printf "%s,%d,%d,%d,%d,%d,%d,%d" "$REPO" "$CONFLICTS" "$SUCCESSES" "$PERFECT_MERGES" "$PERFECT_NO_COMMENTS" "$PERCENT_RESOLVED" "$PERCENT_PERFECT" "$PERCENT_PERFECT_NO_COMMENTS" >> ${REPO}_$3.csv
