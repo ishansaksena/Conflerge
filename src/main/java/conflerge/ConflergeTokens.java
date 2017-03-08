@@ -49,7 +49,6 @@ public class ConflergeTokens {
             fail("Files not found");
         } catch (Exception e) {
             fail("Unexpected failure");
-            e.printStackTrace();
         }
     }
     
