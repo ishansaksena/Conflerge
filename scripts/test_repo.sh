@@ -15,10 +15,10 @@ fi
 if [ ! -f ${RESULTS_DIR}/merge_conflicts.txt ]
 	then
 	# copy if this is one of the repos already checked (in previous versions of this script)
-	if [ -f /tmp/${REPO_FULL_NAME}-conflicts.txt ]
+	if [ -f conflicts/${REPO_FULL_NAME}-conflicts.txt ]
 		then
 		echo "Found a previous conflict report for this repo, copying..."
-		cp /tmp/${REPO_FULL_NAME}-conflicts.txt ${RESULTS_DIR}/merge_conflicts.txt
+		cp conflicts/${REPO_FULL_NAME}-conflicts.txt ${RESULTS_DIR}/merge_conflicts.txt
 	else
 		./find_conflicts.sh ${REPO_DIR} ${RESULTS_DIR}
 	fi
