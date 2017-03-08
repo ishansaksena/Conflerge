@@ -14,7 +14,7 @@ fi
 # Find all merge conflicts for the given repo
 if [ ! -f ${RESULTS_DIR}/merge_conflicts.txt ]
 	then
-	# copy if this is one of the repos already checked (in previous versions of this script)
+	# copy if this is one of the default repos
 	if [ -f conflicts/${REPO_FULL_NAME}-conflicts.txt ]
 		then
 		echo "Found a previous conflict report for this repo, copying..."
@@ -32,9 +32,3 @@ fi
 
 # Output <repositoryname>.csv file
 ./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} $3
-
-#rm ${RESULTS_DIR}/*
-
-# Run Conflerge again with tokens instead of trees
-#./merge_conflicts.sh ${REPO_DIR} ${RESULTS_DIR} token > ${RESULTS_DIR}/res.txt
-#./make_csv.sh ${REPO_NAME} ${RESULTS_DIR} token

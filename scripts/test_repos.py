@@ -1,5 +1,4 @@
 # script to run Conflerge testing a list of GitHub repos one by one
-# TODO: parallelize this
 import subprocess
 
 from github import Github

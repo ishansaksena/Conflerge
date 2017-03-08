@@ -1,11 +1,8 @@
-#Assessing Conflerge's Effectiveness
+#Assessing Conflerge with Github repositories
 
+### Reproducing results
 
-#### Testing on a Single Repository
-
-1) Clone a github repository you wish to test into /tmp/
-
-2)	Add these lines to your `~/.gitconfig` file:
+1) Update your `.gitconfig` to include:
 
 ~~~~
 [mergetool "conflerge-tree"]
@@ -17,16 +14,13 @@
     tool = conflerge-token
 ~~~~
 
-3) Ensure that all the .sh files in `Conflerge/scripts` have run permission
+3) Ensure that all `.sh` files in `Conflerge/scripts` have run permission
 
-4) Run `./test-repo.sh` from inside the Conflerge/scripts directory
+4) From inside `Conflerge/scripts`, run:
 
-* `test_repo.sh` accepts 3 arguments with the form:
+`python3 tests_for_paper.py {tree|token}`
 
-	`./test_repo.sh [repo name] [repouser-reponame] [merging approach]`
-
-* For example, to test Conflerge using the tree-based merging approach on the [elasticsearch](https://github.com/elastic/elasticsearch) repo you would run:
-
-	`./test_repo.sh elasticsearch elastic-elasticsearch tree`
-
-5) Once this finishes, the results will be stored in [reponame]\_[mergeapproach].csv (ie elasticsearch\_tree.csv)
+* Specifying the positional argument as either `tree` or `token` is required, and determines whether to evaluate Conflerge using a tree or token based merge strategy
+* The default set of Github repositories on which to test is defined in `Conflerge/scripts/repos.txt`
+	* 	As the script runs it will output test results for each individual repo to files in the form `[repo]_[merge_strategy].csv` (ie `javaparser_token.csv`)
+	*  Once every repository in `repos.txt` has been processed, the script will output an aggregated summary of results to `totals.csv`
