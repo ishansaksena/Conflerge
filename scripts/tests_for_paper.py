@@ -1,7 +1,18 @@
+# This script runs evaluation tests on a set of git repositories
+# as specified in Conflerge/scripts/repos.txt
+# summarizing the results in a single table
 import os
+import argparse
 import subprocess
 
-# TODO: accept args for tree/token
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "merging_strategy",
+    help="Selects which merge approach to test conflerge with (trees or tokens)",
+    choices=["tree", "token"]
+)
+args = parser.parse_args()
+
 with open('repos.txt', 'r') as file:
     for line in file:
         repo = line.split('/')[-1].split('.')[0]
@@ -13,9 +24,9 @@ with open('repos.txt', 'r') as file:
         p = subprocess.Popen("mv {0} /tmp/".format(repo), shell=True)
 
         # generate conflerge results for repo
-        p = subprocess.Popen("./test_repo.sh {0} {1} tree".format(repo, org + '-' + repo), shell=True).wait()
+        p = subprocess.Popen("./test_repo.sh {0} {1} {2}".format(repo, org + '-' + repo, args.merging_strategy), shell=True).wait()
 
-        # remove the repo
+        # remove the repository
         p = subprocess.Popen("rm -rf /tmp/{0}".format(repo), shell=True).wait()
 
 
@@ -60,3 +71,6 @@ with open("totals.csv", "w") as file:
         + str(sum_resolved*100 // sum_found) + ","
         + str(sum_perf*100 // sum_resolved) + ","
         + str(sum_perf_noc*100 // sum_resolved) + "\n")
+
+# clean up any remaining intermediate files (results directories)
+p = subprocess.Popen("rm -rf ./*results", shell=True).wait()
