@@ -22,7 +22,12 @@ import static com.github.javaparser.ASTParserConstants.*;
  * To ignore comments, run with -c, like: java DiffTool -c file_expected file_actual
  */
 public class DiffTool {
+    
+    /** Display detailed diff output iff PRINT */
+    public static final boolean PRINT = false;
+    
     public static void main(String[] args) throws FileNotFoundException {
+        
         List<String> argsList = Arrays.asList(args);
         try {
             List<JavaToken> t1 = TokenParser.tokenizeFileNoImports(args[args.length - 1]);
@@ -42,28 +47,29 @@ public class DiffTool {
                 System.out.println("FAILURE");
             }
             
-            for (Edit e : edits) {
-                switch (e.type) {
-                case INSERT:
-                    System.out.println("INSERT: " + t2.get(e.icur).text + " " + t2.get(e.icur).range);
-                    break;
-                case DELETE:
-                    System.out.println("DELETE: " + t1.get(e.ibase).text + " " + t1.get(e.ibase).range);
-                    break;
-                case REPLACE:
-                    System.out.println("REPLACE: " 
-                                    + t1.get(e.ibase).text + " " 
-                                    + t1.get(e.ibase).range +  " " 
-                                    + t2.get(e.icur).text + " " 
-                                    + t2.get(e.icur).range);
-                    break;
-                default:
-                    break;
+            if (PRINT) {
+                for (Edit e : edits) {
+                    switch (e.type) {
+                    case INSERT:
+                        System.out.println("INSERT: " + t2.get(e.icur).text + " " + t2.get(e.icur).range);
+                        break;
+                    case DELETE:
+                        System.out.println("DELETE: " + t1.get(e.ibase).text + " " + t1.get(e.ibase).range);
+                        break;
+                    case REPLACE:
+                        System.out.println("REPLACE: " 
+                                        + t1.get(e.ibase).text + " " 
+                                        + t1.get(e.ibase).range +  " " 
+                                        + t2.get(e.icur).text + " " 
+                                        + t2.get(e.icur).range);
+                        break;
+                    default:
+                        break;
+                    }
                 }
             }
         } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("CRASH");
+            System.out.println("FAILURE");
         }
     }
 
