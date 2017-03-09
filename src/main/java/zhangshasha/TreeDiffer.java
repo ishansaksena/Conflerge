@@ -237,7 +237,7 @@ public class TreeDiffer {
                     y = bLs[y+joff] - 1 - joff;
                 }
             }
-            M.add(edit);
+            if (edit != null) M.add(edit);
         }
         while (x > 0) {
             M.add("DELETE " + aNodes[x+ioff]);
@@ -252,7 +252,6 @@ public class TreeDiffer {
     //-Pre-Processing----------------------------------------------------------
     
     /**
-     * 
      * @param root
      * @return
      */
@@ -277,7 +276,6 @@ public class TreeDiffer {
     }
 
     /**
-     * 
      * @param nodes
      * @return
      */
@@ -295,7 +293,6 @@ public class TreeDiffer {
     }
 
     /**
-     * 
      * @param root
      * @param nodes
      * @return
