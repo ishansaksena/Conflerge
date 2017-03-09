@@ -30,47 +30,83 @@ with open('repos.txt', 'r') as file:
         p = subprocess.Popen("rm -rf /tmp/{0}".format(repo), shell=True).wait()
 
 
-results_dir = "."
+# Returns string representation of num/denom as a percentage
+def percent_str(num,denom):
+    return "{0:.1f}".format(100*num/denom)
+
 csv_header = ""
 csv_data = []
 
-for filename in os.listdir(results_dir):
+# Look for csv results files
+for filename in os.listdir("."):
 
-    if not filename.endswith(".csv"):
+    # Ignore irrelevant files
+    if not filename.endswith(args.merging_strategy + ".csv"):
         continue
 
+    # Store the data line
     with open(filename) as f:
         lines = f.readlines()
         csv_header = lines[0].strip()
         data = lines[1]
 
-    num_conflicts = int(data.split(",")[1])
     csv_data.append(data)
 
-with open("totals.csv", "w") as file:
+# Create the overall results file
+with open(args.merging_strategy + "_totals.csv", "w") as file:
 
     file.write(csv_header + "\n")
 
-    sum_found = 0
-    sum_resolved = 0
-    sum_perf = 0
-    sum_perf_noc = 0
+    # Track cumulative numbers
+    total_conflicts = 0
+    total_unresolved = 0
+    total_perfect = 0
+    total_perf_nc = 0
+    total_incorrect = 0
 
+    # Process each repo's data
     for line in csv_data:
-        file.write(line + '\n')
-        sum_found += int(line.split(",")[1])
-        sum_resolved += int(line.split(",")[2])
-        sum_perf += int(line.split(",")[3])
-        sum_perf_noc += int(line.split(",")[4])
 
-    file.write("TOTAL (using {0}),".format(args.merging_strategy)
-        + str(sum_found) + ","
-        + str(sum_resolved) + ","
-        + str(sum_perf) + ","
-        + str(sum_perf_noc) + ","
-        + str(sum_resolved*100 // sum_found) + ","
-        + str(sum_perf*100 // sum_resolved) + ","
-        + str(sum_perf_noc*100 // sum_resolved) + "\n")
+        # Separate by csv item
+        items = line.split(",")
+
+        # Get the counts from the csv
+        repo = items[0]
+        conflicts = int(items[1])
+        unresolved = int(items[2])
+        perfect = int(items[3])
+        perf_nc = int(items[4])
+        incorrect = int(items[5])
+
+        # Get percentages from counts
+        data_out = [repo,
+                    str(conflicts),
+                    percent_str(unresolved,conflicts),
+                    percent_str(perfect, conflicts),
+                    percent_str(perf_nc, conflicts),
+                    percent_str(incorrect, conflicts)]
+
+        # Write data_out to the output csv
+        file.write(",".join(data_out) + "\n")
+
+        # Update the totals
+        total_conflicts += conflicts
+        total_unresolved += unresolved
+        total_perfect += perfect
+        total_perf_nc += perf_nc
+        total_incorrect += incorrect
+
+    # Get the totals row
+    data_out = ["TOTALS",
+                str(total_conflicts),
+                percent_str(total_unresolved, total_conflicts),
+                percent_str(total_perfect, total_conflicts),
+                percent_str(total_perf_nc, total_conflicts),
+                percent_str(total_incorrect, total_conflicts)]
+
+    # Write totals row to file
+    file.write(",".join(data_out)+"\n")
 
 # clean up any remaining intermediate files (results directories)
 p = subprocess.Popen("rm -rf ./*results", shell=True).wait()
+

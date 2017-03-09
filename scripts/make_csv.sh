@@ -2,23 +2,29 @@
 
 ./rundiff.sh $2
 
+# The tested repository
 REPO=$1
 
-CONFLICTS=$(grep FAILURE $2/res.txt | wc -l)
+# Number of conflicts Conflerge failed to merge
+UNRESOLVED=$(grep FAILURE $2/res.txt | wc -l)
 
-SUCCESSES=$(grep SUCCESS $2/res.txt | wc -l)
+# Number of conflicts Conflerge merged
+RESOLVED=$(grep SUCCESS $2/res.txt | wc -l)
 
-PERFECT_MERGES=$(grep SUCCESS $2/*.out | wc -l)
+# Number of Conflerge merges identical to human merges
+PERFECT=$(grep SUCCESS $2/*.out | wc -l)
 
-PERFECT_NO_COMMENTS=$(grep SUCCESS $2/*.outc | wc -l)
+# Number of Conflerge merges identical to human merges, ignoring comments
+ALL_PERFECT_NC=$(grep SUCCESS $2/*.outc | wc -l)
 
-CONFLICTS=$(($CONFLICTS + $SUCCESSES))
+# Total number of tested conflicts
+CONFLICTS=$[UNRESOLVED+RESOLVED]
 
-PERCENT_RESOLVED=$[SUCCESSES*100/CONFLICTS]
+# Number of Conflerge merges identical to human merges but differing in comments
+PERFECT_NC=$[ALL_PERFECT_NC-PERFECT]
 
-PERCENT_PERFECT=$[PERFECT_MERGES*100/SUCCESSES]
+# Number of incorrect merges
+INCORRECT=$[RESOLVED-ALL_PERFECT_NC]
 
-PERCENT_PERFECT_NO_COMMENTS=$[PERFECT_NO_COMMENTS*100/SUCCESSES]
-
-echo "Repo,Conflicts,Resolved,Perfect,PerfNC,%Res,%Perf,%PerfNC" > ${REPO}_$3.csv
-printf "%s,%d,%d,%d,%d,%d,%d,%d" "$REPO" "$CONFLICTS" "$SUCCESSES" "$PERFECT_MERGES" "$PERFECT_NO_COMMENTS" "$PERCENT_RESOLVED" "$PERCENT_PERFECT" "$PERCENT_PERFECT_NO_COMMENTS" >> ${REPO}_$3.csv
+echo "Repo,Conflicts,Unresolved,Correct,CorrectNC,Incorrect" > ${REPO}_$3.csv
+printf "%s,%d,%d,%d,%d,%d" "$REPO" "$CONFLICTS" "$UNRESOLVED" "$PERFECT" "$PERFECT_NC" "$INCORRECT" >> ${REPO}_$3.csv
