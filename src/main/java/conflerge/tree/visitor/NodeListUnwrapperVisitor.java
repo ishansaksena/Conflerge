@@ -10,7 +10,8 @@ import conflerge.tree.DiffResult;
 import conflerge.tree.ast.NodeListWrapper;
 
 /**
- * 'Unwraps' a tree that has been wrapped by NodeListWrapperVisitor.
+ * 'Unwraps' a tree that has been wrapped by NodeListWrapperVisitor: Removes
+ * any NodeListWrappers and replaces them with their wrapped NodeLists.
  */
 public class NodeListUnwrapperVisitor extends ModifierVisitor<DiffResult>  {  
     

@@ -7,9 +7,11 @@ import com.github.javaparser.JavaToken;
 
 import conflerge.Edit;
 
-/**
- * Provides a static method for 'diffing' lists of tokens: computing the 
- * smallest collection of Edits that transforms one list of into the other.
+/** 
+ *  Provides a static method, diff, for 'diffing' lists of tokens: computing the  smallest 
+ *  collection of Edits that transforms one list of into the other. Diff uses the Wagner-Fisher 
+ *  algorithm (https://en.wikipedia.org/wiki/Wagner-Fischer_algorithm) to compute the minimum
+ *  edit script between two token sequences.
  */
 public class TokenDiffer {
 

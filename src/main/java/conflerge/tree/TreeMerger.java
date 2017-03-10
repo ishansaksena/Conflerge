@@ -18,7 +18,9 @@ import conflerge.tree.visitor.NodeListUnwrapperVisitor;
 import conflerge.tree.visitor.NodeListWrapperVisitor;
 
 /**
- * Merges Java files by AST.
+ * Merges Java files by AST. Represents the base, local, and remote 
+ * files to be merged. The merge method attempts to perform a merge, returning 
+ * a node that it the root of the merged tree on success, and null on failure.
  */
 public class TreeMerger {
 
@@ -99,7 +101,7 @@ public class TreeMerger {
     /**
      * @param local
      * @param remote
-     * @return The union of local and remote's import declarations.
+     * @return The union of local and remote's import declarations, sorted alphabetically.
      */
     public static List<ImportDeclaration> mergeImports(CompilationUnit local, CompilationUnit remote) {
         List<ImportDeclaration> imports = new ArrayList<>(local.getImports());

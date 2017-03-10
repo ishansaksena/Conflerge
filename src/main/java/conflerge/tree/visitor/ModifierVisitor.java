@@ -1,5 +1,10 @@
 package conflerge.tree.visitor;
 
+
+// Unfortunately we need this, the latest copy of ModifierVisitor.java, because the version 
+// from the offical release contains a bug that causes stack-overflow errors. All credit to
+// Júlio Vilmar Gesser and The JavaParser Team; see copyright below.
+
 /*
  * Copyright (C) 2007-2010 Júlio Vilmar Gesser.
  * Copyright (C) 2011, 2013-2016 The JavaParser Team.
@@ -133,9 +138,6 @@ import com.github.javaparser.utils.Pair;
  *
  * @author Julio Vilmar Gesser
  */
-
- // Unfortunately we need this, the latest copy of ModifierVisitor.java, because the version 
- // from the offical release contains a bug that causes stack-overflow errors.
 
 @SuppressWarnings("deprecation")
 public class ModifierVisitor<A> implements GenericVisitor<Visitable, A> {

@@ -107,11 +107,17 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
     /**
      * Visit a NodeList. This should be a NodeListWrapper, because the AST in question
      * should have been wrapped before the merge operation is performed. Perform any
-     * inserts inserts into the wrapped NodeList, then visit the list's original nodes.
+     * inserts into the wrapped NodeList, then visit the list's original nodes.
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public Visitable visit(NodeList n, Pair<DiffResult, DiffResult> args) {    
+    public Visitable visit(NodeList n, Pair<DiffResult, DiffResult> args) {   
+        
+        // The NodeListWrapper visitor should ensure that all NodeLists
+        // are NodeListWrappers. If not, fail.
+        if (!(n instanceof NodeListWrapper)) {
+            throw new IllegalStateException("Expected wrapped NodeList");
+        }
         
         // Construct a Map to store any inserts that apply to this NodeList
         Map<Integer, List<Node>> inserts = new HashMap<>();
@@ -135,37 +141,26 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
             }
         }
         
-        // The NodeListWrapper visitor should ensure that this is always true
-        if (n instanceof NodeListWrapper) {
-            NodeList nl = ((NodeListWrapper) n).nodeList; 
-            List<Node> nodes = new ArrayList<>(nl);
-            nl.clear();
-            
-            // Perform insert operations, vist nodes.
-            int i = 0;
-            for (Node node : nodes) {
-                if (inserts.containsKey(i)) { 
-                    nl.addAll(inserts.get(i));
-                }
-                Node item = (Node) node.accept(this, args);
-                if (item != null) { 
-                    nl.add(item);
-                }
-                i++;
+        NodeList nl = ((NodeListWrapper) n).nodeList; 
+        List<Node> nodes = new ArrayList<>(nl);
+        nl.clear();
+        
+        // Perform insert operations, vist nodes.
+        int i = 0;
+        for (Node node : nodes) {
+            if (inserts.containsKey(i)) { 
+                nl.addAll(inserts.get(i));
             }
-            if (inserts.containsKey(i)) {
-                nl.addAll(inserts.get(i));   
-            }            
-            return nl;
-            
-        // Bad state: The NodeListWrapper visitor should have prevented this -- executing this block 
-        // indicates a bug in either our code or JavaParser.
-        } else {
-            System.err.println("Unexpected unwrapped NodeList " + n.size());
-            if (n.size() > 0) System.err.println(n.get(0).getClass()); 
-            System.err.println(n.getParentNode().get() + " " + n.getParentNode().get().getClass());
-            return super.visit(n, args);
+            Node item = (Node) node.accept(this, args);
+            if (item != null) { 
+                nl.add(item);
+            }
+            i++;
         }
+        if (inserts.containsKey(i)) {
+            nl.addAll(inserts.get(i));   
+        }            
+        return nl;
     }
     
     /**

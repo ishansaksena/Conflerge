@@ -6,8 +6,19 @@ package conflerge;
 public class Edit {
     
     /**
-     * The edit operations. Type.MATCH is not actually an
-     * edit, but it's useful in practice.
+     * The edit operations:
+     * 
+     *  Type.MATCH: not actually an edit, but useful information.
+     *  It corresponds to an alignment between two items.
+     *  
+     *  Type.REPLACE: corresponds to replacing the item
+     *  at index ibase with the item at index icur.
+     *  
+     *  Type.INSERT: corresponds to inserting the item
+     *  at index ibase with at index icur.
+     *  
+     *  Type.DELETE: corresponds to inserting the item 
+     *  at index icur.
      */
     public enum Type {
         MATCH, REPLACE, INSERT, DELETE
