@@ -23,8 +23,8 @@ In contrast to tokens, Abstract Syntax Trees retain information about the syntac
 
 ### Reproducing results
 
-1. Clone the *Conflerge* repository to ~/.
-2. Update your `.gitconfig` to include: 
+* Clone the *Conflerge* repository to ~/.
+* Update your `.gitconfig` to include: 
 ```bash
     [mergetool "conflerge-tree"]
 		cmd = java -jar ~/Conflerge/scripts/ConflergeTree.jar \$BASE \$LOCAL \$REMOTE \$MERGED
@@ -34,10 +34,10 @@ In contrast to tokens, Abstract Syntax Trees retain information about the syntac
         tool = conflerge-tree
         tool = conflerge-token
 ```
-3. Ensure that all `.sh` files in `Conflerge/scripts` have run permission
-4. Clone the repository to be tested to ` /tmp`  
+* Ensure that all `.sh` files in `Conflerge/scripts` have run permission
+* Clone the repository to be tested to ` /tmp`  
 
-5. From inside `Conflerge/scripts`, run:
+* From inside `Conflerge/scripts`, run:
 
 `bash test_repo.sh <repository name> <repository owner>-<repository name> <tree or token>`
 
