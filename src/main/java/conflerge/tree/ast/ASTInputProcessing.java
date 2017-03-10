@@ -9,8 +9,7 @@ import com.github.javaparser.ast.NodeList;
 
 /**
  * The diff algorithm requires several preprocessing steps on the ASTs.
- * They've been moved to this file to keep ASTDiffer.java a bit more
- * managable.
+ * They appear in this file to keep ASTDiffer.java a bit more managable.
  */
 public class ASTInputProcessing {
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
@@ -39,23 +40,29 @@ public class TreeDiffer {
      *  not a Map, but we use IdentityHashMap because nodes are 
      *  tracked based on object identity rather than equality.
      */
-    private IdentityHashMap<Node, Node> deletes = new IdentityHashMap<>();
+    private Set<Node> deletes = Collections.newSetFromMap(new IdentityHashMap<Node, Boolean>());
     
     /**
-     *  Mapping from nodes in B that replaced nodes in A and the 
-     *  opposite mapping from nodes replaced in A to replacements 
-     *  in B.
+     *  Mapping from nodes in A to nodes they replaced with in B.
      */
     private IdentityHashMap<Node, Node> replacesA = new IdentityHashMap<>();
+    
+    /**
+     *  Mapping from nodes in B that to nodes they replaced in A.
+     */
     private IdentityHashMap<Node, Node> replacesB = new IdentityHashMap<>();
     
     /**
-     * Mappings between nodes in A and B that were aligned. 
+     * Mappings from nodes in A and to nodes in B that are aligned. 
      * The mmdiff algorithm enforces that key, values nodes MUST be 
-     * shallowly equal. (otherwise it would be a replacement, 
-     * not an alignment)
+     * shallowly equal: otherwise it would be a replacement, 
+     * not an alignment.
      */
     private IdentityHashMap<Node, Node> alignsA = new IdentityHashMap<>();
+    
+    /**
+     * Mappings between nodes in B to nodes in A that are aligned. 
+     */
     private IdentityHashMap<Node, Node> alignsB = new IdentityHashMap<>();
     
     /**
@@ -82,34 +89,54 @@ public class TreeDiffer {
     private IdentityHashMap<Node, Node> nonListInserts = new IdentityHashMap<>();
     
     /**
-     * Maps from nodes to their parents. Unlike the node's 'getParent' method,
-     * this returns NodeListWrapperNodes if the node is a member of a wrapped 
-     * NodeList. Never use 'getParent' if you expected wrapper nodes.
+     *  Maps from nodes in A to their parent nodes. Unlike the node's 'getParent' 
+     *  method, this returns NodeListWrapperNodes if the node is a member of a wrapped 
+     *  NodeList. Never use 'getParent' if you expected wrapper nodes.
      */
-    public final IdentityHashMap<Node, Node> parentsA;
-    public final IdentityHashMap<Node, Node> parentsB;
+    private final IdentityHashMap<Node, Node> parentsA;
+    
+    /**
+     *  Maps from nodes in B to their parent nodes.
+     */
+    private final IdentityHashMap<Node, Node> parentsB;
     
        
     /**
-     * opt: Array of optimal subproblem edit distances.
-     * m  : Length of opt's first dimension, equal to the number of nodes in A.
-     * n  : Length of opt's second dimension, equal to the number of nodes in B.
+     *  Array of optimal subproblem edit distances.
      */
     private int[][] opt;
+    
+    /**
+     *  Length of opt's first dimension, equal to the number of nodes in A.
+     *  The name is 'n' chosen to correspond to the mmdiff paper's notation.
+     */
     private final int m;
+    
+    /**
+     *  Length of opt's second dimension, equal to the number of nodes in B.
+     *  The name 'n' is chosen to correspond to the mmdiff paper's notation.
+     */
     private final int n;
     
     /**
-     * The nodes in A, B in pre-order.
+     *  The nodes in A in pre-order.
      */
     private final Node[] aN;
+    
+    /**
+     *  The nodes in B in pre-order.
+     */
     private final Node[] bN;
     
     /**
-     * The depth of nodes in A, B in pre-order. If Node n is the ith node in A 
+     * The depth of nodes in A in pre-order. If Node n is the ith node in A 
      * and has depth d, then: aD[i] = d
      */
     private final int[] aD;
+    
+    /**
+     * The depth of nodes in B in pre-order.
+     */
     private final int[] bD;
 
     /**
@@ -163,7 +190,7 @@ public class TreeDiffer {
     }
 
     /**
-     * Runs the mmdiff algorithm. Popluates opt with the computation's results.
+     * Runs the mmdiff algorithm. Populates opt with the computation's results.
      */
     private void computeEdits() {
        int max = m + n + 1;
@@ -244,7 +271,7 @@ public class TreeDiffer {
      * @param j index of B node in bN.
      */
     private void addDelete(int i, int j) {
-        deletes.put(aN[i], aN[i]);
+        deletes.add(aN[i]);
     }
     
     /**

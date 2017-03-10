@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
@@ -16,10 +17,9 @@ import conflerge.tree.ast.NodeListWrapper;
  */
 public class DiffResult {
     /**
-     * Set of Nodes in A that were deleted. Implemented with an 
-     * IdentityHashMap so Nodes can be looked up by object identity.
+     * Set of Nodes in A that were deleted. Must be backed by an IdentityHashMap. 
      */
-    public final IdentityHashMap<Node, Node> deletes;
+    public final Set<Node> deletes;
     
     /**
      * Map from Nodes in A -> replacements in B.
@@ -42,7 +42,7 @@ public class DiffResult {
      * @param modifiers
      * @param listInserts
      */
-    public DiffResult(IdentityHashMap<Node, Node> deletes, 
+    public DiffResult(Set<Node> deletes, 
                       IdentityHashMap<Node, Node> replaces,
                       IdentityHashMap<Node, EnumSet<Modifier>> modifiers,
                       IdentityHashMap<NodeListWrapper, Map<Integer, List<Node>>> listInserts) {
@@ -58,7 +58,7 @@ public class DiffResult {
      * @return true iff n was deleted
      */
     public boolean deleted(Node n) {
-        return deletes.containsKey(n);
+        return deletes.contains(n);
     }
     
     /**
