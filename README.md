@@ -21,7 +21,7 @@ In contrast to tokens, Abstract Syntax Trees retain information about the syntac
 
 *Conflerge* is currently scoped to work with Java source code files and Git. 
 
-### Reproducing results
+To run the tool on a git repository: 
 
 * Clone the *Conflerge* repository to ~/.
 * Update your `.gitconfig` to include: 
