@@ -24,16 +24,15 @@ In contrast to tokens, Abstract Syntax Trees retain information about the syntac
 ### Reproducing results
 
 1. Clone the *Conflerge* repository to ~/.
-2. Update your `.gitconfig` to include:
-
+2. Update your `.gitconfig` to include: ```
     [mergetool "conflerge-tree"]
-        cmd = java -jar ~/Conflerge/scripts/ConflergeTree.jar \$BASE \$LOCAL \$REMOTE \$MERGED
+		cmd = java -jar ~/Conflerge/scripts/ConflergeTree.jar \$BASE \$LOCAL \$REMOTE \$MERGED
     [mergetool "conflerge-token"]
         cmd = java -jar ~/Conflerge/scripts/ConflergeToken.jar \$BASE \$LOCAL \$REMOTE \$MERGED
     [merge]
         tool = conflerge-tree
         tool = conflerge-token
-
+```
 3. Ensure that all `.sh` files in `Conflerge/scripts` have run permission
 4. Clone the repository to be tested to ` /tmp`  
 
@@ -45,8 +44,7 @@ For example, to test  [Glide](https://github.com/bumptech/glide) using the tree 
 `bash test_repo.sh glide bumptech-glide tree`
 
 * Specifying the positional argument as either `tree` or `token` is required, and determines whether to evaluate Conflerge using a tree or token based merge strategy
-* The default set of Github repositories on which to test is defined in `Conflerge/scripts/repos.txt`
-	* 	As the script runs it will output test results for each individual repo to files in the form `[repo]_[merge_strategy].csv` (ie `glide_token.csv`)
+* 	As the script runs it will output test results for each individual repo to files in the form `[repo]_[merge_strategy].csv` (ie `glide_tree.csv`)
 	
 
 Instructions to recreate the results in the paper can be found [here](https://github.com/ishansaksena/Conflerge/tree/master/scripts). 
