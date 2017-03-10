@@ -2,7 +2,8 @@
 
 ### Reproducing results
 
-1. Update your `.gitconfig` to include:```
+1. Update your `.gitconfig` to include:
+```bash
 [mergetool "conflerge-tree"]
     cmd = java -jar ~/Conflerge/scripts/ConflergeTree.jar $BASE $LOCAL $REMOTE $MERGED
 [mergetool "conflerge-token"]
