@@ -2,7 +2,7 @@
 
 ### Reproducing results
 
-1. Update your `.gitconfig` to include:
+* Update your `.gitconfig` to include:
 ```bash
 [mergetool "conflerge-tree"]
     cmd = java -jar ~/Conflerge/scripts/ConflergeTree.jar $BASE $LOCAL $REMOTE $MERGED
@@ -13,9 +13,9 @@
     tool = conflerge-token
 ```
 
-2.  Ensure that all `.sh` files in `Conflerge/scripts` have run permission
+*  Ensure that all `.sh` files in `Conflerge/scripts` have run permission
 
-3.  From inside `Conflerge/scripts`, run:
+*  From inside `Conflerge/scripts`, run:
 
 `python3 tests_for_paper.py {tree|token}`
 
