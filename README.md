@@ -1,4 +1,4 @@
-Conflerge
+#Conflerge
 *Conflerge* is custom mergetool that strives to automatically resolve merge conflicts. This is an attempt to demonstrate that finer grain merging, unlike the line-by-line merging in Git, can result in fewer false-positive conflicts with a competitive false-negative rate. 
 
 We attempted finer grain merging with two approaches: Token-based and Abstract Syntax Tree based. 
@@ -12,7 +12,7 @@ In contrast to tokens, Abstract Syntax Trees retain information about the syntac
 
 ##Architecture
 
-![*Conflerge* architecture](https://www.sharelatex.com/project/58b389deede31c212c54f52b/file/58c2142256270a1c0e9e74c2)
+![*Conflerge* architecture](http://i.imgur.com/ds71jB3.png)
 
 Git provides the relevant versions of **BASE**, **LOCAL** and **REMOTE**. We use [javaparser](https://github.com/javaparser/javaparser) to parse and unparse the source code files. We also use it for tokenization and the construction of abstract syntax trees. 
 
