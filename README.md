@@ -24,7 +24,8 @@ In contrast to tokens, Abstract Syntax Trees retain information about the syntac
 ### Reproducing results
 
 1. Clone the *Conflerge* repository to ~/.
-2. Update your `.gitconfig` to include: ```
+2. Update your `.gitconfig` to include: 
+```bash
     [mergetool "conflerge-tree"]
 		cmd = java -jar ~/Conflerge/scripts/ConflergeTree.jar \$BASE \$LOCAL \$REMOTE \$MERGED
     [mergetool "conflerge-token"]
