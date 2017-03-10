@@ -1,0 +1,27 @@
+
+7
+FAILURE
+REPLACE: /**
+	 * Add the {@link HttpEntity} attribute to restTemplate.exchange() method.
+	 * By default, the value will be <code>null</code> (for DELETE, HEAD and
+	 * OPTIONS method type)
+	 */ (line 71,col 5)-(line 75,col 4) /**
+	 * Add the HttpEntity attribute to restTemplate.exchange() method. By
+	 * default, the value will be <code>null</code> (for DELETE, HEAD and
+	 * OPTIONS method type)
+	 */ (line 74,col 5)-(line 78,col 4)
+INSERT: // RestTemplate exchange() 3rd arg : add HttpMethod type param
+ (line 60,col 9)-(line 60,col 71)
+REPLACE: // add url param
+ (line 56,col 9)-(line 56,col 25) // RestTemplate exchange() 2nd arg : add url param
+ (line 58,col 9)-(line 58,col 59)
+REPLACE: // concat root url + suffix
+ (line 54,col 9)-(line 54,col 36) // RestTemplate exchange() 1st arg : concat root url + suffix
+ (line 56,col 9)-(line 56,col 70)
+REPLACE: // exchange method call
+ (line 52,col 9)-(line 52,col 32) // RestTemplate exchange() method call
+ (line 54,col 9)-(line 54,col 47)
+INSERT: // Keep a reference on method's body
+ (line 48,col 9)-(line 48,col 45)
+INSERT: // Creating method signature
+ (line 35,col 9)-(line 35,col 37)

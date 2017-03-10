@@ -1,0 +1,239 @@
+
+94
+FAILURE
+INSERT: new (line 174,col 30)-(line 174,col 32)
+INSERT: = (line 174,col 28)-(line 174,col 28)
+INSERT: bitmapPool (line 174,col 17)-(line 174,col 26)
+INSERT: { (line 173,col 20)-(line 173,col 20)
+INSERT: else (line 173,col 15)-(line 173,col 18)
+INSERT: } (line 173,col 13)-(line 173,col 13)
+INSERT: } (line 172,col 17)-(line 172,col 17)
+INSERT: ; (line 171,col 57)-(line 171,col 57)
+INSERT: ) (line 171,col 56)-(line 171,col 56)
+INSERT: size (line 171,col 52)-(line 171,col 55)
+INSERT: ( (line 171,col 51)-(line 171,col 51)
+INSERT: LruBitmapPool (line 171,col 38)-(line 171,col 50)
+INSERT: ) (line 169,col 104)-(line 169,col 104)
+INSERT: ARGB_8888 (line 169,col 94)-(line 169,col 102)
+INSERT: . (line 169,col 93)-(line 169,col 93)
+INSERT: Config (line 169,col 87)-(line 169,col 92)
+INSERT: . (line 169,col 86)-(line 169,col 86)
+INSERT: Bitmap (line 169,col 80)-(line 169,col 85)
+INSERT: ( (line 169,col 79)-(line 169,col 79)
+INSERT: singleton (line 169,col 70)-(line 169,col 78)
+INSERT: . (line 169,col 69)-(line 169,col 69)
+INSERT: Collections (line 169,col 58)-(line 169,col 68)
+INSERT: , (line 169,col 56)-(line 169,col 56)
+INSERT: { (line 168,col 53)-(line 168,col 53)
+INSERT: ) (line 168,col 51)-(line 168,col 51)
+INSERT: REQUIRE_ARGB_8888 (line 168,col 34)-(line 168,col 50)
+INSERT: . (line 168,col 33)-(line 168,col 33)
+INSERT: DecodeFormat (line 168,col 21)-(line 168,col 32)
+INSERT: ( (line 168,col 20)-(line 168,col 20)
+INSERT: if (line 168,col 17)-(line 168,col 18)
+INSERT: } (line 146,col 9)-(line 146,col 9)
+INSERT: decodeFormat (line 145,col 33)-(line 145,col 44)
+INSERT: = (line 145,col 31)-(line 145,col 31)
+INSERT: . (line 145,col 17)-(line 145,col 17)
+INSERT: this (line 145,col 13)-(line 145,col 16)
+INSERT: { (line 144,col 16)-(line 144,col 16)
+INSERT: else (line 144,col 11)-(line 144,col 14)
+INSERT: } (line 144,col 9)-(line 144,col 9)
+INSERT: } (line 143,col 13)-(line 143,col 13)
+INSERT: ; (line 142,col 100)-(line 142,col 100)
+INSERT: ) (line 142,col 99)-(line 142,col 99)
+INSERT: "Unsafe to use RGB_565 on KitKat or Lollipop, ignoring setDecodeFormat" (line 142,col 28)-(line 142,col 98)
+INSERT: , (line 142,col 26)-(line 142,col 26)
+INSERT: TAG (line 142,col 23)-(line 142,col 25)
+INSERT: ( (line 142,col 22)-(line 142,col 22)
+INSERT: w (line 142,col 21)-(line 142,col 21)
+INSERT: . (line 142,col 20)-(line 142,col 20)
+INSERT: Log (line 142,col 17)-(line 142,col 19)
+INSERT: { (line 141,col 48)-(line 141,col 48)
+INSERT: ) (line 141,col 46)-(line 141,col 46)
+INSERT: ) (line 141,col 45)-(line 141,col 45)
+INSERT: WARN (line 141,col 41)-(line 141,col 44)
+INSERT: . (line 141,col 40)-(line 141,col 40)
+INSERT: Log (line 141,col 37)-(line 141,col 39)
+INSERT: , (line 141,col 35)-(line 141,col 35)
+INSERT: TAG (line 141,col 32)-(line 141,col 34)
+INSERT: ( (line 141,col 31)-(line 141,col 31)
+INSERT: isLoggable (line 141,col 21)-(line 141,col 30)
+INSERT: . (line 141,col 20)-(line 141,col 20)
+INSERT: Log (line 141,col 17)-(line 141,col 19)
+INSERT: ( (line 141,col 16)-(line 141,col 16)
+INSERT: if (line 141,col 13)-(line 141,col 14)
+INSERT: ; (line 140,col 62)-(line 140,col 62)
+INSERT: PREFER_ARGB_8888 (line 140,col 46)-(line 140,col 61)
+INSERT: . (line 140,col 45)-(line 140,col 45)
+INSERT: DecodeFormat (line 140,col 33)-(line 140,col 44)
+INSERT: { (line 139,col 94)-(line 139,col 94)
+INSERT: ) (line 139,col 92)-(line 139,col 92)
+INSERT: PREFER_ARGB_8888 (line 139,col 76)-(line 139,col 91)
+INSERT: . (line 139,col 75)-(line 139,col 75)
+INSERT: DecodeFormat (line 139,col 63)-(line 139,col 74)
+INSERT: != (line 139,col 60)-(line 139,col 61)
+INSERT: decodeFormat (line 139,col 47)-(line 139,col 58)
+INSERT: && (line 139,col 44)-(line 139,col 45)
+INSERT: REQUIRE_ARGB_8888 (line 139,col 26)-(line 139,col 42)
+INSERT: . (line 139,col 25)-(line 139,col 25)
+INSERT: DecodeFormat (line 139,col 13)-(line 139,col 24)
+INSERT: ( (line 139,col 12)-(line 139,col 12)
+INSERT: if (line 139,col 9)-(line 139,col 10)
+REPLACE: /**
+     * Sets the {@link com.bumptech.glide.load.DecodeFormat} that will be the default format for all the default
+     * decoders that can change the {@link android.graphics.Bitmap.Config} of the {@link android.graphics.Bitmap}s they
+     * decode.
+     *
+     * <p>
+     *     Decode format is always a suggestion, not a requirement. See {@link com.bumptech.glide.load.DecodeFormat} for
+     *     more details.
+     * </p>
+     *
+     * <p>
+     *     If you instantiate and use a custom decoder, it will use
+     *     {@link com.bumptech.glide.load.DecodeFormat#DEFAULT} as its default.
+     * </p>
+     *
+     * <p>
+     *     Calls to this method are ignored on KitKat and Lollipop. See #301.
+     * </p>
+     *
+     * @param decodeFormat The format to use.
+     * @return This builder.
+     */ (line 126,col 5)-(line 147,col 7) /**
+   * Sets the {@link com.bumptech.glide.load.DecodeFormat} that will be the default format for all
+   * the default decoders that can change the {@link android.graphics.Bitmap.Config} of the {@link
+   * android.graphics.Bitmap}s they decode.
+   *
+   * <p> Decode format is always a suggestion, not a requirement. See {@link
+   * com.bumptech.glide.load.DecodeFormat} for more details. </p>
+   *
+   * <p> If you instantiate and use a custom decoder, it will use {@link
+   * com.bumptech.glide.load.DecodeFormat#DEFAULT} as its default. </p>
+   *
+   * <p> Calls to this method are ignored on KitKat and Lollipop. See #301. </p>
+   *
+   * @param decodeFormat The format to use.
+   * @return This builder.
+   */ (line 122,col 5)-(line 137,col 5)
+REPLACE: /**
+     * Sets the {@link java.util.concurrent.ExecutorService} implementation to use when retrieving
+     * {@link com.bumptech.glide.load.engine.Resource}s that are currently in cache.
+     *
+     * <p>
+     *     Any implementation must order requests based on their {@link com.bumptech.glide.Priority} for thumbnail
+     *     requests to work properly.
+     * </p>
+     *
+     * @see #setResizeService(java.util.concurrent.ExecutorService)
+     * @see com.bumptech.glide.load.engine.executor.FifoPriorityThreadPoolExecutor
+     *
+     * @param service The ExecutorService to use.
+     * @return This builder.
+     */ (line 106,col 5)-(line 120,col 7) /**
+   * Sets the {@link java.util.concurrent.ExecutorService} implementation to use when retrieving
+   * {@link com.bumptech.glide.load.engine.Resource}s that are currently in cache.
+   *
+   * <p> Any implementation must order requests based on their {@link com.bumptech.glide.Priority}
+   * for thumbnail requests to work properly. </p>
+   *
+   * @param service The ExecutorService to use.
+   * @return This builder.
+   * @see #setResizeService(java.util.concurrent.ExecutorService)
+   * @see com.bumptech.glide.load.engine.executor.FifoPriorityThreadPoolExecutor
+   */ (line 105,col 5)-(line 116,col 5)
+REPLACE: /**
+     * Sets the {@link java.util.concurrent.ExecutorService} implementation to use when retrieving
+     * {@link com.bumptech.glide.load.engine.Resource}s that are not already in the cache.
+     *
+     * <p>
+     *     Any implementation must order requests based on their {@link com.bumptech.glide.Priority} for thumbnail
+     *     requests to work properly.
+     * </p>
+     *
+     * @see #setDiskCacheService(java.util.concurrent.ExecutorService)
+     * @see com.bumptech.glide.load.engine.executor.FifoPriorityThreadPoolExecutor
+     *
+     * @param service The ExecutorService to use.
+     * @return This builder.
+     */ (line 86,col 5)-(line 100,col 7) /**
+   * Sets the {@link java.util.concurrent.ExecutorService} implementation to use when retrieving
+   * {@link com.bumptech.glide.load.engine.Resource}s that are not already in the cache.
+   *
+   * <p> Any implementation must order requests based on their {@link com.bumptech.glide.Priority}
+   * for thumbnail requests to work properly. </p>
+   *
+   * @param service The ExecutorService to use.
+   * @return This builder.
+   * @see #setDiskCacheService(java.util.concurrent.ExecutorService)
+   * @see com.bumptech.glide.load.engine.executor.FifoPriorityThreadPoolExecutor
+   */ (line 88,col 5)-(line 99,col 5)
+REPLACE: /**
+     * Sets the {@link com.bumptech.glide.load.engine.cache.DiskCache.Factory} implementation to use to construct
+     * the {@link com.bumptech.glide.load.engine.cache.DiskCache} to use to store
+     * {@link com.bumptech.glide.load.engine.Resource} data on disk.
+     *
+     * @param diskCacheFactory The disk cche factory to use.
+     * @return This builder.
+     */ (line 73,col 5)-(line 80,col 7) /**
+   * Sets the {@link com.bumptech.glide.load.engine.cache.DiskCache.Factory} implementation to use
+   * to construct the {@link com.bumptech.glide.load.engine.cache.DiskCache} to use to store {@link
+   * com.bumptech.glide.load.engine.Resource} data on disk.
+   *
+   * @param diskCacheFactory The disk cche factory to use.
+   * @return This builder.
+   */ (line 75,col 5)-(line 82,col 5)
+REPLACE: /**
+     * Sets the {@link com.bumptech.glide.load.engine.cache.DiskCache} implementation to use to store
+     * {@link com.bumptech.glide.load.engine.Resource} data and thumbnails.
+     *
+     * @deprecated Creating a disk cache directory on the main thread causes strict mode violations, use
+     * {@link #setDiskCache(com.bumptech.glide.load.engine.cache.DiskCache.Factory)} instead. Scheduled to be removed
+     * in Glide 4.0.
+     * @param diskCache The disk cache to use.
+     * @return This builder.
+     */ (line 52,col 5)-(line 61,col 7) /**
+   * Sets the {@link com.bumptech.glide.load.engine.cache.DiskCache} implementation to use to store
+   * {@link com.bumptech.glide.load.engine.Resource} data and thumbnails.
+   *
+   * @param diskCache The disk cache to use.
+   * @return This builder.
+   * @deprecated Creating a disk cache directory on the main thread causes strict mode violations,
+   * use {@link #setDiskCache(com.bumptech.glide.load.engine.cache.DiskCache.Factory)} instead.
+   * Scheduled to be removed in Glide 4.0.
+   */ (line 54,col 5)-(line 63,col 5)
+REPLACE: /**
+     * Sets the {@link com.bumptech.glide.load.engine.cache.MemoryCache} implementation to store
+     * {@link com.bumptech.glide.load.engine.Resource}s that are not currently in use.
+     *
+     * @param memoryCache  The cache to use.
+     * @return This builder.
+     */ (line 40,col 5)-(line 46,col 7) /**
+   * Sets the {@link com.bumptech.glide.load.engine.cache.MemoryCache} implementation to store
+   * {@link com.bumptech.glide.load.engine.Resource}s that are not currently in use.
+   *
+   * @param memoryCache The cache to use.
+   * @return This builder.
+   */ (line 42,col 5)-(line 48,col 5)
+REPLACE: /**
+     * Sets the {@link com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool} implementation to use to store and
+     * retrieve reused {@link android.graphics.Bitmap}s.
+     *
+     * @param bitmapPool The pool to use.
+     * @return This builder.
+     */ (line 28,col 5)-(line 34,col 7) /**
+   * Sets the {@link com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool} implementation to use
+   * to store and retrieve reused {@link android.graphics.Bitmap}s.
+   *
+   * @param bitmapPool The pool to use.
+   * @return This builder.
+   */ (line 30,col 5)-(line 36,col 5)
+INSERT: final (line 10,col 13)-(line 10,col 17)
+INSERT: private (line 10,col 5)-(line 10,col 11)
+INSERT: ; (line 8,col 46)-(line 8,col 46)
+INSERT: "Glide" (line 8,col 39)-(line 8,col 45)
+INSERT: = (line 8,col 37)-(line 8,col 37)
+INSERT: TAG (line 8,col 33)-(line 8,col 35)
+INSERT: String (line 8,col 26)-(line 8,col 31)
+INSERT: static (line 8,col 13)-(line 8,col 18)

@@ -1,0 +1,8 @@
+
+5
+FAILURE
+DELETE: ; (line 28,col 43)-(line 28,col 43)
+DELETE: restErrorHandlerField (line 28,col 22)-(line 28,col 42)
+DELETE: JFieldVar (line 28,col 12)-(line 28,col 20)
+DELETE: public (line 28,col 5)-(line 28,col 10)
+REPLACE: class (line 18,col 8)-(line 18,col 12) interface (line 18,col 8)-(line 18,col 16)

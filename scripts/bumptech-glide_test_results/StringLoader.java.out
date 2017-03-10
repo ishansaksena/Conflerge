@@ -1,0 +1,15 @@
+
+2
+FAILURE
+DELETE: final (line 36,col 13)-(line 36,col 17)
+REPLACE: /**
+ * A model loader for handling certain string models. Handles paths, urls, and any uri string with a scheme handled by
+ * {@link android.content.ContentResolver#openInputStream(Uri)}.
+ *
+ * @param <T> The type of data that will be loaded from the given {@link java.lang.String}.
+ */ (line 3,col 1)-(line 8,col 3) /**
+ * A model loader for handling certain string models. Handles paths, urls, and any uri string with a
+ * scheme handled by {@link android.content.ContentResolver#openInputStream(Uri)}.
+ *
+ * @param <Data> The type of data that will be loaded from the given {@link java.lang.String}.
+ */ (line 3,col 1)-(line 8,col 3)

@@ -1,0 +1,50 @@
+
+10
+FAILURE
+INSERT: //
+ (line 112,col 27)-(line 112,col 29)
+INSERT: //
+ (line 111,col 37)-(line 111,col 39)
+DELETE: //
+ (line 109,col 9)-(line 109,col 11)
+INSERT: //
+ (line 101,col 27)-(line 101,col 29)
+INSERT: //
+ (line 100,col 37)-(line 100,col 39)
+DELETE: //
+ (line 99,col 9)-(line 99,col 11)
+INSERT: //
+ (line 91,col 27)-(line 91,col 29)
+INSERT: //
+ (line 90,col 37)-(line 90,col 39)
+DELETE: //
+ (line 90,col 9)-(line 90,col 11)
+REPLACE: /**
+ * Copyright (C) 2010-2013 eBusiness Information, Excilys Group
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed To in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */ (line 1,col 1)-(line 15,col 3) /**
+ * Copyright (C) 2010-2014 eBusiness Information, Excilys Group
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed To in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */ (line 1,col 1)-(line 15,col 3)

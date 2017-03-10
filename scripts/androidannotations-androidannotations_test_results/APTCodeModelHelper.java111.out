@@ -1,0 +1,15 @@
+
+12
+FAILURE
+DELETE: ; (line 174,col 43)-(line 174,col 43)
+DELETE: ) (line 174,col 42)-(line 174,col 42)
+DELETE: ( (line 174,col 41)-(line 174,col 41)
+DELETE: classes (line 174,col 34)-(line 174,col 40)
+DELETE: . (line 174,col 33)-(line 174,col 33)
+DELETE: holder (line 174,col 27)-(line 174,col 32)
+DELETE: = (line 174,col 25)-(line 174,col 25)
+DELETE: classes (line 174,col 17)-(line 174,col 23)
+DELETE: Classes (line 174,col 9)-(line 174,col 15)
+REPLACE: EBeanHolder (line 172,col 65)-(line 172,col 75) EComponentHolder (line 172,col 65)-(line 172,col 80)
+DELETE: . (line 159,col 22)-(line 159,col 22)
+DELETE: ProcessHolder (line 159,col 9)-(line 159,col 21)

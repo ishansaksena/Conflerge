@@ -1,0 +1,6 @@
+
+1
+FAILURE
+DELETE: /*
+	 * Java
+	 */ (line 25,col 5)-(line 27,col 4)

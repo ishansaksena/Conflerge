@@ -1,0 +1,211 @@
+
+89
+FAILURE
+INSERT: } (line 139,col 5)-(line 139,col 5)
+INSERT: ; (line 138,col 33)-(line 138,col 33)
+INSERT: tagId (line 138,col 28)-(line 138,col 32)
+INSERT: = (line 138,col 26)-(line 138,col 26)
+INSERT: tagId (line 138,col 20)-(line 138,col 24)
+INSERT: . (line 138,col 19)-(line 138,col 19)
+INSERT: ViewTarget (line 138,col 9)-(line 138,col 18)
+INSERT: ) (line 136,col 154)-(line 136,col 154)
+REPLACE: view (line 141,col 33)-(line 141,col 36) " the tag id after the first request has been made" (line 136,col 103)-(line 136,col 153)
+INSERT: "You cannot set the tag id more than once or change" (line 136,col 48)-(line 136,col 99)
+INSERT: ( (line 136,col 47)-(line 136,col 47)
+INSERT: IllegalArgumentException (line 136,col 23)-(line 136,col 46)
+INSERT: new (line 136,col 19)-(line 136,col 21)
+INSERT: throw (line 136,col 13)-(line 136,col 17)
+INSERT: { (line 135,col 63)-(line 135,col 63)
+INSERT: ) (line 135,col 61)-(line 135,col 61)
+INSERT: isTagUsedAtLeastOnce (line 135,col 41)-(line 135,col 60)
+INSERT: || (line 135,col 38)-(line 135,col 39)
+INSERT: null (line 135,col 33)-(line 135,col 36)
+INSERT: != (line 135,col 30)-(line 135,col 31)
+INSERT: tagId (line 135,col 24)-(line 135,col 28)
+INSERT: . (line 135,col 23)-(line 135,col 23)
+INSERT: ViewTarget (line 135,col 13)-(line 135,col 22)
+REPLACE: "Target for: " (line 141,col 16)-(line 141,col 29) ( (line 135,col 12)-(line 135,col 12)
+REPLACE: return (line 141,col 9)-(line 141,col 14) if (line 135,col 9)-(line 135,col 10)
+INSERT: tagId (line 134,col 37)-(line 134,col 41)
+INSERT: int (line 134,col 33)-(line 134,col 35)
+INSERT: setTagId (line 134,col 24)-(line 134,col 31)
+REPLACE: toString (line 140,col 19)-(line 140,col 26) void (line 134,col 19)-(line 134,col 22)
+REPLACE: String (line 140,col 12)-(line 140,col 17) static (line 134,col 12)-(line 134,col 17)
+DELETE: Override (line 139,col 6)-(line 139,col 13)
+REPLACE: @ (line 139,col 5)-(line 139,col 5) /**
+   * Sets the android resource id to use in conjunction with {@link View#setTag(int, Object)}
+   * to store temporary state allowing loads to be automatically cancelled and resources re-used
+   * in scrolling lists.
+   *
+   * <p>
+   *   If no tag id is set, Glide will use {@link View#setTag(Object)}.
+   * </p>
+   *
+   * <p>
+   *   Warning: prior to Android 4.0 tags were stored in a static map. Using this method prior
+   *   to Android 4.0 may cause memory leaks and isn't recommended. If you do use this method
+   *   on older versions, be sure to call {@link com.bumptech.glide.RequestManager#clear(View)} on
+   *   any view you start a load into to ensure that the static state is removed.
+   * </p>
+   *
+   * @param tagId The android resource to use.
+   */ (line 116,col 5)-(line 133,col 5)
+INSERT: } (line 97,col 5)-(line 97,col 5)
+INSERT: ; (line 96,col 37)-(line 96,col 37)
+INSERT: view (line 96,col 33)-(line 96,col 36)
+INSERT: + (line 96,col 31)-(line 96,col 31)
+INSERT: "Target for: " (line 96,col 16)-(line 96,col 29)
+INSERT: return (line 96,col 9)-(line 96,col 14)
+INSERT: { (line 95,col 30)-(line 95,col 30)
+INSERT: ) (line 95,col 28)-(line 95,col 28)
+INSERT: ( (line 95,col 27)-(line 95,col 27)
+INSERT: toString (line 95,col 19)-(line 95,col 26)
+INSERT: String (line 95,col 12)-(line 95,col 17)
+INSERT: public (line 95,col 5)-(line 95,col 10)
+INSERT: Override (line 94,col 6)-(line 94,col 13)
+INSERT: @ (line 94,col 5)-(line 94,col 5)
+REPLACE: /**
+     * Returns any stored request using {@link android.view.View#getTag()}.
+     *
+     * <p>
+     *     For Glide to function correctly, Glide must be the only thing that calls {@link View#setTag(Object)}. If the
+     *     tag is cleared or set to another object type, Glide will not be able to retrieve and cancel previous loads
+     *     which will not only prevent Glide from reusing resource, but will also result in incorrect images being
+     *     loaded and lots of flashing of images in lists. As a result, this will throw an
+     *     {@link java.lang.IllegalArgumentException} if {@link android.view.View#getTag()}} returns a non null object
+     *     that is not an {@link com.bumptech.glide.request.Request}.
+     * </p>
+     */ (line 96,col 5)-(line 107,col 7) /**
+   * Returns any stored request using {@link android.view.View#getTag()}.
+   *
+   * <p> For Glide to function correctly, Glide must be the only thing that calls {@link
+   * View#setTag(Object)}. If the tag is cleared or put to another object type, Glide will not be
+   * able to retrieve and cancel previous loads which will not only prevent Glide from reusing
+   * resource, but will also result in incorrect images being loaded and lots of flashing of images
+   * in lists. As a result, this will throw an {@link java.lang.IllegalArgumentException} if {@link
+   * android.view.View#getTag()}} returns a non null object that is not an {@link
+   * com.bumptech.glide.request.Request}. </p>
+   */ (line 69,col 5)-(line 79,col 5)
+REPLACE: /**
+     * Stores the request using {@link View#setTag(Object)}.
+     *
+     * @param request {@inheritDoc}
+     */ (line 86,col 5)-(line 90,col 7) /**
+   * Stores the request using {@link View#setTag(Object)}.
+   *
+   * @param request {@inheritDoc}
+   */ (line 59,col 5)-(line 63,col 5)
+REPLACE: /**
+     * Determines the size of the view by first checking {@link android.view.View#getWidth()} and
+     * {@link android.view.View#getHeight()}. If one or both are zero, it then checks the view's
+     * {@link LayoutParams}. If one or both of the params width and height are less than or
+     * equal to zero, it then adds an {@link android.view.ViewTreeObserver.OnPreDrawListener} which waits until the view
+     * has been measured before calling the callback with the view's drawn width and height.
+     *
+     * @param cb {@inheritDoc}
+     */ (line 72,col 5)-(line 80,col 7) /**
+   * Determines the size of the view by first checking {@link android.view.View#getWidth()} and
+   * {@link android.view.View#getHeight()}. If one or both are zero, it then checks the view's
+   * {@link LayoutParams}. If one or both of the params width and height are less than or equal to
+   * zero, it then adds an {@link android.view.ViewTreeObserver.OnPreDrawListener} which waits until
+   * the view has been measured before calling the callback with the view's drawn width and height.
+   *
+   * @param cb {@inheritDoc}
+   */ (line 45,col 5)-(line 53,col 5)
+REPLACE: /**
+     * Returns the wrapped {@link android.view.View}.
+     */ (line 65,col 5)-(line 67,col 7) /**
+   * Returns the wrapped {@link android.view.View}.
+   */ (line 38,col 5)-(line 40,col 5)
+DELETE: ( (line 60,col 22)-(line 60,col 22)
+DELETE: ViewTarget (line 60,col 12)-(line 60,col 21)
+DELETE: public (line 60,col 5)-(line 60,col 10)
+DELETE: } (line 58,col 5)-(line 58,col 5)
+DELETE: ; (line 57,col 33)-(line 57,col 33)
+DELETE: tagId (line 57,col 28)-(line 57,col 32)
+DELETE: = (line 57,col 26)-(line 57,col 26)
+DELETE: tagId (line 57,col 20)-(line 57,col 24)
+DELETE: . (line 57,col 19)-(line 57,col 19)
+DELETE: ViewTarget (line 57,col 9)-(line 57,col 18)
+DELETE: } (line 56,col 9)-(line 56,col 9)
+DELETE: ; (line 55,col 155)-(line 55,col 155)
+DELETE: ) (line 55,col 154)-(line 55,col 154)
+DELETE: " the tag id after the first request has been made" (line 55,col 103)-(line 55,col 153)
+DELETE: + (line 55,col 101)-(line 55,col 101)
+DELETE: "You cannot set the tag id more than once or change" (line 55,col 48)-(line 55,col 99)
+DELETE: IllegalArgumentException (line 55,col 23)-(line 55,col 46)
+DELETE: new (line 55,col 19)-(line 55,col 21)
+DELETE: throw (line 55,col 13)-(line 55,col 17)
+DELETE: { (line 54,col 63)-(line 54,col 63)
+DELETE: ) (line 54,col 61)-(line 54,col 61)
+DELETE: isTagUsedAtLeastOnce (line 54,col 41)-(line 54,col 60)
+DELETE: || (line 54,col 38)-(line 54,col 39)
+DELETE: null (line 54,col 33)-(line 54,col 36)
+DELETE: != (line 54,col 30)-(line 54,col 31)
+DELETE: tagId (line 54,col 24)-(line 54,col 28)
+DELETE: . (line 54,col 23)-(line 54,col 23)
+DELETE: ( (line 54,col 12)-(line 54,col 12)
+DELETE: if (line 54,col 9)-(line 54,col 10)
+DELETE: { (line 53,col 44)-(line 53,col 44)
+DELETE: ) (line 53,col 42)-(line 53,col 42)
+DELETE: tagId (line 53,col 37)-(line 53,col 41)
+DELETE: int (line 53,col 33)-(line 53,col 35)
+DELETE: ( (line 53,col 32)-(line 53,col 32)
+DELETE: setTagId (line 53,col 24)-(line 53,col 31)
+DELETE: void (line 53,col 19)-(line 53,col 22)
+DELETE: static (line 53,col 12)-(line 53,col 17)
+DELETE: /**
+     * Sets the android resource id to use in conjunction with {@link View#setTag(int, Object)}
+     * to store temporary state allowing loads to be automatically cancelled and resources re-used
+     * in scrolling lists.
+     *
+     * <p>
+     *   If no tag id is set, Glide will use {@link View#setTag(Object)}.
+     * </p>
+     *
+     * <p>
+     *   Warning: prior to Android 4.0 tags were stored in a static map. Using this method prior
+     *   to Android 4.0 may cause memory leaks and isn't recommended. If you do use this method
+     *   on older versions, be sure to call {@link com.bumptech.glide.Glide#clear(View)} on any view
+     *   you start a load into to ensure that the static state is removed.
+     * </p>
+     *
+     * @param tagId The android resource to use.
+     */ (line 35,col 5)-(line 52,col 7)
+REPLACE: /**
+ * A base {@link Target} for loading {@link android.graphics.Bitmap}s into {@link View}s that provides default
+ * implementations for most most methods and can determine the size of views using a
+ * {@link android.view.ViewTreeObserver.OnDrawListener}.
+ *
+ * <p>
+ *     To detect {@link View} reuse in {@link android.widget.ListView} or any {@link android.view.ViewGroup} that reuses
+ *     views, this class uses the {@link View#setTag(Object)} method to store some metadata so that if a view is reused,
+ *     any previous loads or resources from previous loads can be cancelled or reused.
+ * </p>
+ *
+ * <p>
+ *     Any calls to {@link View#setTag(Object)}} on a View given to this class will result in excessive allocations and
+ *     and/or {@link IllegalArgumentException}s. If you must call {@link View#setTag(Object)} on a view, consider
+ *     using {@link BaseTarget} or {@link SimpleTarget} instead.
+ * </p>
+ *
+ * @param <T> The specific subclass of view wrapped by this target.
+ * @param <Z> The resource type this target will receive.
+ */ (line 3,col 1)-(line 22,col 3) /**
+ * A base {@link Target} for loading {@link android.graphics.Bitmap}s into {@link View}s that
+ * provides default implementations for most most methods and can determine the size of views using
+ * a {@link android.view.ViewTreeObserver.OnDrawListener}.
+ *
+ * <p> To detect {@link View} reuse in {@link android.widget.ListView} or any {@link
+ * android.view.ViewGroup} that reuses views, this class uses the {@link View#setTag(Object)} method
+ * to store some metadata so that if a view is reused, any previous loads or resources from previous
+ * loads can be cancelled or reused. </p>
+ *
+ * <p> Any calls to {@link View#setTag(Object)}} on a View given to this class will result in
+ * excessive allocations and and/or {@link IllegalArgumentException}s. If you must call {@link
+ * View#setTag(Object)} on a view, consider using {@link BaseTarget} or {@link SimpleTarget}
+ * instead. </p>
+ *
+ * @param <T> The specific subclass of view wrapped by this target.
+ * @param <Z> The resource type this target will receive.
+ */ (line 3,col 1)-(line 20,col 3)

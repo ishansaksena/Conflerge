@@ -1,0 +1,49 @@
+
+2
+FAILURE
+REPLACE: /**
+	 * Method to handle all annotations dealing with resource ids that can be
+	 * set using the value() parameter of the annotation (as int or int[]), the
+	 * resName() parameter of the annotation (as String or String[]), the
+	 * element name.
+	 * 
+	 * @param element
+	 *            the annotated element
+	 * @param target
+	 *            the annotation on the element
+	 * @param rInnerClass
+	 *            the R innerClass the resources belong to
+	 * @param useElementName
+	 *            Should we use a default fallback strategy that uses the
+	 *            element qualified name for a resource name
+	 * @return the qualified names of the matching resources in the R inner
+	 *         class
+	 */ (line 134,col 5)-(line 151,col 4) /**
+	 * Method to handle all annotations dealing with resource ids that can be
+	 * set using the value() parameter of the annotation (as int or int[]), the
+	 * resName() parameter of the annotation (as String or String[]), the
+	 * element name.
+	 * 
+	 * @param element
+	 *            the annotated element
+	 * @param annotationName
+	 *            the annotation on the element
+	 * @param rInnerClass
+	 *            the R innerClass the resources belong to
+	 * @param useElementName
+	 *            Should we use a default fallback strategy that uses the
+	 *            element qualified name for a resource name
+	 * @return the qualified names of the matching resources in the R inner
+	 *         class
+	 */ (line 134,col 5)-(line 151,col 4)
+REPLACE: /**
+	 * Returns a list of {@link JFieldRef} linking to the R class, based on the
+	 * given annotation
+	 * 
+	 * @see #extractAnnotationResources(Element, Class, IRInnerClass, boolean)
+	 */ (line 120,col 5)-(line 125,col 4) /**
+	 * Returns a list of {@link JFieldRef} linking to the R class, based on the
+	 * given annotation
+	 * 
+	 * @see #extractAnnotationResources(Element, String, IRInnerClass, boolean)
+	 */ (line 120,col 5)-(line 125,col 4)

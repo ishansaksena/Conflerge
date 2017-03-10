@@ -1,0 +1,34 @@
+
+3
+FAILURE
+REPLACE: /**
+     * Returns the current {@link com.bumptech.glide.RequestManager} or null if none is set.
+     */ (line 41,col 5)-(line 43,col 7) /**
+   * Returns the current {@link com.bumptech.glide.RequestManager} or null if none is set.
+   */ (line 41,col 5)-(line 43,col 5)
+REPLACE: /**
+     * Sets the current {@link com.bumptech.glide.RequestManager}.
+     *
+     * @param requestManager The manager to set.
+     */ (line 28,col 5)-(line 32,col 7) /**
+   * Sets the current {@link com.bumptech.glide.RequestManager}.
+   *
+   * @param requestManager The manager to set.
+   */ (line 28,col 5)-(line 32,col 5)
+REPLACE: /**
+ * A view-less {@link android.support.v4.app.Fragment} used to safely store an
+ * {@link com.bumptech.glide.RequestManager} that can be used to start, stop and manage Glide requests started for
+ * targets within the fragment or activity this fragment is a child of.
+ *
+ * @see com.bumptech.glide.manager.RequestManagerFragment
+ * @see com.bumptech.glide.manager.RequestManagerRetriever
+ * @see com.bumptech.glide.RequestManager
+ */ (line 3,col 1)-(line 11,col 3) /**
+ * A view-less {@link android.support.v4.app.Fragment} used to safely store an {@link
+ * com.bumptech.glide.RequestManager} that can be used to start, stop and manage Glide requests
+ * started for targets within the fragment or activity this fragment is a child of.
+ *
+ * @see com.bumptech.glide.manager.RequestManagerFragment
+ * @see com.bumptech.glide.manager.RequestManagerRetriever
+ * @see com.bumptech.glide.RequestManager
+ */ (line 3,col 1)-(line 11,col 3)

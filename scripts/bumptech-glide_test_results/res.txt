@@ -1,0 +1,174 @@
+FAILURE
+CONFLICT (content): Merge conflict in third_party/gif_decoder/src/main/java/com/bumptech/glide/gifdecoder/GifDecoder.java
+FAILURE
+CONFLICT (content): Merge conflict in samples/flickr/src/main/java/com/bumptech/glide/samples/flickr/FlickrPhotoGrid.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/util/Util.java
+SUCCESS
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/request/ThumbnailRequestCoordinator.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/request/RequestFutureTarget.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/manager/SupportRequestManagerFragment.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/manager/RequestTracker.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/manager/RequestManagerRetriever.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/manager/RequestManagerFragment.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/manager/ActivityFragmentLifecycle.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/resource/bitmap/TransformationUtils.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/resource/bitmap/ImageHeaderParser.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/resource/bitmap/Downsampler.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/model/stream/BaseGlideUrlLoader.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/model/ResourceLoader.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/model/GlideUrl.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/engine/executor/FifoPriorityThreadPoolExecutor.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/engine/cache/DiskLruCacheWrapper.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/engine/cache/DiskCacheAdapter.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/engine/cache/DiskCache.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/engine/bitmap_recycle/LruBitmapPool.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/engine/EngineKey.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/engine/Engine.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/engine/DecodeJob.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/data/HttpUrlFetcher.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/RequestManager.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/Glide.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/resize/load/ExifTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/request/ThumbnailRequestCoordinatorTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/manager/RequestManagerRetrieverTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/load/resource/bitmap/ImageHeaderParserTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/load/model/stream/BaseGlideUrlLoaderTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/load/model/GlideUrlTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/load/data/HttpUrlFetcherTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/load/data/HttpUrlFetcherServerTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/RequestManagerTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/GlideTest.java
+FAILURE
+CONFLICT (content): Merge conflict in integration/volley/src/main/java/com/bumptech/glide/integration/volley/VolleyStreamFetcher.java
+FAILURE
+CONFLICT (content): Merge conflict in integration/volley/src/main/java/com/bumptech/glide/integration/volley/VolleyRequestFactory.java
+FAILURE
+CONFLICT (content): Merge conflict in integration/volley/src/androidTest/java/com/bumptech/glide/integration/volley/VolleyStreamFetcherServerTest.java
+FAILURE
+CONFLICT (content): Merge conflict in integration/okhttp/src/main/java/com/bumptech/glide/integration/okhttp/OkHttpStreamFetcher.java
+Your branch is up-to-date with 'origin/master'.
+Deleted branch commit1 (was e161ca9).
+Deleted branch commit2 (was 7e0f873).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+Your branch is up-to-date with 'origin/master'.
+Deleted branch merged (was a93a941).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+SUCCESS
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/main/java/com/bumptech/glide/load/resource/bitmap/Downsampler.java
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/load/resource/bitmap/VideoBitmapDecoderTest.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/androidTest/java/com/bumptech/glide/load/resource/bitmap/DownsamplerTest.java
+FAILURE
+CONFLICT (content): Merge conflict in integration/volley/src/main/java/com/bumptech/glide/integration/volley/VolleyUrlLoader.java
+SUCCESS
+Your branch is up-to-date with 'origin/master'.
+Deleted branch commit1 (was f389e91).
+Deleted branch commit2 (was 431ccaf).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+Your branch is up-to-date with 'origin/master'.
+Deleted branch merged (was 7bb2e56).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+FAILURE
+CONFLICT (content): Merge conflict in samples/flickr/src/main/java/com/bumptech/glide/samples/flickr/api/Api.java
+SUCCESS
+Your branch is up-to-date with 'origin/master'.
+Deleted branch commit1 (was a7fbd5b).
+Deleted branch commit2 (was 60b0657).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+Your branch is up-to-date with 'origin/master'.
+Deleted branch merged (was 2c2b177).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+FAILURE
+CONFLICT (content): Merge conflict in samples/flickr/src/com/bumptech/glide/samples/flickr/FlickrSearchActivity.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/com/bumptech/glide/resize/cache/DiskLruCacheWrapper.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/com/bumptech/glide/resize/ImageManager.java
+Your branch is up-to-date with 'origin/master'.
+Deleted branch commit1 (was 809f3b3).
+Deleted branch commit2 (was 0b2cafb).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+Your branch is up-to-date with 'origin/master'.
+Deleted branch merged (was 4626911).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+FAILURE
+CONFLICT (content): Merge conflict in library/src/com/bumptech/glide/resize/load/TransformationUtils.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in library/src/com/bumptech/glide/resize/load/Downsampler.java
+FAILURE
+CONFLICT (content): Merge conflict in library/src/com/bumptech/glide/presenter/target/ImageViewTarget.java
+Your branch is up-to-date with 'origin/master'.
+Deleted branch commit1 (was 347118b).
+Deleted branch commit2 (was a55e201).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+Your branch is up-to-date with 'origin/master'.
+Deleted branch merged (was 8fb1d98).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+FAILURE
+CONFLICT (content): Merge conflict in library/tests/src/com/bumptech/glide/GlideTest.java
+Your branch is up-to-date with 'origin/master'.
+Deleted branch commit1 (was fa8e803).
+Deleted branch commit2 (was d216308).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+Your branch is up-to-date with 'origin/master'.
+Deleted branch merged (was c89e181).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+SUCCESS
+Your branch is up-to-date with 'origin/master'.
+Deleted branch commit1 (was 42dde93).
+Deleted branch commit2 (was 058ef77).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.
+Your branch is up-to-date with 'origin/master'.
+Deleted branch merged (was b08f94d).
+HEAD is now at 3bcea91 Update to latest sdk/build tools.

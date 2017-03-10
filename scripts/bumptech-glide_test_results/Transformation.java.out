@@ -1,0 +1,23 @@
+
+4
+FAILURE
+REPLACE: /**
+     * Scale the image so that either the width of the image matches the given width and the height of the image is
+     * greater than the given height or vice versa, and then crop the larger dimension to match the given dimension.
+     *
+     * Does not maintain the image's aspect ratio
+     */ (line 26,col 5)-(line 31,col 7) /**
+     * Scale the image uniformly (maintaining the image's aspect ratio) so that one of the dimensions of the image
+     * will be equal to the given dimension and the other will be less than the given dimension
+     */ (line 28,col 5)-(line 31,col 7)
+REPLACE: toRuse (line 22,col 51)-(line 22,col 56) toReuse (line 24,col 51)-(line 24,col 57)
+REPLACE: toRuse (line 21,col 26)-(line 21,col 31) toReuse (line 23,col 26)-(line 23,col 32)
+REPLACE: /**
+     * Scale the image uniformly (maintaining the image's aspect ratio) so that one of the dimensions of the image
+     * will be equal to the given dimension and the other will be less than the given dimension
+     */ (line 10,col 5)-(line 13,col 7) /**
+     * Scale the image so that either the width of the image matches the given width and the height of the image is
+     * greater than the given height or vice versa, and then crop the larger dimension to match the given dimension.
+     *
+     * Does not maintain the image's aspect ratio
+     */ (line 10,col 5)-(line 15,col 7)

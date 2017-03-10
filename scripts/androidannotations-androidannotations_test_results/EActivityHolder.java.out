@@ -1,0 +1,15 @@
+
+6
+FAILURE
+INSERT: //
+ (line 380,col 67)-(line 380,col 69)
+DELETE: //
+ (line 376,col 9)-(line 376,col 11)
+INSERT: //
+ (line 355,col 56)-(line 355,col 58)
+DELETE: //
+ (line 354,col 13)-(line 354,col 15)
+INSERT: //
+ (line 351,col 76)-(line 351,col 78)
+DELETE: //
+ (line 349,col 13)-(line 349,col 15)

@@ -63,6 +63,7 @@ function mergeCommits {
         else
           # Conflerge failed; output this so we can grep for it
           echo "FAILURE"
+	  echo $CONFLICT
         fi
       fi
     fi

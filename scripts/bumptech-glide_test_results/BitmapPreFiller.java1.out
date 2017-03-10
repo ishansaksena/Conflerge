@@ -1,0 +1,9 @@
+
+6
+FAILURE
+DELETE: . (line 33,col 114)-(line 33,col 114)
+DELETE: DecodeFormat (line 33,col 102)-(line 33,col 113)
+DELETE: == (line 33,col 99)-(line 33,col 100)
+DELETE: defaultFormat (line 33,col 85)-(line 33,col 97)
+DELETE: || (line 33,col 82)-(line 33,col 83)
+DELETE: ALWAYS_ARGB_8888 (line 33,col 65)-(line 33,col 80)

@@ -1,0 +1,616 @@
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/ValidatorParameterHelper.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/handler/PreferenceChangeHandler.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was a9deed6).
+Deleted branch commit2 (was f3757d9).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was a486f2f).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 8b38c70).
+Deleted branch commit2 (was 5aeaf4c).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 036a666).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/CaseHelper.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was a96f299).
+Deleted branch commit2 (was 11e5621).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 3f128ff).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/functional-test-1-5/src/main/java/org/androidannotations/test15/AwaitingResultFragment.java
+SUCCESS
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 0dd1eae).
+Deleted branch commit2 (was 421fa7b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was f8e9fba).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/holder/BaseGeneratedClassHolder.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 549c5d1).
+Deleted branch commit2 (was cf6fb7b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 7043de4).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+SUCCESS
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 9bbaf76).
+Deleted branch commit2 (was cf6fb7b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 5c813f3).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was d28722c).
+Deleted branch commit2 (was cf6fb7b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was a0bca69).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was c6e3753).
+Deleted branch commit2 (was 7abadb1).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 6495da7).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 4733416).
+Deleted branch commit2 (was af58f98).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 311e6e9).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/holder/SharedPrefHolder.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/holder/BaseGeneratedClassHolder.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/handler/rest/RestHandler.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 16504b0).
+Deleted branch commit2 (was 4ec8a02).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 984439f).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 12750f9).
+Deleted branch commit2 (was 171e141).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 9de0be8).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 9dcdf29).
+Deleted branch commit2 (was 171e141).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 4b63413).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/handler/rest/RestMethodHandler.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was f5aae7d).
+Deleted branch commit2 (was bead889).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 6014cf3).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/CanonicalNameConstants.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was e984450).
+Deleted branch commit2 (was c18702f).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was e9bb3ee).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was c9f91ac).
+Deleted branch commit2 (was db85e0e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 8d42018).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+SUCCESS
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 4e08a3e).
+Deleted branch commit2 (was d474cdb).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 41538df).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 966630b).
+Deleted branch commit2 (was d4a09b6).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 886bf3b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/handler/AnnotationHandlers.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was dff7a68).
+Deleted branch commit2 (was d4a09b6).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 1e6a298).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was b341012).
+Deleted branch commit2 (was eac9629).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 0446998).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/process/ModelValidator.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/process/ModelProcessor.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/generation/SourceCodewriter.java
+SUCCESS
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was ccdb2d5).
+Deleted branch commit2 (was 7e0c079).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 61f56b8).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/APTCodeModelHelper.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 90b2e4c).
+Deleted branch commit2 (was d99edae).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 53840c7).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/holder/GeneratedClassHolder.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was b3ca678).
+Deleted branch commit2 (was 4920ca6).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 534a825).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/handler/rest/DeleteHandler.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was a53eabc).
+Deleted branch commit2 (was 9a6c878).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was b3ca678).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 5ef89f4).
+Deleted branch commit2 (was c4b0451).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was a53eabc).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was d9ce667).
+Deleted branch commit2 (was a9e57a6).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 034eeaf).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/APTCodeModelHelper.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was cce0a2c).
+Deleted branch commit2 (was 9dcfe8d).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was d9ce667).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/ValidatorHelper.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/CaseHelper.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 96c82d3).
+Deleted branch commit2 (was 0ca0638).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 1c95d7e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 246c14e).
+Deleted branch commit2 (was 12a2dbd).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 46d3f6b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/APTCodeModelHelper.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 69e9a10).
+Deleted branch commit2 (was 0b88c44).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 246c14e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/APTCodeModelHelper.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/handler/BackgroundHandler.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 9d5bf79).
+Deleted branch commit2 (was 0fb5ca3).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 612bb45).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was d1c95a8).
+Deleted branch commit2 (was 9a6c878).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 42c65e7).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/processing/SharedPrefProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 173bf64).
+Deleted branch commit2 (was 0b05bd8).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 4ee1bfd).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/APTCodeModelHelper.java
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 84130ab).
+Deleted branch commit2 (was 04995ad).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was d4dbebe).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/process/ProcessHolder.java
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/CanonicalNameConstants.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 498daa9).
+Deleted branch commit2 (was 6b70c32).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 4788b47).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/holder/HasIntentBuilder.java
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 5421392).
+Deleted branch commit2 (was ca0588f).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was cdeac84).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/process/ProcessHolder.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 0414900).
+Deleted branch commit2 (was 9f58869).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 5421392).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 6c8d9df).
+Deleted branch commit2 (was 3663dea).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 642abb0).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was b294662).
+Deleted branch commit2 (was a07a843).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 6c8d9df).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+SUCCESS
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/handler/BackgroundHandler.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 5bc3db9).
+Deleted branch commit2 (was 77cbcea).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was fb4676a).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/functional-test-1-5/src/main/java/org/androidannotations/test15/rest/MyService.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/ValidatorHelper.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was a0986a2).
+Deleted branch commit2 (was 77cbcea).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 7bbac6c).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 5a87e8a).
+Deleted branch commit2 (was 60a82e7).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 173bf64).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/processing/TouchProcessor.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/processing/LongClickProcessor.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/processing/ClickProcessor.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/ValidatorHelper.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 2aa295e).
+Deleted branch commit2 (was 07468b2).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was f2af436).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/processing/SharedPrefProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 8051cc2).
+Deleted branch commit2 (was 2aa295e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 37cb77e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 70dd6bc).
+Deleted branch commit2 (was fb6432c).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was c8e417e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/helper/ValidatorHelper.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 582897d).
+Deleted branch commit2 (was c044909).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was a476ab0).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/processing/EBeanHolder.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was f68ae5b).
+Deleted branch commit2 (was a4803f2).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 9f72516).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/processing/rest/RestProcessor.java
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 5197bfd).
+Deleted branch commit2 (was 42594d6).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was ac2fa84).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/org/androidannotations/processing/rest/RestProcessor.java
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was a774d7a).
+Deleted branch commit2 (was a885485).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 70367c1).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 9778709).
+Deleted branch commit2 (was ed4239b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was a774d7a).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was a4b2fb4).
+Deleted branch commit2 (was 01051c6).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was ed90013).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/processing/EFragmentProcessor.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was aacf66f).
+Deleted branch commit2 (was 253ee67).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 02ebd1d).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 1878e0d).
+Deleted branch commit2 (was 553aa9b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was d856a8f).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was d1da1ac).
+Deleted branch commit2 (was 5ce693e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was be45024).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/processing/EBeansHolder.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/helper/CanonicalNameConstants.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was eb950c1).
+Deleted branch commit2 (was f741a6e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was cbb2d82).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 8a83304).
+Deleted branch commit2 (was 5b965b2).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 6faa6fd).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/processing/OptionsItemProcessor.java
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was d903da3).
+Deleted branch commit2 (was c3385e6).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 4b7ee36).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 6189d25).
+Deleted branch commit2 (was c8c5450).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 69ff14f).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 6605d9e).
+Deleted branch commit2 (was 381da52).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 624582d).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+SUCCESS
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 580fdd5).
+Deleted branch commit2 (was 83b19d0).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was c1a719b).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was e9d2ded).
+Deleted branch commit2 (was fe9a8b5).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 2e3d8f3).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+SUCCESS
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/AndroidAnnotationProcessor.java
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 09763aa).
+Deleted branch commit2 (was 2c827cc).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was eebf18e).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+FAILURE
+CONFLICT (content): Merge conflict in AndroidAnnotations/androidannotations/src/main/java/com/googlecode/androidannotations/processing/rest/GetProcessor.java
+SUCCESS
+SUCCESS
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch commit1 (was 1332cf6).
+Deleted branch commit2 (was fd7a8eb).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017
+Your branch is up-to-date with 'origin/develop'.
+Deleted branch merged (was 51caab1).
+HEAD is now at 1e91a3b Merge pull request #1958 from dodgex/1954_update_copyright_for_2017

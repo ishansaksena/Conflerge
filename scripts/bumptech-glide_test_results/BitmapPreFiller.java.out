@@ -1,0 +1,8 @@
+
+5
+FAILURE
+DELETE: ) (line 25,col 36)-(line 25,col 36)
+DELETE: "deprecation" (line 25,col 23)-(line 25,col 35)
+DELETE: ( (line 25,col 22)-(line 25,col 22)
+DELETE: SuppressWarnings (line 25,col 6)-(line 25,col 21)
+DELETE: @ (line 25,col 5)-(line 25,col 5)

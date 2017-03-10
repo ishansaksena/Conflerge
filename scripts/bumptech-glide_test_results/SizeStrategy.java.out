@@ -1,0 +1,12 @@
+
+1
+FAILURE
+REPLACE: /**
+ * A strategy for reusing bitmaps that relies on {@link Bitmap#reconfigure(int, int, Bitmap.Config)}.
+ * Requires {@link Build.VERSION_CODES#KITKAT KitKat} (API {@value Build.VERSION_CODES#KITKAT}) or higher.
+ */ (line 3,col 1)-(line 6,col 3) /**
+ * A strategy for reusing bitmaps that relies on
+ * {@link Bitmap#reconfigure(int, int, Bitmap.Config)}.
+ *
+ * <p> Requires {@link Build.VERSION_CODES#KITKAT KitKat} or higher. </p>
+ */ (line 3,col 1)-(line 8,col 3)

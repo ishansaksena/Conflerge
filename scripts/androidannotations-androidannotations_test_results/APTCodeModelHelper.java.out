@@ -1,0 +1,19 @@
+
+2
+FAILURE
+REPLACE: //TODO it would be nice to cache the result map for better performance
+ (line 417,col 5)-(line 417,col 75) // TODO it would be nice to cache the result map for better performance
+ (line 417,col 5)-(line 417,col 76)
+REPLACE: /**
+	 * Gets all of the methods of the class and includes the methods of any
+	 * implemented interfaces.
+	 * 
+	 * @param typeElement
+	 * @return full list of methods.
+	 */ (line 321,col 5)-(line 327,col 4) /**
+	 * Gets all of the methods of the class and includes the methods of any
+	 * implemented interfaces.
+	 *
+	 * @param typeElement
+	 * @return full list of methods.
+	 */ (line 321,col 5)-(line 327,col 4)

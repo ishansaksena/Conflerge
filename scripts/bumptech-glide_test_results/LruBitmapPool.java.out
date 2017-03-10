@@ -1,0 +1,76 @@
+
+33
+FAILURE
+DELETE: } (line 148,col 9)-(line 148,col 9)
+DELETE: ; (line 147,col 38)-(line 147,col 38)
+DELETE: ) (line 147,col 37)-(line 147,col 37)
+DELETE: "clearMemory" (line 147,col 24)-(line 147,col 36)
+DELETE: , (line 147,col 22)-(line 147,col 22)
+DELETE: TAG (line 147,col 19)-(line 147,col 21)
+DELETE: ( (line 147,col 18)-(line 147,col 18)
+DELETE: d (line 147,col 17)-(line 147,col 17)
+DELETE: . (line 147,col 16)-(line 147,col 16)
+DELETE: Log (line 147,col 13)-(line 147,col 15)
+DELETE: { (line 146,col 47)-(line 146,col 47)
+DELETE: ) (line 146,col 45)-(line 146,col 45)
+DELETE: ) (line 146,col 44)-(line 146,col 44)
+DELETE: VERBOSE (line 146,col 37)-(line 146,col 43)
+DELETE: . (line 146,col 36)-(line 146,col 36)
+DELETE: Log (line 146,col 33)-(line 146,col 35)
+DELETE: , (line 146,col 31)-(line 146,col 31)
+DELETE: TAG (line 146,col 28)-(line 146,col 30)
+DELETE: ( (line 146,col 27)-(line 146,col 27)
+DELETE: isLoggable (line 146,col 17)-(line 146,col 26)
+DELETE: . (line 146,col 16)-(line 146,col 16)
+DELETE: Log (line 146,col 13)-(line 146,col 15)
+DELETE: ( (line 146,col 12)-(line 146,col 12)
+DELETE: if (line 146,col 9)-(line 146,col 10)
+DELETE: // null as the requested config here. See issue #194.
+ (line 122,col 9)-(line 122,col 62)
+REPLACE: // passing in
+ (line 121,col 9)-(line 121,col 22) // passing in null as the requested config here. See issue #194.
+ (line 120,col 9)-(line 120,col 73)
+DELETE: // here. See issue #131.
+ (line 111,col 13)-(line 111,col 37)
+DELETE: // individually, so we do so
+ (line 110,col 13)-(line 110,col 41)
+REPLACE: // correctly. we shouldn't force all consumers to independently erase the contents
+ (line 109,col 13)-(line 109,col 95) // contents individually, so we do so here. See issue #131.
+ (line 110,col 13)-(line 110,col 72)
+REPLACE: // to be rendered
+ (line 108,col 13)-(line 108,col 30) // to be rendered correctly. we shouldn't force all consumers to independently erase the
+ (line 109,col 13)-(line 109,col 101)
+REPLACE: /**
+     * Constructor for LruBitmapPool.
+     *
+     * @param maxSize The initial maximum size of the pool in bytes.
+     * @param allowedConfigs A white listed set of {@link android.graphics.Bitmap.Config} that are allowed to be put
+     *                       into the pool. Configs not in the allowed set will be rejected.
+     */ (line 53,col 5)-(line 59,col 7) /**
+   * Constructor for LruBitmapPool.
+   *
+   * @param maxSize        The initial maximum size of the pool in bytes.
+   * @param allowedConfigs A white listed set of {@link android.graphics.Bitmap.Config} that are
+   *                       allowed to be put into the pool. Configs not in the allowed set will be
+   *                       rejected.
+   */ (line 53,col 5)-(line 60,col 5)
+REPLACE: /**
+     * Constructor for LruBitmapPool.
+     *
+     * @param maxSize The initial maximum size of the pool in bytes.
+     */ (line 44,col 5)-(line 48,col 7) /**
+   * Constructor for LruBitmapPool.
+   *
+   * @param maxSize The initial maximum size of the pool in bytes.
+   */ (line 44,col 5)-(line 48,col 5)
+REPLACE: /**
+ * An {@link com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool} implementation that uses an
+ * {@link com.bumptech.glide.load.engine.bitmap_recycle.LruPoolStrategy} to bucket {@link Bitmap}s and then uses an LRU
+ * eviction policy to evict {@link android.graphics.Bitmap}s from the least recently used bucket in order to keep
+ * the pool below a given maximum size limit.
+ */ (line 3,col 1)-(line 8,col 3) /**
+ * An {@link com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool} implementation that uses an
+ * {@link com.bumptech.glide.load.engine.bitmap_recycle.LruPoolStrategy} to bucket {@link Bitmap}s
+ * and then uses an LRU eviction policy to evict {@link android.graphics.Bitmap}s from the least
+ * recently used bucket in order to keep the pool below a given maximum size limit.
+ */ (line 3,col 1)-(line 8,col 3)

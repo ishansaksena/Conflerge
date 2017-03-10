@@ -1,0 +1,13 @@
+
+3
+FAILURE
+INSERT: /*
+		 * Any view injection or listener binding should occur before
+		 * AfterViewsProcessor
+		 */ (line 323,col 9)-(line 326,col 5)
+INSERT: /*
+		 * Any view injection or listener binding should occur before
+		 * AfterViewsValidator
+		 */ (line 235,col 9)-(line 238,col 5)
+INSERT: //
+ (line 92,col 20)-(line 92,col 22)

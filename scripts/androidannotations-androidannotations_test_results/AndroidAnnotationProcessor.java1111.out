@@ -1,0 +1,26 @@
+
+22
+FAILURE
+INSERT: rClass (line 321,col 79)-(line 321,col 84)
+INSERT: , (line 321,col 77)-(line 321,col 77)
+REPLACE: NonConfigurationInstanceProcessor (line 320,col 37)-(line 320,col 69) TrackingTouchStopProcessor (line 321,col 37)-(line 321,col 62)
+INSERT: rClass (line 320,col 80)-(line 320,col 85)
+INSERT: , (line 320,col 78)-(line 320,col 78)
+REPLACE: InstanceStateProcessor (line 319,col 37)-(line 319,col 58) TrackingTouchStartProcessor (line 320,col 37)-(line 320,col 63)
+REPLACE: TrackingTouchStopProcessor (line 318,col 37)-(line 318,col 62) ProgressChangeProcessor (line 319,col 37)-(line 319,col 59)
+DELETE: rClass (line 317,col 80)-(line 317,col 85)
+DELETE: , (line 317,col 78)-(line 317,col 78)
+REPLACE: TrackingTouchStartProcessor (line 317,col 37)-(line 317,col 63) NonConfigurationInstanceProcessor (line 318,col 37)-(line 318,col 69)
+DELETE: rClass (line 316,col 76)-(line 316,col 81)
+DELETE: , (line 316,col 74)-(line 316,col 74)
+REPLACE: ProgressChangeProcessor (line 316,col 37)-(line 316,col 59) InstanceStateProcessor (line 317,col 37)-(line 317,col 58)
+INSERT: rClass (line 236,col 79)-(line 236,col 84)
+INSERT: , (line 236,col 77)-(line 236,col 77)
+REPLACE: NonConfigurationInstanceValidator (line 235,col 37)-(line 235,col 69) TrackingTouchStopValidator (line 236,col 37)-(line 236,col 62)
+REPLACE: TrackingTouchStopValidator (line 234,col 37)-(line 234,col 62) TrackingTouchStartValidator (line 235,col 37)-(line 235,col 63)
+REPLACE: TrackingTouchStartValidator (line 233,col 37)-(line 233,col 63) ProgressChangeValidator (line 234,col 37)-(line 234,col 59)
+DELETE: rClass (line 232,col 76)-(line 232,col 81)
+DELETE: , (line 232,col 74)-(line 232,col 74)
+REPLACE: ProgressChangeValidator (line 232,col 37)-(line 232,col 59) NonConfigurationInstanceValidator (line 233,col 37)-(line 233,col 69)
+INSERT: //
+ (line 90,col 19)-(line 90,col 21)

@@ -1,0 +1,10 @@
+
+1
+FAILURE
+INSERT: /**
+	 * Return a unique JClass reference by using {@link JCodeModel#ref(String)}
+	 * and keeping a buffer.
+	 * 
+	 * @param fullyQualifiedClassName
+	 * @return
+	 */ (line 259,col 5)-(line 265,col 4)

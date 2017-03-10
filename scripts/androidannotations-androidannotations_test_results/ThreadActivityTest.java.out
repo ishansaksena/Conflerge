@@ -1,0 +1,108 @@
+
+11
+FAILURE
+REPLACE: /* execute 2*NB_ADD requests to add an item to the list, half being cancelled */ (line 185,col 9)-(line 185,col 88) /*
+		 * execute 2*NB_ADD requests to add an item to the list, half being
+		 * cancelled
+		 */ (line 192,col 9)-(line 195,col 5)
+REPLACE: /*
+		 * the calls are serialized, but not necessarily on the same thread, so we need to
+		 * synchronize to avoid cache effects
+		 */ (line 178,col 9)-(line 181,col 5) /*
+		 * the calls are serialized, but not necessarily on the same thread, so
+		 * we need to synchronize to avoid cache effects
+		 */ (line 185,col 9)-(line 188,col 5)
+REPLACE: /* execute 2*NB_ADD requests to add an item to the list, half being cancelled */ (line 152,col 9)-(line 152,col 88) /*
+		 * execute 2*NB_ADD requests to add an item to the list, half being
+		 * cancelled
+		 */ (line 156,col 9)-(line 159,col 5)
+REPLACE: /*
+		 * the calls are serialized, but not necessarily on the same thread, so we need to
+		 * synchronize to avoid cache effects
+		 */ (line 145,col 9)-(line 148,col 5) /*
+		 * the calls are serialized, but not necessarily on the same thread, so
+		 * we need to synchronize to avoid cache effects
+		 */ (line 149,col 9)-(line 152,col 5)
+REPLACE: /**
+	 * Verify that cancellable background tasks are correctly cancelled, and others are not.
+	 * 
+	 * Start several requests which add an item to a list in background, half explicitly cancelled,
+	 * half not cancelled.
+	 * 
+	 * Once all tasks have completed execution, check if and only if the items from the uncancelled
+	 * tasks are in the list.
+	 */ (line 130,col 5)-(line 138,col 4) /**
+	 * Verify that cancellable background tasks are correctly cancelled, and
+	 * others are not.
+	 * 
+	 * Start several requests which add an item to a list in background, half
+	 * explicitly cancelled, half not cancelled.
+	 * 
+	 * Once all tasks have completed execution, check if and only if the items
+	 * from the uncancelled tasks are in the list.
+	 */ (line 133,col 5)-(line 142,col 4)
+REPLACE: /*
+			 * wait a random delay (between 0 and 20 milliseconds) to increase the probability of
+			 * wrong order if buggy
+			 */ (line 111,col 13)-(line 114,col 6) /*
+			 * wait a random delay (between 0 and 20 milliseconds) to increase
+			 * the probability of wrong order if buggy
+			 */ (line 114,col 13)-(line 117,col 6)
+REPLACE: /*
+		 * the calls are serialized, but not necessarily on the same thread, so we need to
+		 * synchronize to avoid cache effects
+		 */ (line 101,col 9)-(line 104,col 5) /*
+		 * the calls are serialized, but not necessarily on the same thread, so
+		 * we need to synchronize to avoid cache effects
+		 */ (line 104,col 9)-(line 107,col 5)
+REPLACE: /**
+	 * Verify that serialized background tasks are correctly serialized.
+	 * 
+	 * Start several requests which add an item to a list in background, with "@Background" serial
+	 * attribute enabled, so the requests must be executed sequentially.
+	 * 
+	 * Once all tasks have completed execution, verify that the items in the list are ordered.
+	 */ (line 87,col 5)-(line 94,col 4) /**
+	 * Verify that serialized background tasks are correctly serialized.
+	 * 
+	 * Start several requests which add an item to a list in background, with
+	 * "@Background" serial attribute enabled, so the requests must be executed
+	 * sequentially.
+	 * 
+	 * Once all tasks have completed execution, verify that the items in the
+	 * list are ordered.
+	 */ (line 88,col 5)-(line 97,col 4)
+REPLACE: /*
+			 * verify that list items are in the wrong order (the probability it is in the right is
+			 * 1/(NB_ADD!), which is nearly 0)
+			 */ (line 73,col 13)-(line 76,col 6) /*
+			 * verify that list items are in the wrong order (the probability it
+			 * is in the right is 1/(NB_ADD!), which is nearly 0)
+			 */ (line 74,col 13)-(line 77,col 6)
+REPLACE: /*
+			 * wait a random delay (between 0 and 20 milliseconds) to increase the probability of
+			 * wrong order
+			 */ (line 62,col 13)-(line 65,col 6) /*
+			 * wait a random delay (between 0 and 20 milliseconds) to increase
+			 * the probability of wrong order
+			 */ (line 63,col 13)-(line 66,col 6)
+REPLACE: /**
+	 * Verify that non-serialized background tasks <strong>are not</strong> serialized (ensure that
+	 * serial feature does not force all background tasks to be serialized).
+	 * 
+	 * Start several requests which add an item to a list in background, without "@Background"
+	 * serial attribute enabled.
+	 * 
+	 * Once all tasks have completed execution, verify that the items in the list are not ordered
+	 * (with very little false-negative probability).
+	 */ (line 40,col 5)-(line 49,col 4) /**
+	 * Verify that non-serialized background tasks <strong>are not</strong>
+	 * serialized (ensure that serial feature does not force all background
+	 * tasks to be serialized).
+	 * 
+	 * Start several requests which add an item to a list in background, without
+	 * "@Background" serial attribute enabled.
+	 * 
+	 * Once all tasks have completed execution, verify that the items in the
+	 * list are not ordered (with very little false-negative probability).
+	 */ (line 40,col 5)-(line 50,col 4)

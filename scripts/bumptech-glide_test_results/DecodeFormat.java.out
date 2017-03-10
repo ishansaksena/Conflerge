@@ -1,0 +1,86 @@
+
+30
+FAILURE
+INSERT: : (line 38,col 85)-(line 38,col 85)
+INSERT: PREFER_ARGB_8888 (line 38,col 68)-(line 38,col 83)
+INSERT: ? (line 38,col 66)-(line 38,col 66)
+INSERT: REQUIRE_ARGB_8888 (line 38,col 48)-(line 38,col 64)
+REPLACE: /** The default value for DecodeFormat. */ (line 41,col 5)-(line 41,col 46) /**
+   * The default value for DecodeFormat.
+   */ (line 35,col 5)-(line 37,col 5)
+INSERT: KITKAT (line 33,col 98)-(line 33,col 103)
+INSERT: . (line 33,col 97)-(line 33,col 97)
+INSERT: VERSION_CODES (line 33,col 84)-(line 33,col 96)
+INSERT: . (line 33,col 83)-(line 33,col 83)
+INSERT: Build (line 33,col 78)-(line 33,col 82)
+INSERT: >= (line 33,col 75)-(line 33,col 76)
+INSERT: SDK_INT (line 33,col 67)-(line 33,col 73)
+INSERT: . (line 33,col 66)-(line 33,col 66)
+INSERT: VERSION (line 33,col 59)-(line 33,col 65)
+INSERT: . (line 33,col 58)-(line 33,col 58)
+INSERT: Build (line 33,col 53)-(line 33,col 57)
+INSERT: = (line 33,col 51)-(line 33,col 51)
+INSERT: REQUIRE_ARGB_8888 (line 33,col 33)-(line 33,col 49)
+INSERT: boolean (line 33,col 25)-(line 33,col 31)
+REPLACE: PREFER_RGB_565 (line 39,col 5)-(line 39,col 18) final (line 33,col 19)-(line 33,col 23)
+REPLACE: /**
+     * Bitmaps decoded from image formats that support and/or use alpha (some types of PNGs, GIFs etc) should
+     * return {@link android.graphics.Bitmap.Config#ARGB_8888} for {@link android.graphics.Bitmap#getConfig()}. Bitmaps
+     * decoded from formats that don't support or use alpha should return
+     * {@link android.graphics.Bitmap.Config#RGB_565} for {@link android.graphics.Bitmap#getConfig()}.
+     *
+     */ (line 32,col 23)-(line 38,col 7) static (line 33,col 12)-(line 33,col 17)
+REPLACE: , (line 32,col 21)-(line 32,col 21) public (line 33,col 5)-(line 33,col 10)
+REPLACE: PREFER_ARGB_8888 (line 32,col 5)-(line 32,col 20) /**
+   * There is a rendering issue in KitKat and L (or at least L MR1) when reusing mixed format
+   * bitmaps. See #301.
+   */ (line 29,col 5)-(line 32,col 5)
+REPLACE: /**
+     * Bitmaps decoded from most image formats (other than GIFs with hidden configs), will be decoded with the
+     * ARGB_8888 config.
+     *
+     * <p>
+     *     {@link android.graphics.BitmapFactory} does not allow us to guarantee that all returned Bitmaps will
+     *     be of a requested config without resorting to expensive copying. As a result, this is a preference only.
+     *     Most GIFs, for example, will still produce {@link android.graphics.Bitmap}s with null
+     *     {@link android.graphics.Bitmap.Config}s.
+     * </p>
+     */ (line 21,col 23)-(line 31,col 7) ; (line 27,col 19)-(line 27,col 19)
+REPLACE: , (line 21,col 21)-(line 21,col 21) PREFER_RGB_565 (line 27,col 5)-(line 27,col 18)
+REPLACE: ALWAYS_ARGB_8888 (line 21,col 5)-(line 21,col 20) /**
+   * Bitmaps decoded from image formats that support and/or use alpha (some types of PNGs, GIFs etc)
+   * should return {@link android.graphics.Bitmap.Config#ARGB_8888} for
+   * {@link android.graphics.Bitmap#getConfig()}. Bitmaps decoded from formats that don't support or
+   * use alpha should return {@link android.graphics.Bitmap.Config#RGB_565} for
+   * {@link android.graphics.Bitmap#getConfig()}.
+   */ (line 20,col 23)-(line 26,col 5)
+REPLACE: Deprecated (line 20,col 6)-(line 20,col 15) , (line 20,col 21)-(line 20,col 21)
+REPLACE: @ (line 20,col 5)-(line 20,col 5) PREFER_ARGB_8888 (line 20,col 5)-(line 20,col 20)
+REPLACE: /**
+     * All bitmaps returned by the {@link com.bumptech.glide.load.resource.bitmap.BitmapDecoder} should return
+     * {@link android.graphics.Bitmap.Config#ARGB_8888} for {@link android.graphics.Bitmap#getConfig()}.
+     */ (line 16,col 5)-(line 19,col 7) /**
+   * All bitmaps returned by the {@link com.bumptech.glide.load.resource.bitmap.BitmapDecoder}
+   * should return {@link android.graphics.Bitmap.Config#ARGB_8888} for
+   * {@link android.graphics.Bitmap#getConfig()}.
+   */ (line 15,col 5)-(line 19,col 5)
+REPLACE: /**
+ * Options for setting the value of {@link android.graphics.Bitmap#getConfig()} for {@link android.graphics.Bitmap}s
+ * returned by a {@link com.bumptech.glide.load.resource.bitmap.BitmapDecoder}.
+ *
+ * <p>
+ *     Note - In some cases it may not be possible to obey the requested setting, not all
+ *     {@link com.bumptech.glide.load.resource.bitmap.BitmapDecoder}s support setting formats and certain images may
+ *     not be able to be loaded as certain configurations. Therefore this class represents a preference rather than a
+ *     requirement.
+ * </p>
+ */ (line 3,col 1)-(line 13,col 3) /**
+ * Options for setting the value of {@link android.graphics.Bitmap#getConfig()} for
+ * {@link android.graphics.Bitmap}s returned by a
+ * {@link com.bumptech.glide.load.resource.bitmap.BitmapDecoder}.
+ *
+ * <p> Note - In some cases it may not be possible to obey the requested setting, not all {@link
+ * com.bumptech.glide.load.resource.bitmap.BitmapDecoder}s support setting formats and certain
+ * images may not be able to be loaded as certain configurations. Therefore this class represents a
+ * preference rather than a requirement. </p>
+ */ (line 3,col 1)-(line 12,col 3)

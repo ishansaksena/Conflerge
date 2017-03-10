@@ -1,0 +1,164 @@
+
+11
+FAILURE
+REPLACE: /**
+         * Creates an {@link ImagePresenter} or retrieves the existing one and starts loading the image represented by
+         * the given model
+         *
+         * @see ImagePresenter#setModel(Object)
+         */ (line 288,col 9)-(line 293,col 11) /**
+         * Creates an {@link ImagePresenter} or retrieves the existing one and starts loading the image represented by
+         * the given model. This must be called on the main thread.
+         *
+         * @see ImagePresenter#setModel(Object)
+         */ (line 321,col 9)-(line 326,col 11)
+REPLACE: /**
+         * Set the {@link ModelLoader} for the model. For URL models, defaults to {@link UrlLoader},
+         * for File models, defaults to {@link FileLoader}.
+         *
+         * @param modelLoader The {@link ModelLoader} to use. Replaces any existing loader
+         * @return This Request
+         */ (line 201,col 9)-(line 207,col 11) /**
+         * Set the {@link ModelLoader} for the model.
+         *
+         * Note - This method is required only if you are using a model other than a {@link File} or an {@link URL} or
+         * if you wish to specify a different {@link ModelLoader} for either of those models. For {@link URL} models,
+         * the {@link ModelLoader} defaults to {@link UrlLoader} and for {@link File} models, the {@link ModelLoader}
+         * defaults to {@link FileLoader}.
+         *
+         * @param modelLoader The {@link ModelLoader} to use. Replaces any existing loader
+         * @return This Request
+         */ (line 230,col 9)-(line 240,col 11)
+REPLACE: /**
+     * Manages building, tagging, retrieving and/or replacing an ImagePresenter for the given ImageView and model
+     * @param <T> The type of model that will be loaded into the view
+     */ (line 174,col 5)-(line 177,col 7) /**
+     * Manages building, tagging, retrieving and/or replacing an ImagePresenter for the given ImageView and model
+     *
+     * @param <T> The type of model that will be loaded into the view
+     */ (line 202,col 5)-(line 206,col 7)
+REPLACE: /**
+     * Begins constructing a load for a given model.
+     *
+     * @param model The model to load, must not be null
+     * @param <T> The type of the model to load
+     * @return A an unfinished Request that will be used to construct the components to load the model
+     */ (line 111,col 5)-(line 117,col 7) /**
+     * Begins constructing a load for a given model.
+     *
+     * <p>
+     * Note - If an {@link ImageManager} has not yet been set via
+     * {@link #setImageManager(ImageManager) setImageManager}, one will be created during this call unless
+     * you specify a {@link ImageLoader} that does not use {@link #getRequestQueue(android.content.Context)
+     * getRequestQueue} via {@link Glide.Request#resizeWith(ImageLoader) resizeWith}
+     * </p>
+     *
+     * <p>
+     * Note - If the model is a {@link URL} and an {@link com.android.volley.RequestQueue} has not yet been set via
+     * {@link #setRequestQueue(com.android.volley.RequestQueue) setRequestQueue}, one will be created during this call
+     * unless you specify a {@link ModelLoader} via {@link Glide.Request#with(ModelLoader) with}.
+     * </p>
+     *
+     * @see #setImageManager(com.bumptech.glide.resize.ImageManager)
+     * @see #setRequestQueue(com.android.volley.RequestQueue)
+     * @see #isImageManagerSet()
+     * @see #isRequestQueueSet()
+     *
+     * @param model The model to load, must not be null
+     * @param <T> The type of the model to load
+     * @return A an unfinished Request that will be used to construct the components to load the model
+     */ (line 121,col 5)-(line 145,col 7)
+REPLACE: /**
+     * Set the {@link ImageManager} to use with {@link Glide#load(Object)}. Replaces the current {@link ImageManager}
+     * if one has already been set.
+     *
+     * @see #isImageManagerSet()
+     *
+     * @param imageManager The ImageManager to use
+     */ (line 99,col 5)-(line 106,col 7) /**
+     * Set the {@link ImageManager} to use with {@link Glide#load(Object) load}. Replaces the current
+     * {@link ImageManager} if one has already been set.
+     *
+     * @see #isImageManagerSet()
+     *
+     * @param imageManager The ImageManager to use
+     */ (line 109,col 5)-(line 116,col 7)
+REPLACE: /**
+     * Use to check whether or not an {@link ImageManager} has been set yet. Can be used in
+     * {@link android.app.Activity#onCreate(android.os.Bundle)} along with
+     * {@link #setImageManager(com.bumptech.glide.resize.ImageManager.Builder)} to set an {@link ImageManager} with
+     * custom options for use with {@link Glide#load(Object)} and/or as an easily accessible singleton.
+     *
+     * @return true iff an {@link ImageManager} is currently set
+     */ (line 78,col 5)-(line 85,col 7) /**
+     * Use to check whether or not an {@link ImageManager} has been set yet. Can be used in
+     * {@link android.app.Activity#onCreate(android.os.Bundle) Activity.onCreate} along with
+     * {@link #setImageManager(com.bumptech.glide.resize.ImageManager.Builder) setImageManager} to set an
+     * {@link ImageManager} with custom options for use with {@link Glide#load(Object) load} and/or as an easily
+     * accessible singleton.
+     *
+     * @return true iff an {@link ImageManager} is currently set
+     */ (line 87,col 5)-(line 95,col 7)
+REPLACE: /**
+     * Set the {@link RequestQueue} to use with {@link Glide#load(Object)}}. Replaces the current {@link RequestQueue}
+     * if one has already been set
+     *
+     * @param requestQueue
+     */ (line 52,col 5)-(line 57,col 7) /**
+     * Set the {@link RequestQueue} to use with {@link Glide#load(Object)} load}. Replaces the current
+     * {@link RequestQueue} if one has already been set
+     *
+     * @param requestQueue The {@link RequestQueue} to set
+     */ (line 61,col 5)-(line 66,col 7)
+REPLACE: /**
+     * Use to check whether or not an {@link ImageManager} has been set yet. Can be used in
+     * {@link android.app.Activity#onCreate(android.os.Bundle)} along with
+     * {@link #setRequestQueue(com.android.volley.RequestQueue)} to set a {@link RequestQueue} with custom options
+     * for use with {@link Glide#load(Object)}} and/or as an easily accessible singleton
+     *
+     * @return true iff a {@link RequestQueue} has already been set
+     */ (line 40,col 5)-(line 47,col 7) /**
+     * Use to check whether or not an {@link RequestQueue} has been set yet. Can be used in
+     * {@link android.app.Activity#onCreate(android.os.Bundle) Activity.onCreate} along with
+     * {@link #setRequestQueue(RequestQueue) setRequestQueue} to set a {@link RequestQueue} with custom options
+     * for use with {@link Glide#load(Object) load} and/or as an easily accessible singleton
+     *
+     * @return true iff a {@link RequestQueue} has already been set
+     */ (line 49,col 5)-(line 56,col 7)
+REPLACE: /**
+     * Return the current {@link RequestQueue} or create and return a new one if one is not currently set
+     *
+     * @see #setRequestQueue(com.android.volley.RequestQueue)
+     * @see #isRequestQueueSet()
+     *
+     * @param context
+     * @return The {@link RequestQueue}
+     */ (line 24,col 5)-(line 32,col 7) /**
+     * Return the current {@link RequestQueue} or create and return a new one if one is not currently set
+     *
+     * @see #setRequestQueue(RequestQueue)
+     * @see #isRequestQueueSet()
+     *
+     * @param context
+     * @return The {@link RequestQueue}
+     */ (line 33,col 5)-(line 41,col 7)
+INSERT: /**
+     * Get the singleton.
+     *
+     * @return the singleton
+     */ (line 21,col 5)-(line 25,col 7)
+REPLACE: /**
+ * Static helper methods/classes to present a simple unified interface for using glide. Allows 90%
+ * of the functionality of the library. The trade off is some extra unused object allocation, and a few unavailable
+ * methods. For many users this should be enough to make effective use of the library. For others it can serve as a
+ * starting point and example. This class is not thread safe.
+ */ (line 3,col 1)-(line 8,col 3) /**
+ * Static helper methods/classes to present a simple unified interface for using glide. Allows 90%
+ * of the functionality of the library. The trade off is some extra unused object allocation, and a few unavailable
+ * methods. For many users this should be enough to make effective use of the library. For others it can serve as a
+ * starting point and example.
+ *
+ * <p>
+ * Note - This class is not thread safe.
+ * </p>
+ */ (line 3,col 1)-(line 12,col 3)

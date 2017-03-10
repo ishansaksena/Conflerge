@@ -1,0 +1,40 @@
+
+31
+FAILURE
+INSERT: ) (line 40,col 57)-(line 40,col 57)
+INSERT: ) (line 40,col 56)-(line 40,col 56)
+REPLACE: '}' (line 38,col 72)-(line 38,col 74) CHARSET (line 40,col 49)-(line 40,col 55)
+REPLACE: + (line 38,col 70)-(line 38,col 70) ( (line 40,col 48)-(line 40,col 48)
+REPLACE: '\'' (line 38,col 65)-(line 38,col 68) getBytes (line 40,col 40)-(line 40,col 47)
+REPLACE: + (line 38,col 63)-(line 38,col 63) . (line 40,col 39)-(line 40,col 39)
+DELETE: + (line 38,col 51)-(line 38,col 51)
+REPLACE: "signature='" (line 38,col 37)-(line 38,col 49) ( (line 40,col 29)-(line 40,col 29)
+REPLACE: + (line 38,col 35)-(line 38,col 35) update (line 40,col 23)-(line 40,col 28)
+REPLACE: "StringSignature{" (line 38,col 16)-(line 38,col 33) . (line 40,col 22)-(line 40,col 22)
+REPLACE: return (line 38,col 9)-(line 38,col 14) messageDigest (line 40,col 9)-(line 40,col 21)
+INSERT: messageDigest (line 39,col 50)-(line 39,col 62)
+INSERT: MessageDigest (line 39,col 36)-(line 39,col 48)
+REPLACE: toString (line 37,col 19)-(line 37,col 26) updateDiskCacheKey (line 39,col 17)-(line 39,col 34)
+REPLACE: String (line 37,col 12)-(line 37,col 17) void (line 39,col 12)-(line 39,col 15)
+DELETE: ) (line 33,col 57)-(line 33,col 57)
+DELETE: ) (line 33,col 56)-(line 33,col 56)
+REPLACE: CHARSET (line 33,col 49)-(line 33,col 55) '}' (line 35,col 72)-(line 35,col 74)
+REPLACE: ( (line 33,col 48)-(line 33,col 48) + (line 35,col 70)-(line 35,col 70)
+REPLACE: getBytes (line 33,col 40)-(line 33,col 47) '\'' (line 35,col 65)-(line 35,col 68)
+REPLACE: . (line 33,col 39)-(line 33,col 39) + (line 35,col 63)-(line 35,col 63)
+INSERT: + (line 35,col 51)-(line 35,col 51)
+REPLACE: ( (line 33,col 29)-(line 33,col 29) "signature='" (line 35,col 37)-(line 35,col 49)
+REPLACE: update (line 33,col 23)-(line 33,col 28) + (line 35,col 35)-(line 35,col 35)
+REPLACE: . (line 33,col 22)-(line 33,col 22) "StringSignature{" (line 35,col 16)-(line 35,col 33)
+REPLACE: messageDigest (line 33,col 9)-(line 33,col 21) return (line 35,col 9)-(line 35,col 14)
+DELETE: messageDigest (line 32,col 50)-(line 32,col 62)
+DELETE: MessageDigest (line 32,col 36)-(line 32,col 48)
+REPLACE: updateDiskCacheKey (line 32,col 17)-(line 32,col 34) toString (line 34,col 19)-(line 34,col 26)
+REPLACE: void (line 32,col 12)-(line 32,col 15) String (line 34,col 12)-(line 34,col 17)
+REPLACE: /**
+ * A unique Signature that wraps a String.
+ */ (line 3,col 1)-(line 5,col 3) /**
+ * A unique Signature that wraps a String.
+ *
+ * TODO: remove this and replace with ObjectKey.
+ */ (line 3,col 1)-(line 7,col 3)
