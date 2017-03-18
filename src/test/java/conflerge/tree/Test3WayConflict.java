@@ -8,6 +8,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.utils.Pair;
 
+import conflerge.ConflergeUtil;
 import conflerge.tree.visitor.MergeVisitor;
 import conflerge.tree.visitor.NodeListUnwrapperVisitor;
 import conflerge.tree.visitor.NodeListWrapperVisitor;
@@ -30,12 +31,12 @@ public class Test3WayConflict {
         DiffResult localDiff = new TreeDiffer(base, local).diff();
         DiffResult remoteDiff = new TreeDiffer(base, remote).diff();
         
-        TreeMerger.conflict = false;
+        ConflergeUtil.conflict = false;
         
         base.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(localDiff, remoteDiff));   
         base.accept(new NodeListUnwrapperVisitor(), null); 
         
-        assertEquals(TreeMerger.conflict, conflict);
+        assertEquals(ConflergeUtil.conflict, conflict);
         
     }
     

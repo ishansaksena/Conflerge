@@ -4,10 +4,12 @@ import java.util.EnumSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.comments.Comment;
 
 import conflerge.tree.ast.NodeListWrapper;
 
@@ -35,6 +37,11 @@ public class DiffResult {
      * Map from nodes in A -> altered modifiers in B.
      */
     public final IdentityHashMap<Node, EnumSet<Modifier>> modifiers;
+    
+    /**
+     * Mapping of nodes aligned in A -> their comments modified in B.
+     */
+    public final IdentityHashMap<Node, Optional<Comment>> comments;
       
     /**
      * @param deletes
@@ -45,12 +52,14 @@ public class DiffResult {
     public DiffResult(Set<Node> deletes, 
                       IdentityHashMap<Node, Node> replaces,
                       IdentityHashMap<Node, EnumSet<Modifier>> modifiers,
+                      IdentityHashMap<Node, Optional<Comment>> comments,
                       IdentityHashMap<NodeListWrapper, Map<Integer, List<Node>>> listInserts) {
         
         this.deletes = deletes;
         this.replaces = replaces;
         this.listInserts = listInserts;
         this.modifiers = modifiers;
+        this.comments = comments;
     }
       
     /**

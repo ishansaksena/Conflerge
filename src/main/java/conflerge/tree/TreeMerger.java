@@ -13,6 +13,7 @@ import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.utils.Pair;
 
+import conflerge.ConflergeUtil;
 import conflerge.tree.visitor.MergeVisitor;
 import conflerge.tree.visitor.NodeListUnwrapperVisitor;
 import conflerge.tree.visitor.NodeListWrapperVisitor;
@@ -30,11 +31,6 @@ public class TreeMerger {
     private Node base;
     private Node local;
     private Node remote;
-    
-    /**
-     * true iff a conflict has been detected.
-     */
-    public static boolean conflict;
     
     /**
      * The imports that will be included in the resulting merge, if successful.
@@ -75,12 +71,13 @@ public class TreeMerger {
         DiffResult localDiff = new TreeDiffer(base, local).diff();
         DiffResult remoteDiff = new TreeDiffer(base, remote).diff();
         
-        conflict = false;
+        ConflergeUtil.conflict = false;
+        ConflergeUtil.commentConflict = false;
         
         Pair<DiffResult, DiffResult> diffs = new Pair<>(localDiff, remoteDiff);
         base.accept(new MergeVisitor(), diffs);   
         
-        if (conflict) {
+        if (ConflergeUtil. conflict) {
             return null;
         }
         
@@ -89,13 +86,6 @@ public class TreeMerger {
         addImports((CompilationUnit) base, imports);
         
         return base;
-    }
-    
-    /**
-     * Reports the detection of a conflict.
-     */
-    public static void reportConflict() {
-        conflict = true;
     }
     
     /**

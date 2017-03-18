@@ -8,6 +8,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.utils.Pair;
 
+import conflerge.ConflergeUtil;
 import conflerge.tree.visitor.MergeVisitor;
 import conflerge.tree.visitor.NodeListUnwrapperVisitor;
 import conflerge.tree.visitor.NodeListWrapperVisitor;
@@ -30,12 +31,12 @@ public class Test3WayNoConflict {
         DiffResult localDiff = new TreeDiffer(base, local).diff();
         DiffResult remoteDiff = new TreeDiffer(base, remote).diff();
         
-        TreeMerger.conflict = false;
+        ConflergeUtil.conflict = false;
         
         base.accept(new MergeVisitor(), new Pair<DiffResult, DiffResult>(localDiff, remoteDiff));   
         base.accept(new NodeListUnwrapperVisitor(), null); 
         
-        assertEquals(TreeMerger.conflict, false);
+        assertEquals(ConflergeUtil.conflict, false);
         assertEquals(JavaParser.parse(expectedStr), base);
         
     }
@@ -98,6 +99,46 @@ public class Test3WayNoConflict {
                 "class Foo { void foo(int i) { print(\"hello\"); } }",
                 "class Foo { void foo(int a, int b) { } }",
                 "class Foo { void foo(int a, int b) { print(\"hello\"); } }"
+        );
+    }
+    
+    @Test
+    public void testCommentInsert() {
+        merge(
+                "class Foo { int x; }",
+                "class Foo { int x; }",
+                "class Foo { /*Test*/ int x; }",
+                "class Foo { /*Test*/ int x; }"
+        );
+    }
+    
+    @Test
+    public void testCommentDelete() {
+        merge(
+                "class Foo { /*Test*/ int x; }",
+                "class Foo { /*Test*/ int x; }",
+                "class Foo {  int x; }",
+                "class Foo {  int x; }"
+        );
+    }
+    
+    @Test
+    public void testCommentConflict() {
+        merge(
+                "class Foo { int x; }",
+                "class Foo { /*Test*/int x; }",
+                "class Foo { /*Test*/ int x; }",
+                "class Foo { /*>>> LOCAL: Test\n<<< REMOTE: Test*/ int x; }"
+        );
+    }
+    
+    @Test
+    public void testCommentConflictDelete() {
+        merge(
+                "class Foo { /*Test*/ int x; }",
+                "class Foo { /*Test One*/int x; }",
+                "class Foo { int x; }",
+                "class Foo { /*>>> LOCAL: Test One\n<<< REMOTE: */ int x; }"
         );
     }
 }
