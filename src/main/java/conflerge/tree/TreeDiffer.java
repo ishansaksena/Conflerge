@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 
 import conflerge.tree.ast.ASTInputProcessing;
@@ -71,6 +73,11 @@ public class TreeDiffer {
      * from nodes in A to their altered modifiers in B, if any. 
      */
     private IdentityHashMap<Node, EnumSet<Modifier>> modifiers = new IdentityHashMap<>();
+    
+    /**
+     * Mapping of nodes aligned in A to their comments modified in B.
+     */
+    private IdentityHashMap<Node, Optional<Comment>> comments = new IdentityHashMap<>();
     
     /**
      * A map from NodeListWrapperNodes to nodes that were
@@ -186,7 +193,7 @@ public class TreeDiffer {
         // alignment and replacement maps.
         IdentityHashMap<NodeListWrapper, Map<Integer, List<Node>>> indexInserts = processListInserts();
         
-        return new DiffResult(deletes, replacesA, modifiers, indexInserts);
+        return new DiffResult(deletes, replacesA, modifiers, comments, indexInserts);
     }
 
     /**
@@ -250,6 +257,7 @@ public class TreeDiffer {
      */
     private void addAlignOrReplace(int i, int j) {
         if (updateCost(aN[i], bN[j]) == 0)  {
+            
             if (aN[i] instanceof NodeWithModifiers) {
                 EnumSet<Modifier> aMods = ((NodeWithModifiers<?>) aN[i]).getModifiers();
                 EnumSet<Modifier> bMods = ((NodeWithModifiers<?>) bN[j]).getModifiers();
@@ -257,6 +265,13 @@ public class TreeDiffer {
                     modifiers.put(aN[i], bMods);
                 }
             }
+                
+            Optional<Comment> commentA = aN[i].getComment();
+            Optional<Comment> commentB = bN[j].getComment();
+            if (!commentA.equals(commentB)) {
+                comments.put(aN[i], commentB);
+            }
+            
             alignsA.put(aN[i], bN[j]);
             alignsB.put(bN[j], aN[i]);
         } else {

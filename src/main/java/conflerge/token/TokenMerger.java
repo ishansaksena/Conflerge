@@ -12,10 +12,13 @@ import java.util.Stack;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.JavaToken;
+import com.github.javaparser.Position;
+import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 
+import conflerge.ConflergeUtil;
 import conflerge.Edit;
 import conflerge.tree.TreeMerger;
 
@@ -90,18 +93,16 @@ public class TokenMerger {
             
             // Case: Conflict
             if (e1.type != Edit.Type.MATCH && e2.type != Edit.Type.MATCH) {
-            	
-            	// Temporarily, we want to avoid letting comments cause conflicts.
-            	// Otherwise, we won't be able to fairly compare token-based merging
-            	// to tree based merging, which doesn't currently allow comments
-            	// to conflict.
-            	if (isComment(local.get(e1.icur))) {
+                if (isComment(local.get(e1.icur)) && isComment(remote.get(e2.icur))) {     
+                    ConflergeUtil.reportCommentConflict();
+                    String text = getCommentString(local.get(e1.icur), remote.get(e2.icur));
+                    res.add(new JavaToken(dummy_range, MULTI_LINE_COMMENT , text));
+                } else if (isComment(local.get(e1.icur))) {
             		res.add(local.get(e1.icur));
             		remoteEdits.push(e2);
             	} else if (isComment(remote.get(e2.icur))) {
             		res.add(remote.get(e2.icur));
             		localEdits.push(e1);
-            	
             	} else {
             		return null;
             	}
@@ -133,6 +134,16 @@ public class TokenMerger {
         return res;
     }
 
+    private String getCommentString(JavaToken localToken, JavaToken remoteToken) {
+        String res = "/*";
+        res += " >>>LOCAL: ";
+        res += localToken.text.replace("/*", "").replace("*/", "").replace("//", "");
+        res += "\n<<< REMOTE: ";
+        res += remoteToken.text.replace("/*", "").replace("*/", "").replace("//", "");
+        res += "*/";
+        return res;
+    }
+
     /**
      * @param token
      * @return true iff the given token corresponds to a comment.
@@ -142,4 +153,9 @@ public class TokenMerger {
 	           token.kind == MULTI_LINE_COMMENT  ||  
 	           token.kind == JAVA_DOC_COMMENT;
 	}
+	
+	/**
+	 * Used to satisfy the JavaToken constructor.
+	 */
+	private static final Range dummy_range = new Range(new Position(0, 0), new Position(0, 0));
 }

@@ -1,7 +1,7 @@
 package conflerge.token;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -16,6 +16,7 @@ import org.junit.Test;
 import com.github.javaparser.JavaToken;
 
 import conflerge.ConflergeTokens;
+import conflerge.ConflergeUtil;
 
 /**
  * System tests for Conflerge's token merging.
@@ -63,6 +64,8 @@ public class TestTokens {
         writeFile(BASE, base);
         writeFile(LOCAL, local);
         writeFile(REMOTE, remote);
+        ConflergeUtil.commentConflict = false;
+        ConflergeUtil.conflict = false;
         ConflergeTokens.main(new String[] { BASE, LOCAL, REMOTE, MERGED });
     }
     
@@ -144,6 +147,14 @@ public class TestTokens {
         String l = "class Baz { }";
         String r = "class Bar { }";
         checkMergeFails(b, l, r);
+    }
+    
+    @Test
+    public void testCommentConflict() {
+        String b = "class Foo { int x; }";
+        String l = "class Foo { /* commentA */ int x;  }";
+        String r = "class Foo { /* commentB */ int x; }";
+        checkMergeSucceeds(b, l, r, "class Foo { /* >>>LOCAL:  commentA \n<<< REMOTE:  commentB */ int x; }");
     }
 
 }

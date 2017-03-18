@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.github.javaparser.ast.ArrayCreationLevel;
 import com.github.javaparser.ast.CompilationUnit;
@@ -24,6 +25,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.comments.BlockComment;
+import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.comments.LineComment;
 import com.github.javaparser.ast.expr.ArrayAccessExpr;
@@ -60,6 +62,7 @@ import com.github.javaparser.ast.expr.ThisExpr;
 import com.github.javaparser.ast.expr.TypeExpr;
 import com.github.javaparser.ast.expr.UnaryExpr;
 import com.github.javaparser.ast.expr.VariableDeclarationExpr;
+import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 import com.github.javaparser.ast.stmt.AssertStmt;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.BreakStmt;
@@ -93,11 +96,9 @@ import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.Visitable;
 import com.github.javaparser.utils.Pair;
 
+import conflerge.ConflergeUtil;
 import conflerge.tree.DiffResult;
-import conflerge.tree.TreeMerger;
 import conflerge.tree.ast.NodeListWrapper;
-
-import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
 /**
  * Performs merge operations from two DiffResults and detects conflicts, if any.
  */
@@ -135,7 +136,7 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
             Map<Integer, List<Node>> map = args.b.listInserts.get(n);
             for (Integer i : map.keySet()) {
                 if (inserts.containsKey(i)) {
-                    TreeMerger.reportConflict();
+                    ConflergeUtil.reportConflict();
                 }
                 inserts.put(i, map.get(i));
             }
@@ -173,7 +174,21 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
      * @param remote
      * @return Result of the merge operation.
      */
-    private Visitable mergeOperation(Node n, DiffResult local, DiffResult remote) {
+    private Visitable mergeOperation(Node n, DiffResult local, DiffResult remote) {       
+        if (local.comments.containsKey(n) && remote.comments.containsKey(n)) {          
+            ConflergeUtil.reportCommentConflict();
+            Optional<Comment> localComment = local.comments.get(n);
+            Optional<Comment> remoteComment = remote.comments.get(n);       
+            String localContent = localComment.isPresent() ? localComment.get().getContent() : "";
+            String remoteContent = remoteComment.isPresent() ? remoteComment.get().getContent() : "";
+            Comment res = new BlockComment();
+            res.setContent(">>> LOCAL: " + localContent + "\n<<< REMOTE: " + remoteContent);
+            n.setComment(res);
+        } else if (local.comments.containsKey(n)) {
+            n.setComment(local.comments.get(n).orElse(null));
+        } else if (remote.comments.containsKey(n)) {
+            n.setComment(remote.comments.get(n).orElse(null));
+        }
         
         // If local deleted or replaced this node, return the appropriate
         // value and check for modifications made by remote to the deleted 
@@ -198,7 +213,7 @@ public class MergeVisitor extends ModifierVisitor<Pair<DiffResult, DiffResult>> 
         // If local changed the modifiers on this node, check them against remote.
         if (local.modifiers.containsKey(n)) {
             if (remote.modifiers.containsKey(n) && !remote.modifiers.get(n).equals(local.modifiers.get(n))) {
-                TreeMerger.reportConflict();
+                ConflergeUtil.reportConflict();
             } else {
                 ((NodeWithModifiers<?>) n).setModifiers(local.modifiers.get(n));
             }
