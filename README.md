@@ -21,33 +21,26 @@ In contrast to tokens, Abstract Syntax Trees retain information about the syntac
 
 *Conflerge* is currently scoped to work with Java source code files and Git. 
 
-To run the tool on a git repository: 
+To use the tool:
 
 * Clone the *Conflerge* repository to ~/.
 * Update your `.gitconfig` to include: 
 ```bash
     [mergetool "conflerge-tree"]
-		cmd = java -jar ~/Conflerge/scripts/ConflergeTree.jar \$BASE \$LOCAL \$REMOTE \$MERGED
+		cmd = java -jar ~/Conflerge/ConflergeTree.jar \$BASE \$LOCAL \$REMOTE \$MERGED
     [mergetool "conflerge-token"]
-        cmd = java -jar ~/Conflerge/scripts/ConflergeToken.jar \$BASE \$LOCAL \$REMOTE \$MERGED
+        cmd = java -jar ~/Conflerge/ConflergeToken.jar \$BASE \$LOCAL \$REMOTE \$MERGED
     [merge]
         tool = conflerge-tree
         tool = conflerge-token
 ```
-* Ensure that all `.sh` files in `Conflerge/scripts` have run permission
-* Clone the repository to be tested to ` /tmp`  
+* To run with token-based merging:
+`git mergetool --tool=conflerge-token <conflicting file>`
+* To run with AST-based merging:
+`git mergetool --tool=conflerge-tree <conflicting file>`
 
-* From inside `Conflerge/scripts`, run:
-
-`bash test_repo.sh <repository name> <repository owner>-<repository name> <tree or token>`
-
-For example, to test  [Glide](https://github.com/bumptech/glide) using the tree merge strategy:
-`bash test_repo.sh glide bumptech-glide tree`
-
-* Specifying the positional argument as either `tree` or `token` is required, and determines whether to evaluate Conflerge using a tree or token based merge strategy
-* 	As the script runs it will output test results for each individual repo to files in the form `[repo]_[merge_strategy].csv` (ie `glide_tree.csv`)
+* Note: Our experiments showed that AST-based merging was the more successful strategy, so we recommend using `conflerge-tree`.
 	
-
 Instructions to recreate the results in the paper can be found [here](https://github.com/ishansaksena/Conflerge/tree/master/scripts). 
 
 ###References
